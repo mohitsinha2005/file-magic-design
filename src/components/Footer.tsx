@@ -12,7 +12,7 @@ const Footer = () => {
 
   const footerLinks = [
     {
-      title: "Navigation",
+      title: "Quick Links",
       links: [
         { label: "Home", href: "#home" },
         { label: "Skills", href: "#skills" },
@@ -26,7 +26,7 @@ const Footer = () => {
         { label: "About", href: "#about" },
         { label: "Contact", href: "#contact" },
         { label: "Resume", href: "#" },
-        { label: "Blog", href: "#" },
+        { label: "LinkedIn", href: "https://linkedin.com/in/mohitsinha" },
       ],
     },
   ];
@@ -41,7 +41,8 @@ const Footer = () => {
               Mohit Sinha
             </h3>
             <p className="text-muted-foreground max-w-sm mb-6">
-              Data Scientist & AI Researcher dedicated to transforming complex data into actionable insights.
+              Data Science professional dedicated to transforming complex data into actionable insights 
+              and building intelligent solutions that drive business value.
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social, index) => (

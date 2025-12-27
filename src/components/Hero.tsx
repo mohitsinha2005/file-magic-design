@@ -16,12 +16,13 @@ const Hero = ({ profileImage }: HeroProps) => {
                 Mohit Sinha
               </h1>
               <p className="text-xl md:text-2xl text-primary font-medium">
-                Specialist in AI & Data Science
+                AI & Data Science Professional
               </p>
               <p className="text-muted-foreground text-lg leading-relaxed max-w-xl">
-                Aspiring Data Scientist and AI Researcher currently pursuing BCA and BS in Data Science. 
-                Dedicated to transforming complex data into actionable insights through Machine Learning, 
-                predictive modeling, and advanced analytics. Recruiter-ready professional with a focus on scalable AI solutions.
+                A dedicated professional pursuing BCA and BS in Data Science, specializing in 
+                transforming complex datasets into actionable business insights. Proficient in 
+                Machine Learning, predictive analytics, and data-driven decision making with 
+                a commitment to delivering scalable AI solutions.
               </p>
 
               {/* Action Buttons */}
@@ -51,7 +52,7 @@ const Hero = ({ profileImage }: HeroProps) => {
             <div className="hero-image-frame w-72 h-72 md:w-96 md:h-96">
               <img
                 src={profileImage}
-                alt="Mohit Sinha Professional Portrait"
+                alt="Mohit Sinha - AI & Data Science Professional"
                 className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
               />
             </div>
