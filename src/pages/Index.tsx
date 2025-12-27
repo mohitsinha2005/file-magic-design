@@ -1,12 +1,40 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Helmet } from "react-helmet";
+import Navigation from "@/components/Navigation";
+import Hero from "@/components/Hero";
+import Skills from "@/components/Skills";
+import Projects from "@/components/Projects";
+import Certifications from "@/components/Certifications";
+import About from "@/components/About";
+import CTA from "@/components/CTA";
+import Footer from "@/components/Footer";
 
 const Index = () => {
+  const profileImage = "https://images.pexels.com/photos/7989025/pexels-photo-7989025.jpeg?auto=compress&cs=tinysrgb&w=800";
+  const aboutImage = "https://images.pexels.com/photos/18360995/pexels-photo-18360995.jpeg?auto=compress&cs=tinysrgb&w=800";
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Mohit Sinha | Data Scientist & AI Researcher</title>
+        <meta
+          name="description"
+          content="Mohit Sinha - Aspiring Data Scientist and AI Researcher specializing in Machine Learning, predictive modeling, and advanced analytics. Recruiter-ready professional with a focus on scalable AI solutions."
+        />
+        <meta property="og:title" content="Mohit Sinha | Data Scientist & AI Researcher" />
+        <meta property="og:description" content="Transforming complex data into actionable insights through Machine Learning and AI." />
+        <link rel="canonical" href="https://mohitsinha.dev" />
+      </Helmet>
+
+      <Navigation />
+      <main>
+        <Hero profileImage={profileImage} />
+        <Skills />
+        <Projects />
+        <Certifications />
+        <About profileImage={aboutImage} />
+        <CTA />
+      </main>
+      <Footer />
     </div>
   );
 };
