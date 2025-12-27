@@ -3,38 +3,38 @@ import { Award, BookCheck, Trophy, GraduationCap, Star, Medal } from "lucide-rea
 const certifications = [
   {
     icon: Award,
-    title: "Google Data Analytics Professional",
+    title: "Google Data Analytics Professional Certificate",
     issuer: "Google",
     date: "2024",
   },
   {
     icon: Trophy,
-    title: "IBM Data Science Professional",
+    title: "IBM Data Science Professional Certificate",
     issuer: "IBM",
     date: "2024",
   },
   {
     icon: GraduationCap,
-    title: "Deep Learning Specialization",
-    issuer: "Coursera / DeepLearning.AI",
-    date: "2023",
+    title: "Machine Learning Specialization",
+    issuer: "Stanford Online / Coursera",
+    date: "2024",
   },
   {
     icon: BookCheck,
-    title: "Machine Learning with Python",
+    title: "Python for Data Science and AI",
     issuer: "IBM",
     date: "2023",
   },
   {
     icon: Star,
-    title: "AWS Cloud Practitioner",
-    issuer: "Amazon Web Services",
-    date: "2024",
+    title: "SQL for Data Science",
+    issuer: "University of California, Davis",
+    date: "2023",
   },
   {
     icon: Medal,
-    title: "TensorFlow Developer Certificate",
-    issuer: "Google",
+    title: "Data Visualization with Tableau",
+    issuer: "Coursera",
     date: "2024",
   },
 ];
@@ -46,7 +46,7 @@ const Certifications = () => {
         <div className="text-center mb-12">
           <h2 className="section-title">Professional Certifications</h2>
           <p className="section-subtitle max-w-2xl mx-auto">
-            Validated expertise in Data Science and Artificial Intelligence
+            Industry-recognized credentials validating expertise in Data Science, Analytics, and AI
           </p>
         </div>
 

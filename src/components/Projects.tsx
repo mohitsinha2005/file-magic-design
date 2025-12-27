@@ -2,32 +2,32 @@ import { ExternalLink, Github } from "lucide-react";
 
 const projects = [
   {
-    title: "AI-Powered Sentiment Analysis",
-    category: "Machine Learning",
-    description: "Real-time sentiment analysis using NLP and deep learning models for social media data.",
+    title: "Customer Sentiment Analysis System",
+    category: "Natural Language Processing",
+    description: "Developed an NLP-based sentiment classification model to analyze customer feedback, achieving 89% accuracy using TF-IDF vectorization and machine learning classifiers.",
     image: "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800",
-    tags: ["Python", "TensorFlow", "NLP"],
+    tags: ["Python", "Scikit-learn", "NLP", "Pandas"],
   },
   {
-    title: "Predictive Analytics Dashboard",
-    category: "Data Visualization",
-    description: "Interactive dashboard for business forecasting with real-time data integration.",
+    title: "Sales Forecasting Dashboard",
+    category: "Business Intelligence",
+    description: "Built an interactive Tableau dashboard for sales trend analysis and forecasting, enabling data-driven decision making for inventory optimization.",
     image: "https://images.pexels.com/photos/7567443/pexels-photo-7567443.jpeg?auto=compress&cs=tinysrgb&w=800",
-    tags: ["Tableau", "Python", "SQL"],
+    tags: ["Tableau", "Excel", "SQL", "Data Analysis"],
   },
   {
-    title: "Customer Churn Prediction",
-    category: "Machine Learning",
-    description: "ML model achieving 94% accuracy in predicting customer churn for telecom industry.",
+    title: "Customer Churn Prediction Model",
+    category: "Predictive Analytics",
+    description: "Implemented a classification model to predict customer attrition with 91% precision, utilizing feature engineering and ensemble learning techniques.",
     image: "https://images.pexels.com/photos/6476808/pexels-photo-6476808.jpeg?auto=compress&cs=tinysrgb&w=800",
-    tags: ["Scikit-learn", "Pandas", "XGBoost"],
+    tags: ["Python", "XGBoost", "Feature Engineering"],
   },
   {
-    title: "Image Classification System",
-    category: "Deep Learning",
-    description: "CNN-based image classification with 98% accuracy on custom dataset.",
+    title: "Portfolio Web Application",
+    category: "Web Development",
+    description: "Designed and developed a responsive portfolio website using React and modern CSS frameworks, showcasing professional work and technical capabilities.",
     image: "https://images.pexels.com/photos/8438923/pexels-photo-8438923.jpeg?auto=compress&cs=tinysrgb&w=800",
-    tags: ["PyTorch", "CNN", "Computer Vision"],
+    tags: ["React", "TypeScript", "Tailwind CSS"],
   },
 ];
 
@@ -38,13 +38,13 @@ const Projects = () => {
         <div className="text-center mb-12">
           <h2 className="section-title">Featured Projects</h2>
           <p className="section-subtitle max-w-2xl mx-auto">
-            Showcasing impactful data science and AI projects that drive business value
+            A selection of projects demonstrating practical application of Data Science and development skills
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <div key={index} className="project-card">
+            <div key={index} className="project-card group">
               <img
                 src={project.image}
                 alt={project.title}

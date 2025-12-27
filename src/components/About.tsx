@@ -6,21 +6,21 @@ const About = ({ profileImage }: AboutProps) => {
   const stats = [
     { value: "10+", label: "Projects" },
     { value: "6+", label: "Certifications" },
-    { value: "2+", label: "Years Exp" },
+    { value: "2+", label: "Years Learning" },
   ];
 
   const details = [
     {
-      label: "Education",
-      value: "Pursuing BCA & BS in Data Science from IIT Madras with focus on AI/ML applications.",
+      label: "Academic Background",
+      value: "Pursuing Bachelor of Computer Applications (BCA) alongside BS in Data Science from IIT Madras, with specialized focus on Artificial Intelligence, Machine Learning, and Statistical Analysis.",
     },
     {
-      label: "Expertise",
-      value: "Specialized in Machine Learning, Deep Learning, and Statistical Analysis.",
+      label: "Core Competencies",
+      value: "Expertise in data preprocessing, exploratory data analysis, predictive modeling, and creating data-driven solutions. Proficient in translating business requirements into technical implementations.",
     },
     {
-      label: "Recruiter Focus",
-      value: "Seeking opportunities to leverage data-driven strategies for corporate growth and efficiency.",
+      label: "Professional Objective",
+      value: "Seeking opportunities to apply analytical skills and technical expertise in Data Science and AI to drive organizational growth, optimize processes, and deliver measurable business outcomes.",
     },
   ];
 
@@ -32,8 +32,8 @@ const About = ({ profileImage }: AboutProps) => {
           <div>
             <div className="elevated-card">
               <div className="mb-6">
-                <h2 className="section-title mb-2">Professional Biography</h2>
-                <p className="text-primary font-medium">Bridging Logic and Intelligence</p>
+                <h2 className="section-title mb-2">Professional Profile</h2>
+                <p className="text-primary font-medium">Data-Driven Problem Solver</p>
               </div>
 
               <div className="space-y-6">
@@ -46,7 +46,7 @@ const About = ({ profileImage }: AboutProps) => {
               </div>
 
               <a href="#contact" className="btn-secondary mt-6 inline-flex">
-                Learn More About My Journey
+                Connect With Me
               </a>
             </div>
           </div>

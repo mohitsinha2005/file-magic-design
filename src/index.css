@@ -212,7 +212,7 @@
 
   /* Project card */
   .project-card {
-    @apply relative overflow-hidden rounded-xl border border-border group cursor-pointer;
+    @apply relative overflow-hidden rounded-xl border border-border cursor-pointer;
   }
 
   .project-overlay {
