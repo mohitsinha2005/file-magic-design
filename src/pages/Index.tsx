@@ -7,10 +7,11 @@ import Certifications from "@/components/Certifications";
 import About from "@/components/About";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
+import profileMohit from "@/assets/profile-mohit.jpg";
 
 const Index = () => {
-  const profileImage = "https://images.pexels.com/photos/7989025/pexels-photo-7989025.jpeg?auto=compress&cs=tinysrgb&w=800";
-  const aboutImage = "https://images.pexels.com/photos/18360995/pexels-photo-18360995.jpeg?auto=compress&cs=tinysrgb&w=800";
+  const profileImage = profileMohit;
+  const aboutImage = profileMohit;
 
   return (
     <div className="min-h-screen bg-background">
