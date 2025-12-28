@@ -1,4 +1,4 @@
-import { Mail, ArrowRight } from "lucide-react";
+import { Mail, ArrowRight, Download } from "lucide-react";
 
 interface HeroProps {
   profileImage: string;
@@ -34,6 +34,14 @@ const Hero = ({ profileImage }: HeroProps) => {
                 <a href="#projects" className="btn-secondary">
                   View Projects
                   <ArrowRight size={18} className="ml-2" />
+                </a>
+                <a 
+                  href="/resume/Mohit_Sinha_Resume.pdf" 
+                  download 
+                  className="btn-secondary"
+                >
+                  <Download size={18} className="mr-2" />
+                  Download Resume
                 </a>
               </div>
 
