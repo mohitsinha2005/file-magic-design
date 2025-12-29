@@ -5,12 +5,11 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
 // Import certificate images
-import certDataconnect from "@/assets/certificates/cert-dataconnect-teachnook.png";
-import certChessMania from "@/assets/certificates/cert-chess-mania.png";
-import certIitmWebsite from "@/assets/certificates/cert-iitm-website.png";
+import certDataconnect from "@/assets/certificates/cert-dataconnect.png";
+import certAiTeachnook from "@/assets/certificates/cert-ai-teachnook.png";
+import certCybersecurity from "@/assets/certificates/cert-cybersecurity.png";
+import certTableau from "@/assets/certificates/cert-tableau-tnx.png";
 import certCoursera from "@/assets/certificates/cert-coursera-business.png";
-import certNextleap from "@/assets/certificates/cert-nextleap-pm.png";
-import certHpLife from "@/assets/certificates/cert-hp-life.png";
 
 const certifications = [
   {
@@ -25,25 +24,25 @@ const certifications = [
     title: "Artificial Intelligence Course Completion",
     issuer: "Teachnook | Cognizance'24 IIT Roorkee",
     date: "April 2025",
-    image: certDataconnect,
+    image: certAiTeachnook,
     description: "Successfully completed comprehensive AI course in collaboration with Cognizance'24 IIT Roorkee. Demonstrated keen enthusiasm and strong understanding of AI concepts.",
     category: "AI & Technology",
   },
   {
-    title: "Chess Mania - IITM Paradox Margazhi'25",
-    issuer: "IITM B.S. Degree Program",
-    date: "Margazhi 2025",
-    image: certChessMania,
-    description: "Certificate of Appreciation for active participation in Chess Mania competition at IITM Paradox during Margazhi'25 cultural festival.",
-    category: "Competition",
+    title: "CyberSecurity Workshop",
+    issuer: "Cyndia | Cognizance 2025, IIT Roorkee",
+    date: "March 2025",
+    image: certCybersecurity,
+    description: "Participated in CyberSecurity workshop conducted by Cyndia in association with Cognizance 2025, Annual Technical Fest of IIT Roorkee.",
+    category: "CyberSecurity",
   },
   {
-    title: "IITM BS Website Redesigning Competition",
-    issuer: "IIT Madras B.S. Degree Program",
-    date: "January 2025",
-    image: certIitmWebsite,
-    description: "Participation certificate for contributing with creativity and innovation in the official website redesigning competition.",
-    category: "Web Development",
+    title: "Tableau Course Completion",
+    issuer: "TNX | Cognizance'24 IIT Roorkee",
+    date: "October 2024",
+    image: certTableau,
+    description: "Successfully completed Tableau Course with TNX. Demonstrated keen enthusiasm for data visualization and analytics.",
+    category: "Data Visualization",
   },
   {
     title: "Business Analysis & Process Management",
@@ -52,22 +51,6 @@ const certifications = [
     image: certCoursera,
     description: "Successfully completed online non-credit project authorized by Coursera Project Network, focusing on business analysis methodologies and process optimization.",
     category: "Business",
-  },
-  {
-    title: "Product Management Workshop",
-    issuer: "Nextleap | Cognizance 2025, IIT Roorkee",
-    date: "2025",
-    image: certNextleap,
-    description: "Certificate of Participation in comprehensive Product Management workshop conducted by Nextleap in association with Cognizance 2025, the Annual Technical Fest of IIT Roorkee.",
-    category: "Product Management",
-  },
-  {
-    title: "Selling Online - HP LIFE",
-    issuer: "HP Foundation",
-    date: "August 2023",
-    image: certHpLife,
-    description: "Successfully completed HP LIFE online course covering online sales optimization, marketing strategies, product listings, and customer service excellence.",
-    category: "Digital Marketing",
   },
 ];
 
@@ -108,7 +91,7 @@ const CertificationsPage = () => {
           {/* Stats badges */}
           <div className="flex gap-4 mt-8 opacity-0 animate-fade-up delay-400">
             <div className="px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-primary text-sm font-medium">
-              7+ Certifications
+              5+ Certifications
             </div>
             <div className="px-4 py-2 rounded-full bg-secondary border border-border text-muted-foreground text-sm font-medium">
               Multiple Institutions
@@ -185,7 +168,7 @@ const CertificationsPage = () => {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-foreground mb-8 opacity-0 animate-fade-up font-heading">Learning Platforms</h2>
           <div className="flex flex-wrap justify-center gap-6">
-            {["IIT Madras", "IIT Roorkee", "Coursera", "HP Foundation", "Teachnook", "Nextleap"].map((platform, idx) => (
+            {["IIT Madras", "IIT Roorkee", "Coursera", "TNX", "Teachnook", "Cyndia"].map((platform, idx) => (
               <div 
                 key={idx} 
                 className="card-3d px-8 py-4 rounded-xl bg-background border border-border text-muted-foreground font-medium opacity-0 animate-bounce-in"
