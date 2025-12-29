@@ -1,84 +1,63 @@
-import { ExternalLink, Github } from "lucide-react";
-
-const projects = [
-  {
-    title: "Customer Sentiment Analysis System",
-    category: "Natural Language Processing",
-    description: "Developed an NLP-based sentiment classification model to analyze customer feedback, achieving 89% accuracy using TF-IDF vectorization and machine learning classifiers.",
-    image: "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800",
-    tags: ["Python", "Scikit-learn", "NLP", "Pandas"],
-  },
-  {
-    title: "Sales Forecasting Dashboard",
-    category: "Business Intelligence",
-    description: "Built an interactive Tableau dashboard for sales trend analysis and forecasting, enabling data-driven decision making for inventory optimization.",
-    image: "https://images.pexels.com/photos/7567443/pexels-photo-7567443.jpeg?auto=compress&cs=tinysrgb&w=800",
-    tags: ["Tableau", "Excel", "SQL", "Data Analysis"],
-  },
-  {
-    title: "Customer Churn Prediction Model",
-    category: "Predictive Analytics",
-    description: "Implemented a classification model to predict customer attrition with 91% precision, utilizing feature engineering and ensemble learning techniques.",
-    image: "https://images.pexels.com/photos/6476808/pexels-photo-6476808.jpeg?auto=compress&cs=tinysrgb&w=800",
-    tags: ["Python", "XGBoost", "Feature Engineering"],
-  },
-  {
-    title: "Portfolio Web Application",
-    category: "Web Development",
-    description: "Designed and developed a responsive portfolio website using React and modern CSS frameworks, showcasing professional work and technical capabilities.",
-    image: "https://images.pexels.com/photos/8438923/pexels-photo-8438923.jpeg?auto=compress&cs=tinysrgb&w=800",
-    tags: ["React", "TypeScript", "Tailwind CSS"],
-  },
-];
+import { Rocket, Clock, Plus } from "lucide-react";
 
 const Projects = () => {
   return (
     <section id="projects" className="section">
       <div className="section-container">
         <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-4 animate-fade-in">
+            <Rocket size={18} />
+            <span className="text-sm font-medium">Portfolio Showcase</span>
+          </div>
           <h2 className="section-title">Featured Projects</h2>
           <p className="section-subtitle max-w-2xl mx-auto">
-            A selection of projects demonstrating practical application of Data Science and development skills
+            Practical applications of Data Science, AI, and Web Development expertise
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
-            <div key={index} className="project-card group">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-64 object-cover"
-              />
-              <div className="project-overlay p-6">
-                <span className="text-primary text-sm font-medium mb-2">{project.category}</span>
-                <h3 className="text-xl font-bold text-foreground mb-3">{project.title}</h3>
-                <p className="text-muted-foreground text-sm mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag, i) => (
-                    <span key={i} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex gap-3">
-                  <button className="btn-primary text-sm py-2 px-4">
-                    <ExternalLink size={16} className="mr-1" />
-                    View
-                  </button>
-                  <button className="btn-secondary text-sm py-2 px-4">
-                    <Github size={16} className="mr-1" />
-                    Code
-                  </button>
-                </div>
-              </div>
-              {/* Visible info on non-hover */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background to-transparent group-hover:opacity-0 transition-opacity">
-                <span className="text-primary text-sm">{project.category}</span>
-                <h3 className="text-lg font-bold text-foreground">{project.title}</h3>
-              </div>
+        {/* Coming Soon Placeholder */}
+        <div className="flex flex-col items-center justify-center py-20">
+          <div className="relative mb-8">
+            {/* Animated rings */}
+            <div className="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping" style={{ animationDuration: '3s' }} />
+            <div className="absolute inset-2 rounded-full border-2 border-primary/30 animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} />
+            <div className="absolute inset-4 rounded-full border-2 border-primary/40 animate-ping" style={{ animationDuration: '2s', animationDelay: '1s' }} />
+            
+            {/* Center icon */}
+            <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/30 animate-float">
+              <Clock size={48} className="text-primary" />
             </div>
-          ))}
+          </div>
+
+          <h3 className="text-2xl font-bold text-foreground mb-3 animate-fade-in">
+            Projects Coming Soon
+          </h3>
+          <p className="text-muted-foreground text-center max-w-md mb-8 animate-fade-in" style={{ animationDelay: '200ms' }}>
+            Exciting projects in Data Science, Machine Learning, and Web Development are currently in development. Check back soon!
+          </p>
+
+          {/* Future Projects Preview */}
+          <div className="grid md:grid-cols-3 gap-6 w-full max-w-4xl">
+            {[
+              { title: "ML Project", desc: "Machine Learning" },
+              { title: "Data Analytics", desc: "Business Intelligence" },
+              { title: "Web App", desc: "Full Stack Development" },
+            ].map((item, index) => (
+              <div 
+                key={index}
+                className="group relative p-6 rounded-xl border border-dashed border-border/50 bg-muted/20 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 animate-scale-in-3d"
+                style={{ animationDelay: `${(index + 1) * 150}ms` }}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Plus size={24} className="text-primary" />
+                  </div>
+                  <h4 className="font-semibold text-foreground mb-1">{item.title}</h4>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

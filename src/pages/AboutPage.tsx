@@ -3,34 +3,33 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, MapPin, GraduationCap, Briefcase, Heart, Target, Lightbulb, Users, Code, Brain } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import profileMohit from "@/assets/profile-mohit.jpg";
 
 const AboutPage = () => {
-  const profileImage = "https://images.pexels.com/photos/18360995/pexels-photo-18360995.jpeg?auto=compress&cs=tinysrgb&w=800";
-
   const stats = [
-    { value: "10+", label: "Projects", icon: Code },
-    { value: "6+", label: "Certifications", icon: GraduationCap },
+    { value: "7+", label: "Certifications", icon: GraduationCap },
     { value: "2+", label: "Years Learning", icon: Brain },
+    { value: "5+", label: "Technologies", icon: Code },
     { value: "100%", label: "Dedication", icon: Heart },
   ];
 
   const timeline = [
     {
-      year: "2024",
-      title: "Advanced Data Science",
-      description: "Pursuing BS in Data Science from IIT Madras, focusing on advanced ML algorithms and AI applications.",
+      year: "2024-Present",
+      title: "BS in Data Science - IIT Madras",
+      description: "Pursuing advanced data science education focusing on Machine Learning algorithms, AI applications, and statistical modeling.",
       icon: GraduationCap,
     },
     {
       year: "2023-Present",
       title: "BCA in Computer Applications",
-      description: "Comprehensive computer science education covering programming fundamentals, databases, and software development.",
+      description: "Comprehensive computer science education covering programming fundamentals, databases, and software development methodologies.",
       icon: Briefcase,
     },
     {
-      year: "2023",
+      year: "2023-2025",
       title: "Professional Certifications",
-      description: "Earned multiple industry certifications from Google, IBM, and Stanford in Data Science and ML.",
+      description: "Earned multiple industry certifications from IIT Madras, IIT Roorkee, Coursera, and HP Foundation in AI, Data Science, and Business domains.",
       icon: Target,
     },
   ];
@@ -56,7 +55,7 @@ const AboutPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>About Me | Mohit Sinha - Data Scientist</title>
+        <title>About Me | Mohit Sinha - Data Scientist & AI Enthusiast</title>
         <meta name="description" content="Learn about Mohit Sinha's background, education, and professional journey in Data Science and AI." />
       </Helmet>
 
@@ -77,7 +76,7 @@ const AboutPage = () => {
                 About <span className="gradient-text glow-text">Me</span>
               </h1>
               <p className="text-xl text-muted-foreground mb-6 opacity-0 animate-slide-in-3d delay-200">
-                A passionate Data Scientist and AI enthusiast dedicated to transforming 
+                A passionate Data Science student and AI enthusiast dedicated to transforming 
                 complex data into actionable insights.
               </p>
               <div className="flex items-center gap-2 text-muted-foreground opacity-0 animate-fade-up delay-300">
@@ -91,7 +90,7 @@ const AboutPage = () => {
               <div className="relative">
                 <div className="w-72 h-72 rounded-3xl overflow-hidden border-2 border-primary/30 animate-glow-pulse">
                   <img
-                    src={profileImage}
+                    src={profileMohit}
                     alt="Mohit Sinha"
                     className="w-full h-full object-cover"
                   />

@@ -1,69 +1,73 @@
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import { Award, BookCheck, Trophy, GraduationCap, Star, Medal, ArrowLeft, ExternalLink, Calendar, Building } from "lucide-react";
+import { Award, ArrowLeft, Calendar, Building } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
+// Import certificate images
+import certDataconnect from "@/assets/certificates/cert-dataconnect-teachnook.png";
+import certChessMania from "@/assets/certificates/cert-chess-mania.png";
+import certIitmWebsite from "@/assets/certificates/cert-iitm-website.png";
+import certCoursera from "@/assets/certificates/cert-coursera-business.png";
+import certNextleap from "@/assets/certificates/cert-nextleap-pm.png";
+import certHpLife from "@/assets/certificates/cert-hp-life.png";
+
 const certifications = [
   {
-    icon: Award,
-    title: "Google Data Analytics Professional Certificate",
-    issuer: "Google",
-    date: "2024",
-    description: "Comprehensive program covering data analytics fundamentals, SQL, R programming, and Tableau for data visualization.",
-    skills: ["Data Analysis", "SQL", "R", "Tableau", "Data Visualization"],
-    credentialId: "GDAC-2024",
-    hours: "200+",
+    title: "Scratch Hackathon - DataConnectDelhi May 2025",
+    issuer: "DataConnectDelhi | IIT Madras BS Program",
+    date: "May 2025",
+    image: certDataconnect,
+    description: "Certificate of Appreciation for enthusiastic participation in the hackathon held at Microsoft Office, Gurugram. Demonstrated creativity, collaboration, and commitment to learning.",
+    category: "Hackathon",
   },
   {
-    icon: Trophy,
-    title: "IBM Data Science Professional Certificate",
-    issuer: "IBM",
-    date: "2024",
-    description: "End-to-end data science methodology including Python, machine learning, and data science tools.",
-    skills: ["Python", "Machine Learning", "Data Science", "Jupyter", "SQL"],
-    credentialId: "IBM-DS-2024",
-    hours: "180+",
+    title: "Artificial Intelligence Course Completion",
+    issuer: "Teachnook | Cognizance'24 IIT Roorkee",
+    date: "April 2025",
+    image: certDataconnect,
+    description: "Successfully completed comprehensive AI course in collaboration with Cognizance'24 IIT Roorkee. Demonstrated keen enthusiasm and strong understanding of AI concepts.",
+    category: "AI & Technology",
   },
   {
-    icon: GraduationCap,
-    title: "Machine Learning Specialization",
-    issuer: "Stanford Online / Coursera",
-    date: "2024",
-    description: "Deep dive into supervised learning, unsupervised learning, recommender systems, and reinforcement learning.",
-    skills: ["Machine Learning", "Neural Networks", "Deep Learning", "TensorFlow"],
-    credentialId: "ML-SPEC-2024",
-    hours: "120+",
+    title: "Chess Mania - IITM Paradox Margazhi'25",
+    issuer: "IITM B.S. Degree Program",
+    date: "Margazhi 2025",
+    image: certChessMania,
+    description: "Certificate of Appreciation for active participation in Chess Mania competition at IITM Paradox during Margazhi'25 cultural festival.",
+    category: "Competition",
   },
   {
-    icon: BookCheck,
-    title: "Python for Data Science and AI",
-    issuer: "IBM",
-    date: "2023",
-    description: "Foundational Python programming for data science applications including pandas, numpy, and scikit-learn.",
-    skills: ["Python", "Pandas", "NumPy", "Data Analysis"],
-    credentialId: "IBM-PY-2023",
-    hours: "40+",
+    title: "IITM BS Website Redesigning Competition",
+    issuer: "IIT Madras B.S. Degree Program",
+    date: "January 2025",
+    image: certIitmWebsite,
+    description: "Participation certificate for contributing with creativity and innovation in the official website redesigning competition.",
+    category: "Web Development",
   },
   {
-    icon: Star,
-    title: "SQL for Data Science",
-    issuer: "University of California, Davis",
-    date: "2023",
-    description: "Advanced SQL techniques for data manipulation, analysis, and database management.",
-    skills: ["SQL", "Database Design", "Data Analysis", "Query Optimization"],
-    credentialId: "UCD-SQL-2023",
-    hours: "30+",
+    title: "Business Analysis & Process Management",
+    issuer: "Coursera Project Network",
+    date: "February 2025",
+    image: certCoursera,
+    description: "Successfully completed online non-credit project authorized by Coursera Project Network, focusing on business analysis methodologies and process optimization.",
+    category: "Business",
   },
   {
-    icon: Medal,
-    title: "Data Visualization with Tableau",
-    issuer: "Coursera",
-    date: "2024",
-    description: "Creating impactful data stories through advanced Tableau visualizations and dashboard design.",
-    skills: ["Tableau", "Data Visualization", "Dashboard Design", "Data Storytelling"],
-    credentialId: "TAB-VIZ-2024",
-    hours: "35+",
+    title: "Product Management Workshop",
+    issuer: "Nextleap | Cognizance 2025, IIT Roorkee",
+    date: "2025",
+    image: certNextleap,
+    description: "Certificate of Participation in comprehensive Product Management workshop conducted by Nextleap in association with Cognizance 2025, the Annual Technical Fest of IIT Roorkee.",
+    category: "Product Management",
+  },
+  {
+    title: "Selling Online - HP LIFE",
+    issuer: "HP Foundation",
+    date: "August 2023",
+    image: certHpLife,
+    description: "Successfully completed HP LIFE online course covering online sales optimization, marketing strategies, product listings, and customer service excellence.",
+    category: "Digital Marketing",
   },
 ];
 
@@ -71,8 +75,11 @@ const CertificationsPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Certifications | Mohit Sinha - Data Scientist</title>
-        <meta name="description" content="Professional certifications and credentials in Data Science, Machine Learning, and Analytics by Mohit Sinha." />
+        <title>Certifications | Mohit Sinha - AI & Data Science Professional</title>
+        <meta
+          name="description"
+          content="View professional certifications and credentials of Mohit Sinha in AI, Data Science, Web Development, and Business domains."
+        />
       </Helmet>
 
       <Navigation />
@@ -86,22 +93,25 @@ const CertificationsPage = () => {
           </Link>
           
           <div className="perspective-1000">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6 animate-bounce-in">
+              <Award size={20} />
+              <span className="font-medium">Verified Credentials</span>
+            </div>
             <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 opacity-0 animate-tilt-in font-heading">
               Professional <span className="gradient-text glow-text">Certifications</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl opacity-0 animate-slide-in-3d delay-200">
-              Industry-recognized credentials validating expertise in Data Science, 
-              Analytics, Machine Learning, and AI technologies.
+              Industry-recognized credentials demonstrating expertise across AI, Data Science, Technology, and Business domains.
             </p>
           </div>
 
           {/* Stats badges */}
           <div className="flex gap-4 mt-8 opacity-0 animate-fade-up delay-400">
             <div className="px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-primary text-sm font-medium">
-              6+ Certifications
+              7+ Certifications
             </div>
             <div className="px-4 py-2 rounded-full bg-secondary border border-border text-muted-foreground text-sm font-medium">
-              600+ Learning Hours
+              Multiple Institutions
             </div>
           </div>
         </div>
@@ -110,58 +120,62 @@ const CertificationsPage = () => {
       {/* Certifications Grid */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-8">
             {certifications.map((cert, index) => (
               <div
                 key={index}
-                className="card-3d elevated-card opacity-0 animate-flip-in overflow-hidden"
+                className="card-3d relative overflow-hidden rounded-2xl border border-border bg-card opacity-0 animate-scale-in-3d hover:border-primary/50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10"
                 style={{ animationDelay: `${200 + index * 100}ms` }}
               >
-                <div className="flex items-start gap-4">
-                  <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0 animate-glow-pulse">
-                    <cert.icon size={32} />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Building size={14} className="text-muted-foreground" />
-                      <span className="text-muted-foreground text-sm">{cert.issuer}</span>
-                    </div>
-                    <h3 className="text-xl font-bold text-foreground mb-2 font-heading">{cert.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">{cert.description}</p>
-                    
-                    {/* Skills */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {cert.skills.map((skill, i) => (
-                        <span key={i} className="px-2 py-1 bg-secondary text-muted-foreground text-xs rounded-md">
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Meta info */}
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground border-t border-border pt-4">
-                      <div className="flex items-center gap-1">
-                        <Calendar size={12} />
-                        {cert.date}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Award size={12} />
-                        {cert.credentialId}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        ⏱️ {cert.hours} hours
-                      </div>
-                    </div>
+                {/* Certificate Image */}
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={cert.image}
+                    alt={cert.title}
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
+                  
+                  {/* Category Badge */}
+                  <div className="absolute top-4 left-4 px-3 py-1.5 bg-primary/90 text-primary-foreground text-xs font-semibold rounded-full backdrop-blur-sm">
+                    {cert.category}
                   </div>
                 </div>
 
-                {/* Verify button */}
-                <button className="mt-4 w-full btn-secondary text-sm py-2">
-                  <ExternalLink size={14} className="mr-2" />
-                  Verify Credential
-                </button>
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-foreground mb-3 font-heading group-hover:text-primary transition-colors line-clamp-2">
+                    {cert.title}
+                  </h3>
+                  
+                  <div className="flex flex-wrap gap-4 mb-4 text-sm">
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Building size={16} className="text-primary" />
+                      <span>{cert.issuer}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Calendar size={16} className="text-primary" />
+                      <span>{cert.date}</span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {cert.description}
+                  </p>
+                </div>
+
+                {/* Decorative gradient */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
               </div>
             ))}
+          </div>
+
+          {/* Coming Soon */}
+          <div className="mt-16 text-center">
+            <div className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-muted/30 border border-dashed border-border animate-float">
+              <Award size={24} className="text-primary" />
+              <span className="text-muted-foreground font-medium">More certifications will be added soon...</span>
+            </div>
           </div>
         </div>
       </section>
@@ -171,7 +185,7 @@ const CertificationsPage = () => {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-foreground mb-8 opacity-0 animate-fade-up font-heading">Learning Platforms</h2>
           <div className="flex flex-wrap justify-center gap-6">
-            {["Google", "IBM", "Coursera", "Stanford Online", "UC Davis"].map((platform, idx) => (
+            {["IIT Madras", "IIT Roorkee", "Coursera", "HP Foundation", "Teachnook", "Nextleap"].map((platform, idx) => (
               <div 
                 key={idx} 
                 className="card-3d px-8 py-4 rounded-xl bg-background border border-border text-muted-foreground font-medium opacity-0 animate-bounce-in"
