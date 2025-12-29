@@ -1,12 +1,11 @@
-import { Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Linkedin, href: "https://linkedin.com/in/mohitsinha", label: "LinkedIn" },
-    { icon: Github, href: "https://github.com/mohitsinha", label: "GitHub" },
-    { icon: Twitter, href: "https://twitter.com/mohitsinha", label: "Twitter" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/mohit-sinha-5b5472255", label: "LinkedIn" },
+    { icon: Github, href: "https://github.com/mohitsinha2005", label: "GitHub" },
     { icon: Mail, href: "mailto:sinhamohit9870@gmail.com", label: "Email" },
   ];
 
@@ -14,19 +13,19 @@ const Footer = () => {
     {
       title: "Quick Links",
       links: [
-        { label: "Home", href: "#home" },
-        { label: "Skills", href: "#skills" },
-        { label: "Projects", href: "#projects" },
-        { label: "Certifications", href: "#certifications" },
+        { label: "Home", href: "/" },
+        { label: "Skills", href: "/skills" },
+        { label: "Projects", href: "/projects" },
+        { label: "Certifications", href: "/certifications" },
       ],
     },
     {
       title: "Connect",
       links: [
-        { label: "About", href: "#about" },
-        { label: "Contact", href: "#contact" },
-        { label: "Resume", href: "#" },
-        { label: "LinkedIn", href: "https://linkedin.com/in/mohitsinha" },
+        { label: "About", href: "/about" },
+        { label: "Contact", href: "/contact" },
+        { label: "Resume", href: "/resume/Mohit_Sinha_Resume.pdf" },
+        { label: "LinkedIn", href: "https://www.linkedin.com/in/mohit-sinha-5b5472255" },
       ],
     },
   ];

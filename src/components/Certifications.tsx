@@ -1,16 +1,15 @@
-import { Award, ExternalLink } from "lucide-react";
+import { Award } from "lucide-react";
 
 // Import certificate images
-import certDataconnect from "@/assets/certificates/cert-dataconnect-teachnook.png";
-import certChessMania from "@/assets/certificates/cert-chess-mania.png";
-import certIitmWebsite from "@/assets/certificates/cert-iitm-website.png";
+import certDataconnect from "@/assets/certificates/cert-dataconnect.png";
+import certAiTeachnook from "@/assets/certificates/cert-ai-teachnook.png";
+import certCybersecurity from "@/assets/certificates/cert-cybersecurity.png";
+import certTableau from "@/assets/certificates/cert-tableau-tnx.png";
 import certCoursera from "@/assets/certificates/cert-coursera-business.png";
-import certNextleap from "@/assets/certificates/cert-nextleap-pm.png";
-import certHpLife from "@/assets/certificates/cert-hp-life.png";
 
 const certifications = [
   {
-    title: "Scratch Hackathon - DataConnectDelhi",
+    title: "Scratch Hackathon - DataConnectDelhi May 2025",
     issuer: "DataConnectDelhi | IIT Madras BS Program",
     date: "May 2025",
     image: certDataconnect,
@@ -20,22 +19,22 @@ const certifications = [
     title: "Artificial Intelligence Course",
     issuer: "Teachnook | Cognizance'24 IIT Roorkee",
     date: "April 2025",
-    image: certDataconnect,
+    image: certAiTeachnook,
     description: "Successfully completed AI course with Cognizance'24 IIT Roorkee collaboration.",
   },
   {
-    title: "Chess Mania - IITM Paradox",
-    issuer: "IITM B.S. Degree Program",
-    date: "Margazhi'25",
-    image: certChessMania,
-    description: "Certificate of Appreciation for active participation in Chess Mania at IITM Paradox.",
+    title: "CyberSecurity Workshop",
+    issuer: "Cyndia | Cognizance 2025, IIT Roorkee",
+    date: "March 2025",
+    image: certCybersecurity,
+    description: "Participated in CyberSecurity workshop conducted by Cyndia at IIT Roorkee's Annual Technical Fest.",
   },
   {
-    title: "IITM BS Website Redesigning Competition",
-    issuer: "IIT Madras B.S. Degree Program",
-    date: "January 2025",
-    image: certIitmWebsite,
-    description: "Participation certificate for contributing with creativity and innovation in website redesigning.",
+    title: "Tableau Course Completion",
+    issuer: "TNX | Cognizance'24 IIT Roorkee",
+    date: "October 2024",
+    image: certTableau,
+    description: "Successfully completed Tableau Course with TNX, demonstrating keen enthusiasm for data visualization.",
   },
   {
     title: "Business Analysis & Process Management",
@@ -43,20 +42,6 @@ const certifications = [
     date: "February 2025",
     image: certCoursera,
     description: "Successfully completed online project authorized by Coursera Project Network.",
-  },
-  {
-    title: "Product Management Workshop",
-    issuer: "Nextleap | Cognizance 2025, IIT Roorkee",
-    date: "2025",
-    image: certNextleap,
-    description: "Certificate of Participation in Product Management workshop conducted by Nextleap.",
-  },
-  {
-    title: "Selling Online - HP LIFE",
-    issuer: "HP Foundation",
-    date: "August 2023",
-    image: certHpLife,
-    description: "Successfully completed HP LIFE online course on optimizing online sales and marketing strategies.",
   },
 ];
 
