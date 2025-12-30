@@ -11,12 +11,14 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import Chatbot from "./components/Chatbot";
+import Background3D from "./components/Background3D";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <Background3D />
       <Toaster />
       <Sonner />
       <BrowserRouter>

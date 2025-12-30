@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Mail, MapPin, Clock, Linkedin, Github, Twitter, Send, MessageSquare, Calendar, Sparkles } from "lucide-react";
+import { ArrowLeft, Mail, MapPin, Clock, Linkedin, Github, Send, MessageSquare, Calendar, Sparkles } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -19,7 +19,7 @@ const ContactPage = () => {
       title: "LinkedIn",
       value: "Connect Professionally",
       description: "Let's grow our network",
-      action: "#",
+      action: "https://www.linkedin.com/in/mohit-sinha-5b5472255",
       primary: false,
     },
     {
@@ -27,7 +27,7 @@ const ContactPage = () => {
       title: "GitHub",
       value: "View My Code",
       description: "Explore my repositories",
-      action: "#",
+      action: "https://github.com/mohitsinha2005",
       primary: false,
     },
   ];
@@ -185,9 +185,8 @@ const ContactPage = () => {
           <p className="text-muted-foreground mb-6">Connect on social platforms</p>
           <div className="flex justify-center gap-4">
             {[
-              { icon: Linkedin, label: "LinkedIn", href: "#" },
-              { icon: Github, label: "GitHub", href: "#" },
-              { icon: Twitter, label: "Twitter", href: "#" },
+              { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/mohit-sinha-5b5472255" },
+              { icon: Github, label: "GitHub", href: "https://github.com/mohitsinha2005" },
               { icon: Mail, label: "Email", href: "mailto:sinhamohit9870@gmail.com" },
             ].map((social, idx) => (
               <a
