@@ -1,4 +1,5 @@
 import { Mail, ArrowRight, Download } from "lucide-react";
+import Hero3D from "./Hero3D";
 
 interface HeroProps {
   profileImage: string;
@@ -6,8 +7,9 @@ interface HeroProps {
 
 const Hero = ({ profileImage }: HeroProps) => {
   return (
-    <section id="home" className="min-h-screen flex items-center section pt-24">
-      <div className="section-container">
+    <section id="home" className="min-h-screen flex items-center section pt-24 relative overflow-hidden">
+      <Hero3D />
+      <div className="section-container relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <div className="order-2 md:order-1">
