@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, MapPin, GraduationCap, Briefcase, Heart, Target, Lightbulb, Users, Code, Brain } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import profileMohit from "@/assets/profile-mohit.jpg";
+import profileAbout from "@/assets/profile-about.webp";
 
 const AboutPage = () => {
   const stats = [
@@ -90,7 +90,7 @@ const AboutPage = () => {
               <div className="relative">
                 <div className="w-72 h-72 rounded-3xl overflow-hidden border-2 border-primary/30 animate-glow-pulse">
                   <img
-                    src={profileMohit}
+                    src={profileAbout}
                     alt="Mohit Sinha"
                     className="w-full h-full object-cover"
                   />
