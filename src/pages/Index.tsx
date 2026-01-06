@@ -5,6 +5,7 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Certifications from "@/components/Certifications";
 import About from "@/components/About";
+import LiveChat from "@/components/LiveChat";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import profileMohit from "@/assets/profile-mohit.jpg";
@@ -34,6 +35,7 @@ const Index = () => {
         <Projects />
         <Certifications />
         <About profileImage={aboutImage} />
+        <LiveChat />
         <CTA />
       </main>
       <Footer />
