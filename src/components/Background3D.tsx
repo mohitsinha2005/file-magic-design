@@ -4,8 +4,9 @@ import { Float, Sphere } from "@react-three/drei";
 import * as THREE from "three";
 
 const FloatingParticles = () => {
-  const count = 40;
+  const count = 20; // Reduced for performance
   const mesh = useRef<THREE.InstancedMesh>(null);
+  const dummy = useMemo(() => new THREE.Object3D(), []);
   
   const particles = useMemo(() => {
     const temp = [];
@@ -15,7 +16,7 @@ const FloatingParticles = () => {
         (Math.random() - 0.5) * 20,
         (Math.random() - 0.5) * 10 - 5,
       ];
-      const scale = Math.random() * 0.08 + 0.03;
+      const scale = Math.random() * 0.06 + 0.02;
       temp.push({ position, scale });
     }
     return temp;
@@ -23,17 +24,16 @@ const FloatingParticles = () => {
 
   useFrame((state) => {
     if (mesh.current) {
-      const time = state.clock.getElapsedTime();
+      const time = state.clock.getElapsedTime() * 0.3; // Slower for smoothness
       particles.forEach((particle, i) => {
-        const matrix = new THREE.Matrix4();
-        const position = new THREE.Vector3(
-          particle.position[0] + Math.sin(time * 0.3 + i) * 0.3,
-          particle.position[1] + Math.cos(time * 0.2 + i) * 0.3,
+        dummy.position.set(
+          particle.position[0] + Math.sin(time + i * 0.5) * 0.2,
+          particle.position[1] + Math.cos(time + i * 0.5) * 0.2,
           particle.position[2]
         );
-        matrix.setPosition(position);
-        matrix.scale(new THREE.Vector3(particle.scale, particle.scale, particle.scale));
-        mesh.current!.setMatrixAt(i, matrix);
+        dummy.scale.setScalar(particle.scale);
+        dummy.updateMatrix();
+        mesh.current!.setMatrixAt(i, dummy.matrix);
       });
       mesh.current.instanceMatrix.needsUpdate = true;
     }
@@ -41,8 +41,8 @@ const FloatingParticles = () => {
 
   return (
     <instancedMesh ref={mesh} args={[undefined, undefined, count]}>
-      <sphereGeometry args={[1, 8, 8]} />
-      <meshBasicMaterial color="#2563eb" transparent opacity={0.4} />
+      <sphereGeometry args={[1, 6, 6]} />
+      <meshBasicMaterial color="#2563eb" transparent opacity={0.3} />
     </instancedMesh>
   );
 };
@@ -50,22 +50,10 @@ const FloatingParticles = () => {
 const FloatingOrbs = () => {
   return (
     <>
-      <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.8}>
-        <Sphere args={[0.4, 16, 16]} position={[-4, 2, -3]}>
+      <Float speed={1} rotationIntensity={0.2} floatIntensity={0.5}>
+        <Sphere args={[0.4, 12, 12]} position={[-4, 2, -3]}>
           <meshStandardMaterial
             color="#3b82f6"
-            roughness={0.3}
-            metalness={0.7}
-            transparent
-            opacity={0.5}
-          />
-        </Sphere>
-      </Float>
-
-      <Float speed={2} rotationIntensity={0.2} floatIntensity={1}>
-        <Sphere args={[0.25, 16, 16]} position={[5, -2, -4]}>
-          <meshStandardMaterial
-            color="#60a5fa"
             roughness={0.4}
             metalness={0.6}
             transparent
@@ -74,14 +62,26 @@ const FloatingOrbs = () => {
         </Sphere>
       </Float>
 
-      <Float speed={1} rotationIntensity={0.4} floatIntensity={0.6}>
-        <Sphere args={[0.3, 16, 16]} position={[3, 3, -5]}>
+      <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.6}>
+        <Sphere args={[0.25, 12, 12]} position={[5, -2, -4]}>
+          <meshStandardMaterial
+            color="#60a5fa"
+            roughness={0.5}
+            metalness={0.5}
+            transparent
+            opacity={0.35}
+          />
+        </Sphere>
+      </Float>
+
+      <Float speed={0.8} rotationIntensity={0.25} floatIntensity={0.4}>
+        <Sphere args={[0.3, 12, 12]} position={[3, 3, -5]}>
           <meshStandardMaterial
             color="#2563eb"
-            roughness={0.2}
-            metalness={0.8}
+            roughness={0.3}
+            metalness={0.7}
             transparent
-            opacity={0.5}
+            opacity={0.4}
           />
         </Sphere>
       </Float>
@@ -93,7 +93,7 @@ const Scene = () => {
   return (
     <>
       <ambientLight intensity={0.3} />
-      <pointLight position={[10, 10, 10]} intensity={0.5} color="#2563eb" />
+      <pointLight position={[10, 10, 10]} intensity={0.4} color="#2563eb" />
       <FloatingOrbs />
       <FloatingParticles />
     </>
@@ -106,6 +106,8 @@ const Background3D = () => {
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         style={{ background: "transparent" }}
+        dpr={[1, 1.5]}
+        performance={{ min: 0.5 }}
       >
         <Scene />
       </Canvas>
