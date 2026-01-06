@@ -8,9 +8,10 @@ import About from "@/components/About";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import profileMohit from "@/assets/profile-mohit.jpg";
+import profileHero from "@/assets/profile-hero.jpg";
 
 const Index = () => {
-  const profileImage = profileMohit;
+  const profileImage = profileHero;
   const aboutImage = profileMohit;
 
   return (
