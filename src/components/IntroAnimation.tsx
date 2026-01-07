@@ -1,34 +1,36 @@
 import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float, Torus, Sphere, RoundedBox } from "@react-three/drei";
+import { Float, Torus, Sphere } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 import * as THREE from "three";
 
-// Cinematic rotating neon torus
-const NeonTorus = ({ onComplete }: { onComplete: () => void }) => {
+// Cinematic rotating neon torus (no React state updates per-frame)
+const NeonTorus = () => {
   const torusRef = useRef<THREE.Mesh>(null);
-  const [scale, setScale] = useState(0.01);
-  const [opacity, setOpacity] = useState(0);
+  const scaleRef = useRef(0.01);
+  const opacityRef = useRef(0);
 
   useFrame((state, delta) => {
-    if (torusRef.current) {
-      torusRef.current.rotation.x += delta * 0.3;
-      torusRef.current.rotation.y += delta * 0.5;
-      torusRef.current.rotation.z += delta * 0.2;
-    }
-    
-    // Animate scale in
-    if (scale < 1) {
-      setScale(prev => Math.min(prev + delta * 0.8, 1));
-    }
-    if (opacity < 1) {
-      setOpacity(prev => Math.min(prev + delta * 1.2, 1));
-    }
+    if (!torusRef.current) return;
+
+    torusRef.current.rotation.x += delta * 0.3;
+    torusRef.current.rotation.y += delta * 0.5;
+    torusRef.current.rotation.z += delta * 0.2;
+
+    // Animate scale + opacity in (mutate objects directly for performance)
+    scaleRef.current = Math.min(scaleRef.current + delta * 0.8, 1);
+    opacityRef.current = Math.min(opacityRef.current + delta * 1.2, 1);
+
+    torusRef.current.scale.setScalar(scaleRef.current);
+
+    const mat = torusRef.current.material as THREE.MeshStandardMaterial;
+    mat.opacity = opacityRef.current;
+    mat.needsUpdate = false;
   });
 
   return (
     <Float speed={2} rotationIntensity={0.3} floatIntensity={0.5}>
-      <Torus ref={torusRef} args={[1.5, 0.4, 24, 48]} scale={scale}>
+      <Torus ref={torusRef} args={[1.5, 0.4, 24, 48]} scale={0.01}>
         <meshStandardMaterial
           color="#00d4ff"
           emissive="#0066ff"
@@ -36,29 +38,29 @@ const NeonTorus = ({ onComplete }: { onComplete: () => void }) => {
           roughness={0.1}
           metalness={0.9}
           transparent
-          opacity={opacity}
+          opacity={0}
         />
       </Torus>
     </Float>
   );
 };
 
-// Glassmorphic sphere
+// Glassmorphic sphere (no React state updates per-frame)
 const GlassSphere = () => {
   const sphereRef = useRef<THREE.Mesh>(null);
-  const [scale, setScale] = useState(0.01);
+  const scaleRef = useRef(0.01);
 
   useFrame((state, delta) => {
-    if (sphereRef.current) {
-      sphereRef.current.rotation.y += delta * 0.2;
-    }
-    if (scale < 1) {
-      setScale(prev => Math.min(prev + delta * 0.6, 1));
-    }
+    if (!sphereRef.current) return;
+
+    sphereRef.current.rotation.y += delta * 0.2;
+
+    scaleRef.current = Math.min(scaleRef.current + delta * 0.6, 1);
+    sphereRef.current.scale.setScalar(scaleRef.current);
   });
 
   return (
-    <Sphere ref={sphereRef} args={[0.6, 32, 32]} position={[0, 0, 0]} scale={scale}>
+    <Sphere ref={sphereRef} args={[0.6, 32, 32]} position={[0, 0, 0]} scale={0.01}>
       <meshStandardMaterial
         color="#ffffff"
         emissive="#2563eb"
@@ -76,7 +78,7 @@ const GlassSphere = () => {
 const OrbitingParticles = () => {
   const groupRef = useRef<THREE.Group>(null);
   const count = 12;
-  
+
   const particles = Array.from({ length: count }, (_, i) => ({
     angle: (i / count) * Math.PI * 2,
     radius: 2.2,
@@ -98,11 +100,7 @@ const OrbitingParticles = () => {
         <Sphere
           key={i}
           args={[p.size, 8, 8]}
-          position={[
-            Math.cos(p.angle) * p.radius,
-            p.yOffset,
-            Math.sin(p.angle) * p.radius,
-          ]}
+          position={[Math.cos(p.angle) * p.radius, p.yOffset, Math.sin(p.angle) * p.radius]}
         >
           <meshBasicMaterial color="#00d4ff" transparent opacity={0.8} />
         </Sphere>
@@ -129,22 +127,16 @@ const CameraAnimation = () => {
 };
 
 // 3D Scene
-const IntroScene = ({ onComplete }: { onComplete: () => void }) => {
+const IntroScene = () => {
   return (
     <>
       <ambientLight intensity={0.2} />
       <pointLight position={[10, 10, 10]} intensity={1.5} color="#00d4ff" />
       <pointLight position={[-10, -10, 5]} intensity={0.8} color="#8b5cf6" />
-      <spotLight
-        position={[0, 10, 0]}
-        intensity={2}
-        color="#ffffff"
-        angle={0.4}
-        penumbra={0.5}
-      />
-      
+      <spotLight position={[0, 10, 0]} intensity={2} color="#ffffff" angle={0.4} penumbra={0.5} />
+
       <CameraAnimation />
-      <NeonTorus onComplete={onComplete} />
+      <NeonTorus />
       <GlassSphere />
       <OrbitingParticles />
     </>
@@ -160,11 +152,8 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Show text after 1 second
     const textTimer = setTimeout(() => setShowText(true), 800);
-    // Start fade out after 3 seconds
     const fadeTimer = setTimeout(() => setFadeOut(true), 3000);
-    // Complete after 3.8 seconds
     const completeTimer = setTimeout(() => onComplete(), 3800);
 
     return () => {
@@ -186,10 +175,17 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
           {/* 3D Canvas */}
           <Canvas
             camera={{ position: [0, 0, 12], fov: 50 }}
-            dpr={[1, 2]}
+            dpr={[1, 1.5]}
             style={{ background: "transparent" }}
+            gl={{
+              antialias: false,
+              alpha: true,
+              powerPreference: "high-performance",
+              stencil: false,
+              depth: true,
+            }}
           >
-            <IntroScene onComplete={onComplete} />
+            <IntroScene />
           </Canvas>
 
           {/* Animated text overlay */}
@@ -235,11 +231,7 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
                     key={i}
                     className="w-2 h-2 rounded-full bg-primary"
                     animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-                    transition={{
-                      duration: 1,
-                      repeat: Infinity,
-                      delay: i * 0.2,
-                    }}
+                    transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
                   />
                 ))}
               </div>
