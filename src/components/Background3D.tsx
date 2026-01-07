@@ -2,12 +2,13 @@ import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Sphere } from "@react-three/drei";
 import * as THREE from "three";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const FloatingParticles = () => {
   const count = 20; // Reduced for performance
   const mesh = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
-  
+
   const particles = useMemo(() => {
     const temp = [];
     for (let i = 0; i < count; i++) {
@@ -101,13 +102,28 @@ const Scene = () => {
 };
 
 const Background3D = () => {
+  const isMobile = useIsMobile();
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+
+  // Keep mobile + reduced-motion experiences smooth by avoiding an always-on WebGL canvas.
+  if (isMobile || prefersReducedMotion) return null;
+
   return (
     <div className="fixed inset-0 pointer-events-none -z-10">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         style={{ background: "transparent" }}
-        dpr={[1, 1.5]}
+        dpr={[1, 1.25]}
         performance={{ min: 0.5 }}
+        gl={{
+          antialias: false,
+          alpha: true,
+          powerPreference: "high-performance",
+          stencil: false,
+          depth: false,
+        }}
       >
         <Scene />
       </Canvas>
