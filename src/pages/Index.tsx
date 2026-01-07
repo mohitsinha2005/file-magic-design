@@ -1,4 +1,6 @@
+import { useState, useCallback } from "react";
 import { Helmet } from "react-helmet";
+import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import Skills from "@/components/Skills";
@@ -9,12 +11,18 @@ import Resources from "@/components/Resources";
 import LiveChat from "@/components/LiveChat";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
+import IntroAnimation from "@/components/IntroAnimation";
 import profileMohit from "@/assets/profile-mohit.jpg";
 import profileHero from "@/assets/profile-hero.jpg";
 
 const Index = () => {
+  const [introComplete, setIntroComplete] = useState(false);
   const profileImage = profileHero;
   const aboutImage = profileMohit;
+
+  const handleIntroComplete = useCallback(() => {
+    setIntroComplete(true);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -29,18 +37,30 @@ const Index = () => {
         <link rel="canonical" href="https://mohitsinha.dev" />
       </Helmet>
 
-      <Navigation />
-      <main>
-        <Hero profileImage={profileImage} />
-        <Skills />
-        <Projects />
-        <Certifications />
-        <About profileImage={aboutImage} />
-        <Resources />
-        <LiveChat />
-        <CTA />
-      </main>
-      <Footer />
+      {/* Cinematic Intro Animation */}
+      <AnimatePresence>
+        {!introComplete && <IntroAnimation onComplete={handleIntroComplete} />}
+      </AnimatePresence>
+
+      {/* Main Content - fades in after intro */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: introComplete ? 1 : 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <Navigation />
+        <main>
+          <Hero profileImage={profileImage} isVisible={introComplete} />
+          <Skills />
+          <Projects />
+          <Certifications />
+          <About profileImage={aboutImage} />
+          <Resources />
+          <LiveChat />
+          <CTA />
+        </main>
+        <Footer />
+      </motion.div>
     </div>
   );
 };
