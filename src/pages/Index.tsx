@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
@@ -20,9 +20,16 @@ const Index = () => {
   const profileImage = profileHero;
   const aboutImage = profileMohit;
 
+  // Force scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleIntroComplete = useCallback(() => {
     // Ensure scroll to top when main content appears
-    window.scrollTo({ top: 0, behavior: "instant" });
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     setIntroComplete(true);
   }, []);
 
