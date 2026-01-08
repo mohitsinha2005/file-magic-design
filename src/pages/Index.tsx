@@ -21,6 +21,8 @@ const Index = () => {
   const aboutImage = profileMohit;
 
   const handleIntroComplete = useCallback(() => {
+    // Ensure scroll to top when main content appears
+    window.scrollTo({ top: 0, behavior: "instant" });
     setIntroComplete(true);
   }, []);
 
