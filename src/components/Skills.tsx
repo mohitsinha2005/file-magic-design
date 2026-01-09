@@ -1,4 +1,5 @@
 import { Brain, Database, BarChart3, Code2, Globe, GitBranch } from "lucide-react";
+import ScrollReveal from "./ScrollReveal";
 
 const skills = [
   {
@@ -43,36 +44,40 @@ const Skills = () => {
   return (
     <section id="skills" className="section bg-card">
       <div className="section-container">
-        <div className="text-center mb-12">
-          <h2 className="section-title">Technical Proficiencies</h2>
-          <p className="section-subtitle max-w-2xl mx-auto">
-            A comprehensive skill set spanning Data Science, Artificial Intelligence, and Modern Web Technologies
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-12">
+            <h2 className="section-title">Technical Proficiencies</h2>
+            <p className="section-subtitle max-w-2xl mx-auto">
+              A comprehensive skill set spanning Data Science, Artificial Intelligence, and Modern Web Technologies
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skills.map((skill, index) => (
-            <div
+            <ScrollReveal
               key={index}
-              className="elevated-card"
-              style={{ animationDelay: `${index * 100}ms` }}
+              delay={index * 0.1}
+              direction={index % 2 === 0 ? "left" : "right"}
             >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary flex-shrink-0 hover:bg-primary/20 transition-colors">
-                  <skill.icon size={24} />
+              <div className="elevated-card h-full">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary flex-shrink-0 hover:bg-primary/20 transition-colors">
+                    <skill.icon size={24} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-foreground mb-2">{skill.name}</h3>
+                    <p className="text-muted-foreground text-sm">{skill.description}</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">{skill.name}</h3>
-                  <p className="text-muted-foreground text-sm">{skill.description}</p>
+                <div className="skill-meter">
+                  <div
+                    className="skill-progress"
+                    style={{ width: `${skill.progress}%` }}
+                  />
                 </div>
               </div>
-              <div className="skill-meter">
-                <div
-                  className="skill-progress"
-                  style={{ width: `${skill.progress}%` }}
-                />
-              </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

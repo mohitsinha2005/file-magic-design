@@ -1,3 +1,5 @@
+import ScrollReveal from "./ScrollReveal";
+
 interface AboutProps {
   profileImage: string;
 }
@@ -29,7 +31,7 @@ const About = ({ profileImage }: AboutProps) => {
       <div className="section-container">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Content */}
-          <div>
+          <ScrollReveal direction="left">
             <div className="elevated-card">
               <div className="mb-6">
                 <h2 className="section-title mb-2">Professional Profile</h2>
@@ -49,28 +51,32 @@ const About = ({ profileImage }: AboutProps) => {
                 Connect With Me
               </a>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Visual with Stats */}
-          <div className="flex flex-col items-center gap-8">
-            <div className="hero-image-frame w-64 h-64 rounded-2xl overflow-hidden">
-              <img
-                src={profileImage}
-                alt="Mohit Sinha"
-                className="w-full h-full object-cover"
-              />
-            </div>
+          <ScrollReveal direction="right" delay={0.2}>
+            <div className="flex flex-col items-center gap-8">
+              <div className="hero-image-frame w-64 h-64 rounded-2xl overflow-hidden">
+                <img
+                  src={profileImage}
+                  alt="Mohit Sinha"
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
-            {/* Stats */}
-            <div className="flex gap-6">
-              {stats.map((stat, index) => (
-                <div key={index} className="stat-circle">
-                  <span className="stat-value">{stat.value}</span>
-                  <span className="stat-label">{stat.label}</span>
-                </div>
-              ))}
+              {/* Stats */}
+              <div className="flex gap-6">
+                {stats.map((stat, index) => (
+                  <ScrollReveal key={index} delay={0.4 + index * 0.1} direction="up">
+                    <div className="stat-circle">
+                      <span className="stat-value">{stat.value}</span>
+                      <span className="stat-label">{stat.label}</span>
+                    </div>
+                  </ScrollReveal>
+                ))}
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
