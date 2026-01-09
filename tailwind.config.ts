@@ -64,6 +64,8 @@ export default {
         "surface-elevated": "hsl(var(--surface-elevated))",
         neutral: "hsl(var(--neutral))",
         success: "hsl(var(--success))",
+        "glow-primary": "hsl(var(--glow-primary))",
+        "glow-accent": "hsl(var(--glow-accent))",
       },
       borderRadius: {
         lg: "var(--radius)",
