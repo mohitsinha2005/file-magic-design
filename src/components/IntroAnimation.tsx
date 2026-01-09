@@ -1,106 +1,112 @@
 import { useRef, useState, useEffect, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float, Torus, Sphere, Box, Octahedron } from "@react-three/drei";
+import { Float, Sphere, Points, PointMaterial } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 import * as THREE from "three";
 
-// Central AI Brain - Professional geometric shape
-const AIBrain = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const scaleRef = useRef(0.01);
-
-  useFrame((state, delta) => {
-    if (!meshRef.current) return;
-    meshRef.current.rotation.x += delta * 0.2;
-    meshRef.current.rotation.y += delta * 0.3;
-    scaleRef.current = Math.min(scaleRef.current + delta * 0.5, 1);
-    meshRef.current.scale.setScalar(scaleRef.current);
-  });
-
-  return (
-    <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.3}>
-      <Octahedron ref={meshRef} args={[0.8, 0]} position={[0, 0, 0]} scale={0.01}>
-        <meshStandardMaterial
-          color="#6366f1"
-          emissive="#4f46e5"
-          emissiveIntensity={0.7}
-          roughness={0.05}
-          metalness={0.95}
-          transparent
-          opacity={0.9}
-        />
-      </Octahedron>
-    </Float>
-  );
-};
-
-// Orbiting data rings
-const DataRings = () => {
-  const ring1Ref = useRef<THREE.Mesh>(null);
-  const ring2Ref = useRef<THREE.Mesh>(null);
-  const ring3Ref = useRef<THREE.Mesh>(null);
+// Galaxy spiral arms
+const GalaxySpiral = () => {
+  const points = useRef<THREE.Points>(null);
+  
+  const { positions, colors } = useMemo(() => {
+    const count = 3000;
+    const positions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
+    
+    for (let i = 0; i < count; i++) {
+      const i3 = i * 3;
+      const radius = Math.random() * 5 + 0.5;
+      const spinAngle = radius * 2.5;
+      const branchAngle = ((i % 4) / 4) * Math.PI * 2;
+      
+      const randomX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.5;
+      const randomY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.3;
+      const randomZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.5;
+      
+      positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
+      positions[i3 + 1] = randomY;
+      positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+      
+      // Color gradient from center (blue/cyan) to edge (purple/pink)
+      const mixedColor = new THREE.Color();
+      const innerColor = new THREE.Color('#22d3ee');
+      const outerColor = new THREE.Color('#a855f7');
+      mixedColor.lerpColors(innerColor, outerColor, radius / 5.5);
+      
+      colors[i3] = mixedColor.r;
+      colors[i3 + 1] = mixedColor.g;
+      colors[i3 + 2] = mixedColor.b;
+    }
+    
+    return { positions, colors };
+  }, []);
 
   useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    if (ring1Ref.current) {
-      ring1Ref.current.rotation.x = time * 0.3;
-      ring1Ref.current.rotation.z = time * 0.1;
-    }
-    if (ring2Ref.current) {
-      ring2Ref.current.rotation.y = time * 0.25;
-      ring2Ref.current.rotation.x = time * 0.15;
-    }
-    if (ring3Ref.current) {
-      ring3Ref.current.rotation.z = time * 0.2;
-      ring3Ref.current.rotation.y = time * 0.1;
+    if (points.current) {
+      points.current.rotation.y = state.clock.getElapsedTime() * 0.08;
+      points.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.05) * 0.1;
     }
   });
 
   return (
-    <>
-      <Torus ref={ring1Ref} args={[1.8, 0.03, 16, 64]} rotation={[Math.PI / 2, 0, 0]}>
-        <meshStandardMaterial color="#3b82f6" emissive="#2563eb" emissiveIntensity={0.8} metalness={0.9} roughness={0.1} />
-      </Torus>
-      <Torus ref={ring2Ref} args={[2.2, 0.025, 16, 64]} rotation={[Math.PI / 3, Math.PI / 4, 0]}>
-        <meshStandardMaterial color="#06b6d4" emissive="#0891b2" emissiveIntensity={0.6} metalness={0.9} roughness={0.1} />
-      </Torus>
-      <Torus ref={ring3Ref} args={[2.6, 0.02, 16, 64]} rotation={[Math.PI / 4, 0, Math.PI / 6]}>
-        <meshStandardMaterial color="#8b5cf6" emissive="#7c3aed" emissiveIntensity={0.5} metalness={0.9} roughness={0.1} />
-      </Torus>
-    </>
+    <points ref={points}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={positions.length / 3}
+          array={positions}
+          itemSize={3}
+        />
+        <bufferAttribute
+          attach="attributes-color"
+          count={colors.length / 3}
+          array={colors}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.03}
+        vertexColors
+        transparent
+        opacity={0.9}
+        sizeAttenuation
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+      />
+    </points>
   );
 };
 
-// Floating data nodes
-const DataNodes = () => {
+// Nebula clouds
+const NebulaClouds = () => {
   const groupRef = useRef<THREE.Group>(null);
   
-  const nodes = useMemo(() => [
-    { pos: [2, 1.5, 0] as [number, number, number], color: "#10b981", size: 0.15 },
-    { pos: [-2, -1, 0.5] as [number, number, number], color: "#f59e0b", size: 0.12 },
-    { pos: [1.5, -1.5, -1] as [number, number, number], color: "#ec4899", size: 0.1 },
-    { pos: [-1.5, 1.2, -0.5] as [number, number, number], color: "#06b6d4", size: 0.13 },
-    { pos: [0, 2, -1] as [number, number, number], color: "#3b82f6", size: 0.11 },
-    { pos: [-0.5, -2, 0] as [number, number, number], color: "#8b5cf6", size: 0.14 },
+  const clouds = useMemo(() => [
+    { pos: [2, 1, -2] as [number, number, number], scale: 1.2, color: '#6366f1' },
+    { pos: [-2.5, -0.5, -1.5] as [number, number, number], scale: 0.9, color: '#ec4899' },
+    { pos: [0, 1.5, -3] as [number, number, number], scale: 1.5, color: '#06b6d4' },
+    { pos: [-1.5, -1.5, -2.5] as [number, number, number], scale: 0.8, color: '#8b5cf6' },
   ], []);
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.1;
+      groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.03;
     }
   });
 
   return (
     <group ref={groupRef}>
-      {nodes.map((node, i) => (
-        <Float key={i} speed={1.5 + i * 0.2} rotationIntensity={0.2} floatIntensity={0.4}>
-          <Sphere args={[node.size, 16, 16]} position={node.pos}>
+      {clouds.map((cloud, i) => (
+        <Float key={i} speed={0.5 + i * 0.1} rotationIntensity={0.1} floatIntensity={0.2}>
+          <Sphere args={[cloud.scale, 24, 24]} position={cloud.pos}>
             <meshStandardMaterial
-              color={node.color}
-              emissive={node.color}
-              emissiveIntensity={0.6}
-              roughness={0.2}
-              metalness={0.8}
+              color={cloud.color}
+              emissive={cloud.color}
+              emissiveIntensity={0.3}
+              transparent
+              opacity={0.15}
+              roughness={1}
+              metalness={0}
             />
           </Sphere>
         </Float>
@@ -109,60 +115,98 @@ const DataNodes = () => {
   );
 };
 
-// Floating data cubes
-const DataCubes = () => {
-  const groupRef = useRef<THREE.Group>(null);
-  
-  const cubes = useMemo(() => 
-    Array.from({ length: 12 }, (_, i) => ({
-      pos: [
-        (Math.random() - 0.5) * 6,
-        (Math.random() - 0.5) * 5,
-        (Math.random() - 0.5) * 4 - 2
-      ] as [number, number, number],
-      size: 0.06 + Math.random() * 0.04,
-      speed: 1 + Math.random() * 0.5,
-    })), []);
+// Central star/sun
+const CentralStar = () => {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const glowRef = useRef<THREE.Mesh>(null);
+  const scaleRef = useRef(0.01);
 
-  useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.05;
-    }
+  useFrame((state, delta) => {
+    if (!meshRef.current || !glowRef.current) return;
+    
+    meshRef.current.rotation.y += delta * 0.5;
+    meshRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.3) * 0.2;
+    
+    // Scale animation
+    scaleRef.current = Math.min(scaleRef.current + delta * 0.4, 1);
+    meshRef.current.scale.setScalar(scaleRef.current);
+    glowRef.current.scale.setScalar(scaleRef.current * 2);
+    
+    // Pulse glow
+    const pulse = Math.sin(state.clock.getElapsedTime() * 2) * 0.1 + 1;
+    glowRef.current.scale.multiplyScalar(pulse);
   });
 
   return (
-    <group ref={groupRef}>
-      {cubes.map((cube, i) => (
-        <Float key={i} speed={cube.speed} rotationIntensity={0.5} floatIntensity={0.3}>
-          <Box args={[cube.size, cube.size, cube.size]} position={cube.pos}>
-            <meshStandardMaterial
-              color={i % 2 === 0 ? "#3b82f6" : "#8b5cf6"}
-              emissive={i % 2 === 0 ? "#2563eb" : "#7c3aed"}
-              emissiveIntensity={0.5}
-              transparent
-              opacity={0.8}
-              metalness={0.8}
-              roughness={0.2}
-            />
-          </Box>
-        </Float>
-      ))}
+    <group>
+      <Sphere ref={glowRef} args={[0.6, 32, 32]} scale={0.01}>
+        <meshBasicMaterial color="#3b82f6" transparent opacity={0.15} />
+      </Sphere>
+      <Sphere ref={meshRef} args={[0.5, 32, 32]} scale={0.01}>
+        <meshStandardMaterial
+          color="#ffffff"
+          emissive="#60a5fa"
+          emissiveIntensity={1.5}
+          roughness={0}
+          metalness={1}
+        />
+      </Sphere>
     </group>
   );
 };
 
-// Particle field
-const ParticleField = () => {
-  const groupRef = useRef<THREE.Group>(null);
-  const count = 20;
+// Orbiting rings
+const OrbitRings = () => {
+  const ring1 = useRef<THREE.Mesh>(null);
+  const ring2 = useRef<THREE.Mesh>(null);
+  const ring3 = useRef<THREE.Mesh>(null);
 
-  const particles = useMemo(() => 
-    Array.from({ length: count }, (_, i) => ({
-      angle: (i / count) * Math.PI * 2,
-      radius: 3 + Math.random() * 0.5,
-      yOffset: (Math.random() - 0.5) * 2,
-      size: 0.04 + Math.random() * 0.03,
-    })), []);
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    if (ring1.current) {
+      ring1.current.rotation.x = t * 0.3;
+      ring1.current.rotation.z = t * 0.1;
+    }
+    if (ring2.current) {
+      ring2.current.rotation.y = t * 0.25;
+      ring2.current.rotation.x = t * 0.15;
+    }
+    if (ring3.current) {
+      ring3.current.rotation.z = t * 0.2;
+      ring3.current.rotation.y = t * 0.12;
+    }
+  });
+
+  return (
+    <>
+      <mesh ref={ring1} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[2, 0.015, 16, 100]} />
+        <meshBasicMaterial color="#22d3ee" transparent opacity={0.6} />
+      </mesh>
+      <mesh ref={ring2} rotation={[Math.PI / 3, Math.PI / 4, 0]}>
+        <torusGeometry args={[2.5, 0.012, 16, 100]} />
+        <meshBasicMaterial color="#a855f7" transparent opacity={0.5} />
+      </mesh>
+      <mesh ref={ring3} rotation={[Math.PI / 4, 0, Math.PI / 6]}>
+        <torusGeometry args={[3, 0.01, 16, 100]} />
+        <meshBasicMaterial color="#3b82f6" transparent opacity={0.4} />
+      </mesh>
+    </>
+  );
+};
+
+// Floating data orbs
+const DataOrbs = () => {
+  const groupRef = useRef<THREE.Group>(null);
+  
+  const orbs = useMemo(() => [
+    { pos: [2.5, 1, 0] as [number, number, number], size: 0.12, color: '#10b981' },
+    { pos: [-2, -1, 0.5] as [number, number, number], size: 0.1, color: '#f59e0b' },
+    { pos: [1.5, -1.5, -0.5] as [number, number, number], size: 0.08, color: '#ec4899' },
+    { pos: [-1.5, 1.2, -0.3] as [number, number, number], size: 0.11, color: '#06b6d4' },
+    { pos: [0, 2.2, -0.5] as [number, number, number], size: 0.09, color: '#3b82f6' },
+    { pos: [-0.5, -2, 0] as [number, number, number], size: 0.13, color: '#8b5cf6' },
+  ], []);
 
   useFrame((state) => {
     if (groupRef.current) {
@@ -172,53 +216,93 @@ const ParticleField = () => {
 
   return (
     <group ref={groupRef}>
-      {particles.map((p, i) => (
-        <Sphere
-          key={i}
-          args={[p.size, 8, 8]}
-          position={[Math.cos(p.angle) * p.radius, p.yOffset, Math.sin(p.angle) * p.radius]}
-        >
-          <meshBasicMaterial color={i % 3 === 0 ? "#22d3ee" : i % 3 === 1 ? "#a78bfa" : "#34d399"} transparent opacity={0.7} />
-        </Sphere>
+      {orbs.map((orb, i) => (
+        <Float key={i} speed={1.5 + i * 0.2} rotationIntensity={0.2} floatIntensity={0.5}>
+          <Sphere args={[orb.size, 16, 16]} position={orb.pos}>
+            <meshStandardMaterial
+              color={orb.color}
+              emissive={orb.color}
+              emissiveIntensity={0.8}
+              roughness={0.1}
+              metalness={0.9}
+            />
+          </Sphere>
+        </Float>
       ))}
     </group>
+  );
+};
+
+// Background stars
+const BackgroundStars = () => {
+  const starsRef = useRef<THREE.Points>(null);
+  
+  const positions = useMemo(() => {
+    const pos = new Float32Array(500 * 3);
+    for (let i = 0; i < 500; i++) {
+      const i3 = i * 3;
+      pos[i3] = (Math.random() - 0.5) * 30;
+      pos[i3 + 1] = (Math.random() - 0.5) * 30;
+      pos[i3 + 2] = (Math.random() - 0.5) * 30 - 10;
+    }
+    return pos;
+  }, []);
+
+  useFrame((state) => {
+    if (starsRef.current) {
+      starsRef.current.rotation.y = state.clock.getElapsedTime() * 0.01;
+    }
+  });
+
+  return (
+    <points ref={starsRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={positions.length / 3}
+          array={positions}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial size={0.02} color="#ffffff" transparent opacity={0.8} sizeAttenuation />
+    </points>
   );
 };
 
 // Camera animation with cinematic zoom
 const CameraAnimation = () => {
   const { camera } = useThree();
-  const initialZ = 12;
-  const targetZ = 5;
+  const initialZ = 15;
+  const targetZ = 6;
 
   useFrame((state) => {
-    const t = Math.min(state.clock.getElapsedTime() / 2.5, 1);
+    const t = Math.min(state.clock.getElapsedTime() / 3, 1);
     const eased = 1 - Math.pow(1 - t, 4);
     camera.position.z = initialZ - (initialZ - targetZ) * eased;
-    camera.position.y = Math.sin(state.clock.getElapsedTime() * 0.4) * 0.15;
-    camera.position.x = Math.cos(state.clock.getElapsedTime() * 0.25) * 0.2;
+    camera.position.y = Math.sin(state.clock.getElapsedTime() * 0.3) * 0.2;
+    camera.position.x = Math.cos(state.clock.getElapsedTime() * 0.2) * 0.3;
     camera.lookAt(0, 0, 0);
   });
 
   return null;
 };
 
-// 3D Scene
-const IntroScene = () => {
+// Main 3D Scene
+const GalaxyScene = () => {
   return (
     <>
-      <ambientLight intensity={0.15} />
-      <pointLight position={[10, 10, 10]} intensity={1.2} color="#3b82f6" />
-      <pointLight position={[-10, -10, 5]} intensity={0.6} color="#8b5cf6" />
-      <pointLight position={[0, 8, 5]} intensity={0.8} color="#06b6d4" />
-      <spotLight position={[0, 10, 0]} intensity={1.5} color="#ffffff" angle={0.4} penumbra={0.5} />
-
+      <ambientLight intensity={0.1} />
+      <pointLight position={[0, 0, 0]} intensity={2} color="#60a5fa" distance={20} />
+      <pointLight position={[5, 5, 5]} intensity={0.5} color="#a855f7" />
+      <pointLight position={[-5, -5, 5]} intensity={0.4} color="#06b6d4" />
+      
       <CameraAnimation />
-      <AIBrain />
-      <DataRings />
-      <DataNodes />
-      <DataCubes />
-      <ParticleField />
+      <BackgroundStars />
+      <GalaxySpiral />
+      <NebulaClouds />
+      <CentralStar />
+      <OrbitRings />
+      <DataOrbs />
     </>
   );
 };
@@ -232,17 +316,16 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Force scroll to top immediately
     window.scrollTo(0, 0);
     document.body.style.overflow = 'hidden';
     
-    const textTimer = setTimeout(() => setShowText(true), 500);
-    const fadeTimer = setTimeout(() => setFadeOut(true), 3000);
+    const textTimer = setTimeout(() => setShowText(true), 600);
+    const fadeTimer = setTimeout(() => setFadeOut(true), 3500);
     const completeTimer = setTimeout(() => {
       document.body.style.overflow = '';
       window.scrollTo(0, 0);
       onComplete();
-    }, 3800);
+    }, 4200);
 
     return () => {
       clearTimeout(textTimer);
@@ -256,86 +339,90 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
     <AnimatePresence>
       {!fadeOut ? (
         <motion.div
-          className="fixed inset-0 z-[100] bg-background overflow-hidden"
+          className="fixed inset-0 z-[100] overflow-hidden"
+          style={{ background: 'linear-gradient(180deg, #030014 0%, #0a0a1f 50%, #030014 100%)' }}
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
         >
-          {/* 3D Canvas */}
+          {/* 3D Galaxy Canvas */}
           <Canvas
-            camera={{ position: [0, 0, 12], fov: 50 }}
+            camera={{ position: [0, 0, 15], fov: 60 }}
             dpr={[1, 1.5]}
             style={{ background: "transparent" }}
             gl={{
-              antialias: false,
+              antialias: true,
               alpha: true,
               powerPreference: "high-performance",
-              stencil: false,
-              depth: true,
             }}
           >
-            <IntroScene />
+            <GalaxyScene />
           </Canvas>
 
           {/* Animated text overlay */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
             <motion.div
-              initial={{ scale: 0.3, opacity: 0, y: 40 }}
+              initial={{ scale: 0.3, opacity: 0, y: 50 }}
               animate={showText ? { scale: 1, opacity: 1, y: 0 } : {}}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="text-center px-4"
             >
+              {/* Decorative line */}
               <motion.div
                 className="mb-6 flex items-center justify-center gap-4"
-                initial={{ opacity: 0 }}
-                animate={showText ? { opacity: 1 } : {}}
-                transition={{ delay: 0.2 }}
+                initial={{ opacity: 0, scaleX: 0 }}
+                animate={showText ? { opacity: 1, scaleX: 1 } : {}}
+                transition={{ delay: 0.3, duration: 0.8 }}
               >
-                <span className="w-16 h-[1px] bg-gradient-to-r from-transparent via-primary to-primary" />
-                <span className="text-xs md:text-sm text-primary/70 tracking-[0.4em] uppercase font-medium">
-                  Portfolio
+                <span className="w-20 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-cyan-400" />
+                <span className="text-xs md:text-sm text-cyan-400/80 tracking-[0.5em] uppercase font-medium">
+                  Welcome
                 </span>
-                <span className="w-16 h-[1px] bg-gradient-to-l from-transparent via-primary to-primary" />
+                <span className="w-20 h-[2px] bg-gradient-to-l from-transparent via-cyan-400 to-cyan-400" />
               </motion.div>
 
+              {/* Name with galaxy gradient */}
               <motion.h1
-                className="text-5xl md:text-7xl lg:text-8xl font-bold font-heading mb-3"
+                className="text-5xl md:text-7xl lg:text-8xl font-bold font-heading mb-4"
                 style={{
-                  background: "linear-gradient(135deg, #ffffff 0%, #60a5fa 30%, #a78bfa 60%, #34d399 100%)",
+                  background: "linear-gradient(135deg, #ffffff 0%, #22d3ee 25%, #a855f7 50%, #ec4899 75%, #ffffff 100%)",
+                  backgroundSize: "200% 200%",
                   backgroundClip: "text",
                   WebkitBackgroundClip: "text",
                   color: "transparent",
-                  textShadow: "0 0 60px rgba(96, 165, 250, 0.3)",
+                  textShadow: "0 0 80px rgba(168, 85, 247, 0.4)",
+                  animation: "gradient-shift 4s ease-in-out infinite",
                 }}
               >
                 Mohit Sinha
               </motion.h1>
               
+              {/* Titles */}
               <motion.div
-                initial={{ y: 25, opacity: 0 }}
+                initial={{ y: 30, opacity: 0 }}
                 animate={showText ? { y: 0, opacity: 1 } : {}}
-                transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+                transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
                 className="mt-4 space-y-2"
               >
-                <p className="text-xl md:text-2xl lg:text-3xl font-medium">
-                  <span className="text-blue-400">Data Scientist</span>
-                  <span className="text-muted-foreground mx-3">|</span>
-                  <span className="text-violet-400">AI Researcher</span>
+                <p className="text-xl md:text-2xl lg:text-3xl font-medium flex items-center justify-center gap-4">
+                  <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">Data Scientist</span>
+                  <span className="text-purple-400/50">✦</span>
+                  <span className="text-purple-400 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">AI Researcher</span>
                 </p>
               </motion.div>
 
+              {/* Badges */}
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={showText ? { y: 0, opacity: 1 } : {}}
-                transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-                className="mt-4 flex items-center justify-center gap-3"
+                transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
+                className="mt-6 flex items-center justify-center gap-4"
               >
-                <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs tracking-wider">
-                  BCA
+                <span className="px-4 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/40 text-emerald-400 text-sm tracking-wider backdrop-blur-sm">
+                  BCA Student
                 </span>
-                <span className="text-muted-foreground">•</span>
-                <span className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs tracking-wider">
-                  BS DATA SCIENCE
+                <span className="px-4 py-1.5 rounded-full bg-blue-500/15 border border-blue-400/40 text-blue-400 text-sm tracking-wider backdrop-blur-sm">
+                  BS Data Science
                 </span>
               </motion.div>
             </motion.div>
@@ -344,53 +431,51 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
+              transition={{ delay: 1.2 }}
               className="absolute bottom-12 md:bottom-16"
             >
               <div className="flex flex-col items-center gap-4">
-                <div className="flex gap-1.5">
-                  {[0, 1, 2, 3, 4, 5].map((i) => (
+                {/* Animated dots */}
+                <div className="flex gap-2">
+                  {[0, 1, 2, 3, 4].map((i) => (
                     <motion.div
                       key={i}
-                      className="w-1.5 h-8 rounded-full"
+                      className="w-2 h-2 rounded-full"
                       style={{ 
-                        background: `linear-gradient(to top, ${['#3b82f6', '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ec4899'][i]}, transparent)` 
+                        background: ['#22d3ee', '#3b82f6', '#8b5cf6', '#a855f7', '#ec4899'][i]
                       }}
                       animate={{ 
-                        scaleY: [0.3, 1, 0.3], 
-                        opacity: [0.4, 1, 0.4] 
+                        scale: [1, 1.5, 1],
+                        opacity: [0.5, 1, 0.5]
                       }}
                       transition={{ 
-                        duration: 0.8, 
-                        repeat: Infinity, 
-                        delay: i * 0.1,
+                        duration: 1,
+                        repeat: Infinity,
+                        delay: i * 0.15,
                         ease: "easeInOut"
                       }}
                     />
                   ))}
                 </div>
-                <span className="text-[10px] text-muted-foreground tracking-[0.3em] uppercase">Loading Experience</span>
+                <span className="text-[10px] text-cyan-400/60 tracking-[0.4em] uppercase">
+                  Entering Portfolio
+                </span>
               </div>
             </motion.div>
           </div>
 
-          {/* Enhanced glow effects */}
+          {/* Radial glow effects */}
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[150px]" />
-            <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-violet-500/10 rounded-full blur-[100px]" />
-            <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] bg-cyan-500/10 rounded-full blur-[80px]" />
-            <div className="absolute top-1/3 right-1/3 w-[200px] h-[200px] bg-emerald-500/8 rounded-full blur-[60px]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-500/8 rounded-full blur-[200px]" />
+            <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px]" />
+            <div className="absolute bottom-1/3 right-1/4 w-[350px] h-[350px] bg-pink-500/8 rounded-full blur-[100px]" />
           </div>
 
-          {/* Professional grid overlay */}
+          {/* Vignette effect */}
           <div 
-            className="absolute inset-0 pointer-events-none opacity-[0.03]"
+            className="absolute inset-0 pointer-events-none"
             style={{
-              backgroundImage: `
-                linear-gradient(rgba(59,130,246,0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59,130,246,0.3) 1px, transparent 1px)
-              `,
-              backgroundSize: "40px 40px",
+              background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.6) 100%)'
             }}
           />
         </motion.div>
