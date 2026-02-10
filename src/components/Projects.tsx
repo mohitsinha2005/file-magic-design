@@ -1,5 +1,17 @@
-import { Rocket, Clock, Plus } from "lucide-react";
+import { Rocket, ExternalLink, Globe, Cloud } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
+
+const projects = [
+  {
+    title: "MohitCloud",
+    description:
+      "A professional cloud platform delivering modern web solutions with seamless performance, scalability, and cutting-edge design.",
+    url: "https://mohitcloud.in",
+    tags: ["Cloud Platform", "Web Development", "Full Stack"],
+    icon: Cloud,
+    gradient: "from-[hsl(var(--primary))] to-[hsl(var(--accent))]",
+  },
+];
 
 const Projects = () => {
   return (
@@ -18,56 +30,60 @@ const Projects = () => {
           </div>
         </ScrollReveal>
 
-        {/* Coming Soon Placeholder */}
-        <div className="flex flex-col items-center justify-center py-20">
-          <ScrollReveal delay={0.2}>
-            <div className="relative mb-8">
-              {/* Animated rings */}
-              <div className="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping" style={{ animationDuration: '3s' }} />
-              <div className="absolute inset-2 rounded-full border-2 border-primary/30 animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} />
-              <div className="absolute inset-4 rounded-full border-2 border-primary/40 animate-ping" style={{ animationDuration: '2s', animationDelay: '1s' }} />
-              
-              {/* Center icon */}
-              <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/30 animate-float">
-                <Clock size={48} className="text-primary" />
-              </div>
-            </div>
-          </ScrollReveal>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          {projects.map((project, index) => (
+            <ScrollReveal key={index} delay={0.2 + index * 0.15} direction="up">
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block"
+              >
+                <div className="relative p-6 rounded-2xl border border-border/40 bg-card/60 backdrop-blur-md hover:border-primary/60 hover:shadow-[0_0_40px_-10px_hsl(var(--primary)/0.3)] transition-all duration-500 h-full">
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-          <ScrollReveal delay={0.3}>
-            <h3 className="text-2xl font-bold text-foreground mb-3 text-center">
-              Projects Coming Soon
-            </h3>
-          </ScrollReveal>
-          
-          <ScrollReveal delay={0.4}>
-            <p className="text-muted-foreground text-center max-w-md mb-8">
-              Exciting projects in Data Science, Machine Learning, and Web Development are currently in development. Check back soon!
-            </p>
-          </ScrollReveal>
-
-          {/* Future Projects Preview */}
-          <div className="grid md:grid-cols-3 gap-6 w-full max-w-4xl">
-            {[
-              { title: "ML Project", desc: "Machine Learning" },
-              { title: "Data Analytics", desc: "Business Intelligence" },
-              { title: "Web App", desc: "Full Stack Development" },
-            ].map((item, index) => (
-              <ScrollReveal key={index} delay={0.5 + index * 0.15} direction="up">
-                <div 
-                  className="group relative p-6 rounded-xl border border-dashed border-border/50 bg-muted/20 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
-                >
-                  <div className="flex flex-col items-center text-center">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                      <Plus size={24} className="text-primary" />
+                  <div className="relative z-10">
+                    {/* Icon */}
+                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${project.gradient} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                      <project.icon size={28} className="text-white" />
                     </div>
-                    <h4 className="font-semibold text-foreground mb-1">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground">{item.desc}</p>
+
+                    {/* Title + Link */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                        {project.title}
+                      </h3>
+                      <ExternalLink size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
+                    </div>
+
+                    {/* URL */}
+                    <div className="flex items-center gap-1.5 mb-4">
+                      <Globe size={13} className="text-primary/70" />
+                      <span className="text-sm text-primary/70 font-mono">{project.url.replace('https://', '')}</span>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+                      {project.description}
+                    </p>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary border border-primary/20"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </ScrollReveal>
-            ))}
-          </div>
+              </a>
+            </ScrollReveal>
+          ))}
         </div>
       </div>
     </section>
