@@ -1,76 +1,120 @@
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Sphere, Torus, Box, Icosahedron } from "@react-three/drei";
+import { Float, Sphere, Torus, Box, Icosahedron, Line } from "@react-three/drei";
 import * as THREE from "three";
 
-// Galaxy spiral particles
+// Dense galaxy spiral particles
 const GalaxyParticles = () => {
   const points = useRef<THREE.Points>(null);
   
-  const { positions, colors } = useMemo(() => {
-    const count = 800;
+  const { positions, colors, sizes } = useMemo(() => {
+    const count = 1800;
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
+    const sizes = new Float32Array(count);
+    
+    const palette = [
+      new THREE.Color('#22d3ee'),
+      new THREE.Color('#a855f7'),
+      new THREE.Color('#6366f1'),
+      new THREE.Color('#10b981'),
+      new THREE.Color('#3b82f6'),
+    ];
     
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
-      const radius = Math.random() * 8 + 2;
-      const spinAngle = radius * 1.5;
-      const branchAngle = ((i % 3) / 3) * Math.PI * 2;
+      const radius = Math.random() * 10 + 1;
+      const spinAngle = radius * 1.2;
+      const branchAngle = ((i % 5) / 5) * Math.PI * 2;
       
-      const randomX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.8;
-      const randomY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.4;
-      const randomZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.8;
+      const scatter = Math.pow(Math.random(), 2) * 1.5;
+      positions[i3] = Math.cos(branchAngle + spinAngle) * radius + (Math.random() - 0.5) * scatter;
+      positions[i3 + 1] = (Math.random() - 0.5) * 2 - 0.5;
+      positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + (Math.random() - 0.5) * scatter - 5;
       
-      positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
-      positions[i3 + 1] = randomY - 1;
-      positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ - 5;
-      
-      const mixedColor = new THREE.Color();
-      const innerColor = new THREE.Color('#22d3ee');
-      const outerColor = new THREE.Color('#a855f7');
-      mixedColor.lerpColors(innerColor, outerColor, radius / 10);
-      
-      colors[i3] = mixedColor.r;
-      colors[i3 + 1] = mixedColor.g;
-      colors[i3 + 2] = mixedColor.b;
+      const col = palette[i % palette.length].clone();
+      col.lerp(new THREE.Color('#ffffff'), Math.random() * 0.15);
+      colors[i3] = col.r;
+      colors[i3 + 1] = col.g;
+      colors[i3 + 2] = col.b;
+      sizes[i] = 0.02 + Math.random() * 0.04;
     }
     
-    return { positions, colors };
+    return { positions, colors, sizes };
   }, []);
 
   useFrame((state) => {
     if (points.current) {
-      points.current.rotation.y = state.clock.getElapsedTime() * 0.03;
+      points.current.rotation.y = state.clock.getElapsedTime() * 0.02;
     }
   });
 
   return (
     <points ref={points}>
       <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={positions.length / 3}
-          array={positions}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          count={colors.length / 3}
-          array={colors}
-          itemSize={3}
-        />
+        <bufferAttribute attach="attributes-position" count={positions.length / 3} array={positions} itemSize={3} />
+        <bufferAttribute attach="attributes-color" count={colors.length / 3} array={colors} itemSize={3} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.04}
+        size={0.035}
         vertexColors
         transparent
-        opacity={0.7}
+        opacity={0.8}
         sizeAttenuation
         blending={THREE.AdditiveBlending}
         depthWrite={false}
       />
     </points>
+  );
+};
+
+// Data constellation lines connecting nodes
+const DataConstellation = () => {
+  const linesRef = useRef<THREE.Group>(null);
+  
+  const { nodes, lines } = useMemo(() => {
+    const nodes: [number, number, number][] = [];
+    for (let i = 0; i < 30; i++) {
+      nodes.push([
+        (Math.random() - 0.5) * 14,
+        (Math.random() - 0.5) * 8,
+        -4 - Math.random() * 6,
+      ]);
+    }
+    const lines: { start: [number, number, number]; end: [number, number, number] }[] = [];
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const d = Math.hypot(nodes[i][0] - nodes[j][0], nodes[i][1] - nodes[j][1], nodes[i][2] - nodes[j][2]);
+        if (d < 4) lines.push({ start: nodes[i], end: nodes[j] });
+      }
+    }
+    return { nodes, lines };
+  }, []);
+
+  useFrame((state) => {
+    if (linesRef.current) {
+      linesRef.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.05) * 0.1;
+    }
+  });
+
+  return (
+    <group ref={linesRef}>
+      {lines.map((l, i) => (
+        <Line
+          key={i}
+          points={[l.start, l.end]}
+          color="#22d3ee"
+          transparent
+          opacity={0.12}
+          lineWidth={1}
+        />
+      ))}
+      {nodes.map((n, i) => (
+        <Sphere key={`n${i}`} args={[0.04, 8, 8]} position={n}>
+          <meshBasicMaterial color={i % 2 === 0 ? '#22d3ee' : '#a855f7'} transparent opacity={0.5} />
+        </Sphere>
+      ))}
+    </group>
   );
 };
 
@@ -292,13 +336,14 @@ const BackgroundStars = () => {
 const Scene = () => {
   return (
     <>
-      <ambientLight intensity={0.2} />
-      <pointLight position={[10, 10, 10]} intensity={0.6} color="#22d3ee" />
-      <pointLight position={[-10, -5, 5]} intensity={0.4} color="#a855f7" />
-      <pointLight position={[0, 8, 5]} intensity={0.5} color="#06b6d4" />
+      <ambientLight intensity={0.15} />
+      <pointLight position={[10, 10, 10]} intensity={0.5} color="#22d3ee" />
+      <pointLight position={[-10, -5, 5]} intensity={0.3} color="#a855f7" />
+      <pointLight position={[0, 8, 5]} intensity={0.4} color="#6366f1" />
       
       <BackgroundStars />
       <GalaxyParticles />
+      <DataConstellation />
       <NeuralNetwork />
       <DataFlow />
       <OrbitRings />
