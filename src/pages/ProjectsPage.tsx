@@ -1,8 +1,9 @@
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Rocket, Clock, Code, Database, Brain, Plus } from "lucide-react";
+import { ArrowLeft, Rocket, Clock, Code, Database, Brain, Plus, ExternalLink, Globe, Cloud } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const ProjectsPage = () => {
   return (
@@ -40,74 +41,97 @@ const ProjectsPage = () => {
         </div>
       </section>
 
-      {/* Coming Soon Section */}
+      {/* Featured Project */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col items-center justify-center py-20">
-            {/* Animated Icon */}
-            <div className="relative mb-12">
-              {/* Animated rings */}
-              <div className="absolute inset-0 w-40 h-40 rounded-full border-2 border-primary/20 animate-ping" style={{ animationDuration: '3s' }} />
-              <div className="absolute inset-4 w-32 h-32 rounded-full border-2 border-primary/30 animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} />
-              <div className="absolute inset-8 w-24 h-24 rounded-full border-2 border-primary/40 animate-ping" style={{ animationDuration: '2s', animationDelay: '1s' }} />
-              
-              {/* Center icon */}
-              <div className="relative w-40 h-40 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/30 animate-float">
-                <Clock size={64} className="text-primary" />
+          <a
+            href="https://mohitcloud.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block max-w-4xl mx-auto"
+          >
+            <div className="relative rounded-3xl border border-border/40 bg-card/60 backdrop-blur-md overflow-hidden hover:border-primary/60 hover:shadow-[0_0_60px_-15px_hsl(var(--primary)/0.3)] transition-all duration-500">
+              {/* Project Image */}
+              <div className="relative overflow-hidden">
+                <AspectRatio ratio={16 / 9}>
+                  <img
+                    src="https://api.microlink.io/?url=https://mohitcloud.in&screenshot=true&meta=false&embed=screenshot.url&type=jpeg&overlay.browser=dark"
+                    alt="MohitCloud - Professional Cloud Platform"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
+                </AspectRatio>
               </div>
-            </div>
 
-            <h2 className="text-3xl font-bold text-foreground mb-4 animate-fade-in text-center font-heading">
-              Projects Coming Soon
-            </h2>
-            <p className="text-muted-foreground text-center max-w-lg mb-12 animate-fade-in text-lg" style={{ animationDelay: '200ms' }}>
-              Exciting projects in Data Science, Machine Learning, AI, and Web Development are currently in development. Stay tuned for updates!
-            </p>
-
-            {/* Future Projects Preview */}
-            <div className="grid md:grid-cols-3 gap-8 w-full max-w-5xl">
-              {[
-                { 
-                  icon: Brain,
-                  title: "Machine Learning Projects", 
-                  desc: "Predictive modeling, classification, and regression analysis",
-                  color: "from-blue-500/20 to-cyan-500/20"
-                },
-                { 
-                  icon: Database,
-                  title: "Data Analytics Projects", 
-                  desc: "Business intelligence dashboards and data visualization",
-                  color: "from-purple-500/20 to-pink-500/20"
-                },
-                { 
-                  icon: Code,
-                  title: "Web Development Projects", 
-                  desc: "Full-stack applications with modern frameworks",
-                  color: "from-orange-500/20 to-red-500/20"
-                },
-              ].map((item, index) => (
-                <div 
-                  key={index}
-                  className="group card-3d relative p-8 rounded-2xl border border-dashed border-border/50 bg-muted/20 hover:border-primary/50 hover:bg-primary/5 transition-all duration-500 opacity-0 animate-scale-in-3d"
-                  style={{ animationDelay: `${(index + 1) * 150}ms` }}
-                >
-                  <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                  
-                  <div className="relative flex flex-col items-center text-center">
-                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
-                      <item.icon size={32} className="text-primary" />
+              {/* Project Info */}
+              <div className="relative p-8 md:p-10">
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <Cloud size={28} className="text-white" />
                     </div>
-                    <h3 className="text-xl font-bold text-foreground mb-3 font-heading">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                    
-                    <div className="mt-6 flex items-center gap-2 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Plus size={16} />
-                      <span>Coming Soon</span>
+                    <div>
+                      <h3 className="text-2xl md:text-3xl font-bold text-foreground group-hover:text-primary transition-colors font-heading">
+                        MohitCloud
+                      </h3>
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <Globe size={14} className="text-primary/70" />
+                        <span className="text-sm text-primary/70 font-mono">mohitcloud.in</span>
+                      </div>
                     </div>
                   </div>
+                  <ExternalLink size={20} className="text-muted-foreground group-hover:text-primary transition-colors mt-2 shrink-0" />
                 </div>
-              ))}
+
+                <p className="text-muted-foreground leading-relaxed mb-6 max-w-2xl">
+                  A professional cloud platform delivering modern web solutions with seamless performance, scalability, and cutting-edge design. Built with full-stack technologies for enterprise-grade reliability.
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {["Cloud Platform", "Web Development", "Full Stack", "Scalable Architecture", "Modern UI"].map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary border border-primary/20"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
+          </a>
+        </div>
+      </section>
+
+      {/* More Coming Soon */}
+      <section className="py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl font-bold text-foreground mb-10 text-center font-heading">More Projects Coming Soon</h2>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {[
+              { icon: Brain, title: "Machine Learning", desc: "Predictive modeling & classification", color: "from-blue-500/20 to-cyan-500/20" },
+              { icon: Database, title: "Data Analytics", desc: "BI dashboards & visualization", color: "from-purple-500/20 to-pink-500/20" },
+              { icon: Code, title: "Web Development", desc: "Full-stack modern applications", color: "from-orange-500/20 to-red-500/20" },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="group relative p-8 rounded-2xl border border-dashed border-border/50 bg-muted/20 hover:border-primary/50 hover:bg-primary/5 transition-all duration-500"
+              >
+                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                <div className="relative flex flex-col items-center text-center">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5 group-hover:scale-110 transition-all duration-300">
+                    <item.icon size={28} className="text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold text-foreground mb-2 font-heading">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                  <div className="mt-4 flex items-center gap-2 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Plus size={16} />
+                    <span>Coming Soon</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
