@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet";
+import mohitcloudPreview from "@/assets/mohitcloud-preview.png";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Rocket, Clock, Code, Database, Brain, Plus, ExternalLink, Globe, Cloud } from "lucide-react";
 import Navigation from "@/components/Navigation";
@@ -55,7 +56,7 @@ const ProjectsPage = () => {
               <div className="relative overflow-hidden">
                 <AspectRatio ratio={16 / 9}>
                   <img
-                    src="https://api.microlink.io/?url=https://mohitcloud.in&screenshot=true&meta=false&embed=screenshot.url&type=jpeg&overlay.browser=dark"
+                    src={mohitcloudPreview}
                     alt="MohitCloud - Professional Cloud Platform"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     loading="lazy"
