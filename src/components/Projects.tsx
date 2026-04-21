@@ -1,4 +1,4 @@
-import { Rocket, ExternalLink, Globe, Cloud } from "lucide-react";
+import { Rocket, ExternalLink, Globe, Cloud, HeartPulse } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 
 const projects = [
@@ -10,6 +10,15 @@ const projects = [
     tags: ["Cloud Platform", "Web Development", "Full Stack"],
     icon: Cloud,
     gradient: "from-[hsl(var(--primary))] to-[hsl(var(--accent))]",
+  },
+  {
+    title: "MohitMedAI",
+    description:
+      "An AI-powered medical assistant platform that leverages machine learning to deliver intelligent healthcare insights and a modern user experience.",
+    url: "https://mohitmedai11.netlify.app",
+    tags: ["AI", "Healthcare", "Machine Learning"],
+    icon: HeartPulse,
+    gradient: "from-[hsl(var(--accent))] to-[hsl(var(--primary))]",
   },
 ];
 
