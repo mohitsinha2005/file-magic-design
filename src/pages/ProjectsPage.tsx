@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
 import mohitcloudPreview from "@/assets/mohitcloud-preview.png";
+import mohitmedaiPreview from "@/assets/mohitmedai-preview.jpg";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Rocket, Clock, Code, Database, Brain, Plus, ExternalLink, Globe, Cloud, HeartPulse } from "lucide-react";
 import Navigation from "@/components/Navigation";
@@ -110,6 +111,17 @@ const ProjectsPage = () => {
             className="group block max-w-4xl mx-auto"
           >
             <div className="relative rounded-3xl border border-border/40 bg-card/60 backdrop-blur-md overflow-hidden hover:border-primary/60 hover:shadow-[0_0_60px_-15px_hsl(var(--primary)/0.3)] transition-all duration-500">
+              <div className="relative overflow-hidden">
+                <AspectRatio ratio={16 / 9}>
+                  <img
+                    src={mohitmedaiPreview}
+                    alt="MohitMedAI - AI-Powered Medical Assistant Platform"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
+                </AspectRatio>
+              </div>
               <div className="relative p-8 md:p-10">
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div className="flex items-center gap-4">
