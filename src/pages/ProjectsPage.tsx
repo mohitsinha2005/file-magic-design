@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import mohitcloudPreview from "@/assets/mohitcloud-preview.png";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Rocket, Clock, Code, Database, Brain, Plus, ExternalLink, Globe, Cloud } from "lucide-react";
+import { ArrowLeft, Rocket, Clock, Code, Database, Brain, Plus, ExternalLink, Globe, Cloud, HeartPulse } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -44,7 +44,7 @@ const ProjectsPage = () => {
 
       {/* Featured Project */}
       <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto space-y-10">
           <a
             href="https://mohitcloud.in"
             target="_blank"
@@ -91,6 +91,50 @@ const ProjectsPage = () => {
 
                 <div className="flex flex-wrap gap-2">
                   {["Cloud Platform", "Web Development", "Full Stack", "Scalable Architecture", "Modern UI"].map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary border border-primary/20"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="https://mohitmedai11.netlify.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block max-w-4xl mx-auto"
+          >
+            <div className="relative rounded-3xl border border-border/40 bg-card/60 backdrop-blur-md overflow-hidden hover:border-primary/60 hover:shadow-[0_0_60px_-15px_hsl(var(--primary)/0.3)] transition-all duration-500">
+              <div className="relative p-8 md:p-10">
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[hsl(var(--accent))] to-[hsl(var(--primary))] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <HeartPulse size={28} className="text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl md:text-3xl font-bold text-foreground group-hover:text-primary transition-colors font-heading">
+                        MohitMedAI
+                      </h3>
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <Globe size={14} className="text-primary/70" />
+                        <span className="text-sm text-primary/70 font-mono">mohitmedai11.netlify.app</span>
+                      </div>
+                    </div>
+                  </div>
+                  <ExternalLink size={20} className="text-muted-foreground group-hover:text-primary transition-colors mt-2 shrink-0" />
+                </div>
+
+                <p className="text-muted-foreground leading-relaxed mb-6 max-w-2xl">
+                  An AI-powered medical assistant platform that leverages machine learning to deliver intelligent healthcare insights, symptom analysis, and a modern, accessible user experience.
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {["AI", "Healthcare", "Machine Learning", "React", "Netlify"].map((tag) => (
                     <span
                       key={tag}
                       className="px-3 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary border border-primary/20"
