@@ -82,10 +82,6 @@ const Certifications = () => {
                     {cert.date}
                   </div>
                 </div>
-                  <div className="absolute top-3 right-3 px-3 py-1 bg-primary/90 text-primary-foreground text-xs font-medium rounded-full backdrop-blur-sm">
-                    {cert.date}
-                  </div>
-                </div>
 
                 {/* Content */}
                 <div className="p-5">
