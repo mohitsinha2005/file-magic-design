@@ -111,13 +111,13 @@ const CertificationsPage = () => {
                 style={{ animationDelay: `${200 + index * 100}ms` }}
               >
                 {/* Certificate Image */}
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative bg-background/50 overflow-hidden flex items-center justify-center p-4">
                   <img
                     src={cert.image}
                     alt={cert.title}
-                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                    className="w-full h-auto object-contain transition-transform duration-700 hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
+                  
                   
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4 px-3 py-1.5 bg-primary/90 text-primary-foreground text-xs font-semibold rounded-full backdrop-blur-sm">
