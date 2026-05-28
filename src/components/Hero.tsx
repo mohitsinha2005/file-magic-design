@@ -1,6 +1,7 @@
+import { lazy, Suspense } from "react";
 import { Mail, ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
-import Hero3D from "./Hero3D";
+const Hero3D = lazy(() => import("./Hero3D"));
 
 interface HeroProps {
   profileImage: string;
