@@ -66,7 +66,7 @@ const Index = () => {
           <Certifications />
           <About profileImage={aboutImage} />
           <Resources />
-          <LiveChat />
+          <Suspense fallback={null}><LiveChat /></Suspense>
           <CTA />
         </main>
         <Footer />
