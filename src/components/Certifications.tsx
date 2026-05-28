@@ -70,15 +70,18 @@ const Certifications = () => {
                 className="group relative bg-background rounded-xl overflow-hidden border border-border/50 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 h-full"
               >
                 {/* Certificate Image */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative bg-background/40 overflow-hidden flex items-center justify-center p-3">
                   <img
                     src={cert.image}
                     alt={cert.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-                  
+
                   {/* Date Badge */}
+                  <div className="absolute top-3 right-3 px-3 py-1 bg-primary/90 text-primary-foreground text-xs font-medium rounded-full backdrop-blur-sm">
+                    {cert.date}
+                  </div>
+                </div>
                   <div className="absolute top-3 right-3 px-3 py-1 bg-primary/90 text-primary-foreground text-xs font-medium rounded-full backdrop-blur-sm">
                     {cert.date}
                   </div>
