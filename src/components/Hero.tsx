@@ -1,6 +1,7 @@
+import { lazy, Suspense } from "react";
 import { Mail, ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
-import Hero3D from "./Hero3D";
+const Hero3D = lazy(() => import("./Hero3D"));
 
 interface HeroProps {
   profileImage: string;
@@ -38,7 +39,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
 
   return (
     <section id="home" className="min-h-screen flex items-center section pt-24 relative overflow-hidden">
-      <Hero3D />
+      <Suspense fallback={null}><Hero3D /></Suspense>
       
       {/* Enhanced glow effects */}
       <div className="absolute inset-0 pointer-events-none">

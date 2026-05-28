@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, lazy, Suspense } from "react";
 import { Helmet } from "react-helmet";
 import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
@@ -8,12 +8,13 @@ import Projects from "@/components/Projects";
 import Certifications from "@/components/Certifications";
 import About from "@/components/About";
 import Resources from "@/components/Resources";
-import LiveChat from "@/components/LiveChat";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import IntroAnimation from "@/components/IntroAnimation";
 import profileMohit from "@/assets/profile-mohit.jpg";
 import profileHero from "@/assets/profile-hero.jpg";
+
+const LiveChat = lazy(() => import("@/components/LiveChat"));
 
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
@@ -65,7 +66,7 @@ const Index = () => {
           <Certifications />
           <About profileImage={aboutImage} />
           <Resources />
-          <LiveChat />
+          <Suspense fallback={null}><LiveChat /></Suspense>
           <CTA />
         </main>
         <Footer />
