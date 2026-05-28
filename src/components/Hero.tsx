@@ -39,7 +39,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
 
   return (
     <section id="home" className="min-h-screen flex items-center section pt-24 relative overflow-hidden">
-      <Hero3D />
+      <Suspense fallback={null}><Hero3D /></Suspense>
       
       {/* Enhanced glow effects */}
       <div className="absolute inset-0 pointer-events-none">
