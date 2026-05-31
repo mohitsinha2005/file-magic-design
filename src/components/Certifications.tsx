@@ -7,8 +7,24 @@ import certAiTeachnook from "@/assets/certificates/cert-ai-teachnook.png";
 import certCybersecurity from "@/assets/certificates/cert-cybersecurity.png";
 import certTableau from "@/assets/certificates/cert-tableau-tnx.png";
 import certCoursera from "@/assets/certificates/cert-coursera-business.png";
+import certDeloitte from "@/assets/certificates/cert-deloitte-data-analytics.jpg";
+import certBritishAirways from "@/assets/certificates/cert-british-airways-data-science.jpg";
 
 const certifications = [
+  {
+    title: "Deloitte Data Analytics Job Simulation",
+    issuer: "Deloitte | Forage",
+    date: "May 2026",
+    image: certDeloitte,
+    description: "Completed practical tasks in data analysis and forensic technology as part of Deloitte's virtual job simulation.",
+  },
+  {
+    title: "British Airways Data Science Job Simulation",
+    issuer: "British Airways | Forage",
+    date: "May 2026",
+    image: certBritishAirways,
+    description: "Completed practical tasks including modeling lounge eligibility at Heathrow Terminal 3 and predicting customer buying behaviour.",
+  },
   {
     title: "Scratch Hackathon - DataConnectDelhi May 2025",
     issuer: "DataConnectDelhi | IIT Madras BS Program",
