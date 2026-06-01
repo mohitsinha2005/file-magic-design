@@ -3,6 +3,8 @@ import { MessageCircle, Send, Bot, User, Sparkles } from "lucide-react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Sphere, Torus } from "@react-three/drei";
 import * as THREE from "three";
+import SafeCanvas from "./SafeCanvas";
+import LazyMount from "./LazyMount";
 
 interface Message {
   role: "user" | "bot";
