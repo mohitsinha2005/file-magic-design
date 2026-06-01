@@ -3,6 +3,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Float, Sphere, Points, PointMaterial } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 import * as THREE from "three";
+import SafeCanvas from "./SafeCanvas";
 
 // Galaxy spiral arms
 const GalaxySpiral = () => {
@@ -370,18 +371,22 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
           transition={{ duration: 0.7, ease: "easeInOut" }}
         >
           {/* 3D Galaxy Canvas */}
-          <Canvas
-            camera={{ position: [0, 0, 15], fov: 60 }}
-            dpr={[1, 1.5]}
-            style={{ background: "transparent" }}
-            gl={{
-              antialias: true,
-              alpha: true,
-              powerPreference: "high-performance",
-            }}
-          >
-            <GalaxyScene />
-          </Canvas>
+          <SafeCanvas>
+            <Canvas
+              camera={{ position: [0, 0, 15], fov: 60 }}
+              dpr={[1, 1.5]}
+              style={{ background: "transparent" }}
+              gl={{
+                antialias: true,
+                alpha: true,
+                powerPreference: "high-performance",
+                failIfMajorPerformanceCaveat: false,
+              }}
+            >
+              <GalaxyScene />
+            </Canvas>
+          </SafeCanvas>
+
 
           {/* Animated text overlay */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
