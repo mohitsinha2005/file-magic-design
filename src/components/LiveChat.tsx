@@ -137,20 +137,23 @@ const LiveChat = () => {
 
         <div className="grid lg:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
           {/* 3D Animation */}
-          <div className="hidden lg:block h-[400px] relative">
+          <LazyMount className="hidden lg:block h-[400px] relative">
             <div className="absolute inset-0 bg-gradient-radial from-primary/5 to-transparent rounded-3xl" />
-            <Canvas
-              camera={{ position: [0, 0, 4], fov: 50 }}
-              style={{ background: "transparent" }}
-              dpr={[1, 1.5]}
-            >
-              <ChatBubble3D />
-            </Canvas>
+            <SafeCanvas>
+              <Canvas
+                camera={{ position: [0, 0, 4], fov: 50 }}
+                style={{ background: "transparent" }}
+                dpr={[1, 1.25]}
+                gl={{ antialias: false, powerPreference: "low-power", failIfMajorPerformanceCaveat: false }}
+              >
+                <ChatBubble3D />
+              </Canvas>
+            </SafeCanvas>
             {/* Floating elements */}
             <div className="absolute top-10 left-10 w-3 h-3 rounded-full bg-primary/40 animate-pulse" />
             <div className="absolute bottom-20 right-10 w-2 h-2 rounded-full bg-primary/30 animate-pulse" style={{ animationDelay: "0.5s" }} />
             <div className="absolute top-1/2 left-5 w-2 h-2 rounded-full bg-primary/20 animate-pulse" style={{ animationDelay: "1s" }} />
-          </div>
+          </LazyMount>
 
           {/* Chat Interface */}
           <div className="bg-card border border-border rounded-2xl shadow-xl overflow-hidden">
