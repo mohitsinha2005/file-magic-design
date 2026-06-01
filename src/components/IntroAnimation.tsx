@@ -316,14 +316,33 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
+    // Disable browser scroll restoration so refresh always lands at top
+    const prevRestoration = window.history.scrollRestoration;
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Strip any hash so anchor links don't auto-scroll
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+
     window.scrollTo(0, 0);
+    document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
-    
+
+    // Keep page pinned to top while intro plays
+    const pin = () => window.scrollTo(0, 0);
+    window.addEventListener('scroll', pin, { passive: true });
+
     const textTimer = setTimeout(() => setShowText(true), 600);
     const fadeTimer = setTimeout(() => setFadeOut(true), 3500);
     const completeTimer = setTimeout(() => {
+      window.removeEventListener('scroll', pin);
+      document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
       window.scrollTo(0, 0);
+      requestAnimationFrame(() => window.scrollTo(0, 0));
       onComplete();
     }, 4200);
 
@@ -331,7 +350,12 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
       clearTimeout(textTimer);
       clearTimeout(fadeTimer);
       clearTimeout(completeTimer);
+      window.removeEventListener('scroll', pin);
+      document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = prevRestoration || 'auto';
+      }
     };
   }, [onComplete]);
 

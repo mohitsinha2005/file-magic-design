@@ -27,11 +27,14 @@ const Index = () => {
   }, []);
 
   const handleIntroComplete = useCallback(() => {
-    // Ensure scroll to top when main content appears
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
     setIntroComplete(true);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      requestAnimationFrame(() => window.scrollTo(0, 0));
+    });
   }, []);
 
   return (
