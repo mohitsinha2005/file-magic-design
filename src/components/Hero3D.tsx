@@ -359,8 +359,10 @@ const Hero3D = () => {
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         style={{ background: "transparent" }}
-        dpr={[1, 1.5]}
+        dpr={[1, 1.25]}
+        frameloop="always"
         performance={{ min: 0.5 }}
+        gl={{ antialias: false, powerPreference: "high-performance", failIfMajorPerformanceCaveat: false }}
       >
         <Scene />
       </Canvas>
