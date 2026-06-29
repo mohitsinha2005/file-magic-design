@@ -1,19 +1,20 @@
-import { lazy, Suspense, useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
+import { lazyWithRetry } from "./lib/lazyWithRetry";
 
-const SkillsPage = lazy(() => import("./pages/SkillsPage"));
-const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
-const CertificationsPage = lazy(() => import("./pages/CertificationsPage"));
-const AboutPage = lazy(() => import("./pages/AboutPage"));
-const ContactPage = lazy(() => import("./pages/ContactPage"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-const Chatbot = lazy(() => import("./components/Chatbot"));
-const Background3D = lazy(() => import("./components/Background3D"));
+const SkillsPage = lazyWithRetry(() => import("./pages/SkillsPage"));
+const ProjectsPage = lazyWithRetry(() => import("./pages/ProjectsPage"));
+const CertificationsPage = lazyWithRetry(() => import("./pages/CertificationsPage"));
+const AboutPage = lazyWithRetry(() => import("./pages/AboutPage"));
+const ContactPage = lazyWithRetry(() => import("./pages/ContactPage"));
+const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
+const Chatbot = lazyWithRetry(() => import("./components/Chatbot"));
+const Background3D = lazyWithRetry(() => import("./components/Background3D"));
 
 const queryClient = new QueryClient();
 
