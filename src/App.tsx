@@ -15,7 +15,6 @@ const ContactPage = lazyWithRetry(() => import("./pages/ContactPage"));
 const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
 const Chatbot = lazyWithRetry(() => import("./components/Chatbot"));
 const Background3D = lazyWithRetry(() => import("./components/Background3D"));
-const VoiceAssistant = lazyWithRetry(() => import("./components/VoiceAssistant"));
 
 const queryClient = new QueryClient();
 
@@ -58,9 +57,6 @@ const AppRoutes = () => {
       </Suspense>
       <Suspense fallback={null}>
         <Chatbot />
-      </Suspense>
-      <Suspense fallback={null}>
-        <VoiceAssistant />
       </Suspense>
     </>
   );
