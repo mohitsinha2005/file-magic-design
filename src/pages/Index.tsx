@@ -15,6 +15,7 @@ import profileMohit from "@/assets/profile-mohit.jpg";
 import profileHero from "@/assets/profile-hero.jpg";
 
 const LiveChat = lazy(() => import("@/components/LiveChat"));
+const VoiceAssistant = lazy(() => import("@/components/VoiceAssistant"));
 
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
