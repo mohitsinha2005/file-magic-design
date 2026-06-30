@@ -74,6 +74,11 @@ const Index = () => {
           <CTA />
         </main>
         <Footer />
+        {introComplete && (
+          <Suspense fallback={null}>
+            <VoiceAssistant />
+          </Suspense>
+        )}
       </motion.div>
     </div>
   );
