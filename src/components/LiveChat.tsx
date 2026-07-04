@@ -3,8 +3,6 @@ import { MessageCircle, Send, Bot, User, Sparkles } from "lucide-react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Sphere, Torus } from "@react-three/drei";
 import * as THREE from "three";
-import SafeCanvas from "./SafeCanvas";
-import LazyMount from "./LazyMount";
 
 interface Message {
   role: "user" | "bot";
@@ -139,23 +137,20 @@ const LiveChat = () => {
 
         <div className="grid lg:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
           {/* 3D Animation */}
-          <LazyMount className="hidden lg:block h-[400px] relative">
+          <div className="hidden lg:block h-[400px] relative">
             <div className="absolute inset-0 bg-gradient-radial from-primary/5 to-transparent rounded-3xl" />
-            <SafeCanvas>
-              <Canvas
-                camera={{ position: [0, 0, 4], fov: 50 }}
-                style={{ background: "transparent" }}
-                dpr={[1, 1.25]}
-                gl={{ antialias: false, powerPreference: "low-power", failIfMajorPerformanceCaveat: false }}
-              >
-                <ChatBubble3D />
-              </Canvas>
-            </SafeCanvas>
+            <Canvas
+              camera={{ position: [0, 0, 4], fov: 50 }}
+              style={{ background: "transparent" }}
+              dpr={[1, 1.5]}
+            >
+              <ChatBubble3D />
+            </Canvas>
             {/* Floating elements */}
             <div className="absolute top-10 left-10 w-3 h-3 rounded-full bg-primary/40 animate-pulse" />
             <div className="absolute bottom-20 right-10 w-2 h-2 rounded-full bg-primary/30 animate-pulse" style={{ animationDelay: "0.5s" }} />
             <div className="absolute top-1/2 left-5 w-2 h-2 rounded-full bg-primary/20 animate-pulse" style={{ animationDelay: "1s" }} />
-          </LazyMount>
+          </div>
 
           {/* Chat Interface */}
           <div className="bg-card border border-border rounded-2xl shadow-xl overflow-hidden">
