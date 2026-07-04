@@ -80,13 +80,31 @@ const JarvisAI = () => {
     window.speechSynthesis.speak(u);
   }, [muted]);
 
-  const handleQuery = useCallback((text: string) => {
+  const handleQuery = useCallback(async (text: string) => {
     const clean = text.trim();
     if (!clean) return;
-    const answer = findAnswer(clean);
-    setTurns(prev => [...prev, { role: "user", text: clean }, { role: "jarvis", text: answer }]);
-    speak(answer);
-  }, [speak]);
+    setTurns(prev => [...prev, { role: "user", text: clean }]);
+    setInput("");
+    setThinking(true);
+    try {
+      const history = turns
+        .filter(t => t.text !== WELCOME)
+        .map(t => ({ role: t.role === "user" ? "user" : "assistant", content: t.text }));
+      const { data, error } = await supabase.functions.invoke("jarvis-chat", {
+        body: { messages: [...history, { role: "user", content: clean }] },
+      });
+      if (error) throw error;
+      const reply: string = data?.reply ?? data?.error ?? "I'm sorry, something went wrong.";
+      setTurns(prev => [...prev, { role: "jarvis", text: reply }]);
+      speak(reply);
+    } catch (err) {
+      const msg = "I'm having trouble reaching my systems right now. Please try again in a moment.";
+      setTurns(prev => [...prev, { role: "jarvis", text: msg }]);
+      speak(msg);
+    } finally {
+      setThinking(false);
+    }
+  }, [speak, turns]);
 
   const startListening = useCallback(() => {
     const r = recognitionRef.current;
