@@ -1,74 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Mic, MicOff, Volume2, VolumeX, X, Sparkles } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
-// JARVIS-style voice assistant using Web Speech API (no backend required).
-// Provides visitors with a spoken tour of Mohit Sinha's profile.
+// JARVIS-style voice assistant powered by Lovable AI (Gemini) via edge function.
+// Uses Web Speech API for mic input and speechSynthesis for spoken replies.
 
-const KNOWLEDGE: { keywords: string[]; answer: string }[] = [
-  {
-    keywords: ["name", "who", "you", "yourself", "about"],
-    answer:
-      "I am Jarvis, the AI assistant for Mohit Sinha. Mohit is a dedicated AI and Data Science professional pursuing a Bachelor of Computer Applications and a Bachelor of Science in Data Science.",
-  },
-  {
-    keywords: ["skill", "expertise", "tech", "stack", "know"],
-    answer:
-      "Mohit specializes in Python, Machine Learning, Data Science, Artificial Intelligence, SQL, Tableau, predictive analytics, and data visualization. He builds scalable AI solutions and turns complex data into actionable insights.",
-  },
-  {
-    keywords: ["project", "work", "portfolio", "build"],
-    answer:
-      "Mohit has worked on several projects including MohitCloud, predictive analytics models, machine learning pipelines, and data visualization dashboards. You can view all of them in the Projects section.",
-  },
-  {
-    keywords: ["education", "study", "degree", "college", "university", "bca", "bs"],
-    answer:
-      "Mohit is currently pursuing a Bachelor of Computer Applications and a Bachelor of Science in Data Science, combining strong programming fundamentals with rigorous analytical training.",
-  },
-  {
-    keywords: ["certif", "course", "learn"],
-    answer:
-      "Mohit holds certifications from British Airways in Data Science and from Deloitte in Data Analytics, both showcased in the Certifications section.",
-  },
-  {
-    keywords: ["contact", "email", "reach", "hire", "connect"],
-    answer:
-      "You can reach Mohit directly by email at sinhamohit9870 at gmail dot com. He is open to collaboration, internships, and full-time opportunities.",
-  },
-  {
-    keywords: ["experience", "role", "job", "career"],
-    answer:
-      "Mohit focuses on machine learning research, predictive analytics, and building production-ready AI systems. He is actively seeking data science and AI engineering roles.",
-  },
-  {
-    keywords: ["resume", "cv", "download"],
-    answer:
-      "You can download Mohit's resume from the Download Resume button on the home page.",
-  },
-  {
-    keywords: ["hello", "hi", "hey", "greet"],
-    answer:
-      "Hello, and welcome. I am Jarvis. Ask me anything about Mohit's skills, projects, education, certifications, or how to get in touch.",
-  },
-  {
-    keywords: ["goal", "vision", "mission", "aim"],
-    answer:
-      "Mohit's goal is to leverage data and artificial intelligence to solve real world problems and to deliver scalable, ethical AI solutions.",
-  },
-];
+const WELCOME =
+  "Hello, I'm Jarvis — Mohit's personal AI assistant. I'm here to help you. Ask me anything about Mohit's skills, projects, education, or how to get in touch.";
 
-const FALLBACK =
-  "I can share Mohit's skills, projects, education, certifications, and contact details. Try asking, what are his skills, or how can I contact him.";
-
-function findAnswer(query: string): string {
-  const q = query.toLowerCase();
-  let best: { score: number; answer: string } | null = null;
-  for (const entry of KNOWLEDGE) {
-    const score = entry.keywords.reduce((s, k) => (q.includes(k) ? s + 1 : s), 0);
-    if (score > 0 && (!best || score > best.score)) best = { score, answer: entry.answer };
-  }
-  return best?.answer ?? FALLBACK;
-}
 
 type SpeechRecognitionLike = {
   lang: string;
@@ -101,10 +40,11 @@ const JarvisAI = () => {
   const [open, setOpen] = useState(false);
   const [listening, setListening] = useState(false);
   const [speaking, setSpeaking] = useState(false);
+  const [thinking, setThinking] = useState(false);
   const [muted, setMuted] = useState(false);
   const [supported, setSupported] = useState(true);
   const [turns, setTurns] = useState<Turn[]>([
-    { role: "jarvis", text: "Systems online. I am Jarvis. How may I assist you today?" },
+    { role: "jarvis", text: WELCOME },
   ]);
   const [input, setInput] = useState("");
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
@@ -140,13 +80,31 @@ const JarvisAI = () => {
     window.speechSynthesis.speak(u);
   }, [muted]);
 
-  const handleQuery = useCallback((text: string) => {
+  const handleQuery = useCallback(async (text: string) => {
     const clean = text.trim();
     if (!clean) return;
-    const answer = findAnswer(clean);
-    setTurns(prev => [...prev, { role: "user", text: clean }, { role: "jarvis", text: answer }]);
-    speak(answer);
-  }, [speak]);
+    setTurns(prev => [...prev, { role: "user", text: clean }]);
+    setInput("");
+    setThinking(true);
+    try {
+      const history = turns
+        .filter(t => t.text !== WELCOME)
+        .map(t => ({ role: t.role === "user" ? "user" : "assistant", content: t.text }));
+      const { data, error } = await supabase.functions.invoke("jarvis-chat", {
+        body: { messages: [...history, { role: "user", content: clean }] },
+      });
+      if (error) throw error;
+      const reply: string = data?.reply ?? data?.error ?? "I'm sorry, something went wrong.";
+      setTurns(prev => [...prev, { role: "jarvis", text: reply }]);
+      speak(reply);
+    } catch (err) {
+      const msg = "I'm having trouble reaching my systems right now. Please try again in a moment.";
+      setTurns(prev => [...prev, { role: "jarvis", text: msg }]);
+      speak(msg);
+    } finally {
+      setThinking(false);
+    }
+  }, [speak, turns]);
 
   const startListening = useCallback(() => {
     const r = recognitionRef.current;
@@ -198,7 +156,7 @@ const JarvisAI = () => {
               <div>
                 <div className="text-sm font-semibold text-foreground">J.A.R.V.I.S</div>
                 <div className="text-[10px] uppercase tracking-widest text-primary">
-                  {listening ? "Listening…" : speaking ? "Speaking…" : "Standing by"}
+                  {listening ? "Listening…" : thinking ? "Thinking…" : speaking ? "Speaking…" : "Online • Ready to help"}
                 </div>
               </div>
             </div>
@@ -224,6 +182,17 @@ const JarvisAI = () => {
                 </div>
               </div>
             ))}
+            {thinking && (
+              <div className="flex justify-start">
+                <div className="bg-primary/10 border border-primary/20 px-3 py-2 rounded-xl rounded-bl-sm">
+                  <div className="flex gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "300ms" }} />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="p-3 border-t border-primary/20 space-y-2">
@@ -232,7 +201,7 @@ const JarvisAI = () => {
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => {
-                  if (e.key === "Enter") { handleQuery(input); setInput(""); }
+                  if (e.key === "Enter" && !thinking) { handleQuery(input); }
                 }}
                 placeholder="Ask Jarvis anything…"
                 className="flex-1 px-3 py-2 rounded-lg bg-background border border-border text-sm focus:border-primary focus:outline-none"
