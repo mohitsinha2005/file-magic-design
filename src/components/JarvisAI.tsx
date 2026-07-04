@@ -1,74 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Mic, MicOff, Volume2, VolumeX, X, Sparkles } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
-// JARVIS-style voice assistant using Web Speech API (no backend required).
-// Provides visitors with a spoken tour of Mohit Sinha's profile.
+// JARVIS-style voice assistant powered by Lovable AI (Gemini) via edge function.
+// Uses Web Speech API for mic input and speechSynthesis for spoken replies.
 
-const KNOWLEDGE: { keywords: string[]; answer: string }[] = [
-  {
-    keywords: ["name", "who", "you", "yourself", "about"],
-    answer:
-      "I am Jarvis, the AI assistant for Mohit Sinha. Mohit is a dedicated AI and Data Science professional pursuing a Bachelor of Computer Applications and a Bachelor of Science in Data Science.",
-  },
-  {
-    keywords: ["skill", "expertise", "tech", "stack", "know"],
-    answer:
-      "Mohit specializes in Python, Machine Learning, Data Science, Artificial Intelligence, SQL, Tableau, predictive analytics, and data visualization. He builds scalable AI solutions and turns complex data into actionable insights.",
-  },
-  {
-    keywords: ["project", "work", "portfolio", "build"],
-    answer:
-      "Mohit has worked on several projects including MohitCloud, predictive analytics models, machine learning pipelines, and data visualization dashboards. You can view all of them in the Projects section.",
-  },
-  {
-    keywords: ["education", "study", "degree", "college", "university", "bca", "bs"],
-    answer:
-      "Mohit is currently pursuing a Bachelor of Computer Applications and a Bachelor of Science in Data Science, combining strong programming fundamentals with rigorous analytical training.",
-  },
-  {
-    keywords: ["certif", "course", "learn"],
-    answer:
-      "Mohit holds certifications from British Airways in Data Science and from Deloitte in Data Analytics, both showcased in the Certifications section.",
-  },
-  {
-    keywords: ["contact", "email", "reach", "hire", "connect"],
-    answer:
-      "You can reach Mohit directly by email at sinhamohit9870 at gmail dot com. He is open to collaboration, internships, and full-time opportunities.",
-  },
-  {
-    keywords: ["experience", "role", "job", "career"],
-    answer:
-      "Mohit focuses on machine learning research, predictive analytics, and building production-ready AI systems. He is actively seeking data science and AI engineering roles.",
-  },
-  {
-    keywords: ["resume", "cv", "download"],
-    answer:
-      "You can download Mohit's resume from the Download Resume button on the home page.",
-  },
-  {
-    keywords: ["hello", "hi", "hey", "greet"],
-    answer:
-      "Hello, and welcome. I am Jarvis. Ask me anything about Mohit's skills, projects, education, certifications, or how to get in touch.",
-  },
-  {
-    keywords: ["goal", "vision", "mission", "aim"],
-    answer:
-      "Mohit's goal is to leverage data and artificial intelligence to solve real world problems and to deliver scalable, ethical AI solutions.",
-  },
-];
+const WELCOME =
+  "Hello, I'm Jarvis — Mohit's personal AI assistant. I'm here to help you. Ask me anything about Mohit's skills, projects, education, or how to get in touch.";
 
-const FALLBACK =
-  "I can share Mohit's skills, projects, education, certifications, and contact details. Try asking, what are his skills, or how can I contact him.";
-
-function findAnswer(query: string): string {
-  const q = query.toLowerCase();
-  let best: { score: number; answer: string } | null = null;
-  for (const entry of KNOWLEDGE) {
-    const score = entry.keywords.reduce((s, k) => (q.includes(k) ? s + 1 : s), 0);
-    if (score > 0 && (!best || score > best.score)) best = { score, answer: entry.answer };
-  }
-  return best?.answer ?? FALLBACK;
-}
 
 type SpeechRecognitionLike = {
   lang: string;
