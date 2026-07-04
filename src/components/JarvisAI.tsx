@@ -40,10 +40,11 @@ const JarvisAI = () => {
   const [open, setOpen] = useState(false);
   const [listening, setListening] = useState(false);
   const [speaking, setSpeaking] = useState(false);
+  const [thinking, setThinking] = useState(false);
   const [muted, setMuted] = useState(false);
   const [supported, setSupported] = useState(true);
   const [turns, setTurns] = useState<Turn[]>([
-    { role: "jarvis", text: "Systems online. I am Jarvis. How may I assist you today?" },
+    { role: "jarvis", text: WELCOME },
   ]);
   const [input, setInput] = useState("");
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
