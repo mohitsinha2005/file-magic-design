@@ -14,6 +14,7 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Chatbot = lazy(() => import("./components/Chatbot"));
 const Background3D = lazy(() => import("./components/Background3D"));
+const JarvisAI = lazy(() => import("./components/JarvisAI"));
 
 const queryClient = new QueryClient();
 
@@ -56,6 +57,9 @@ const AppRoutes = () => {
       </Suspense>
       <Suspense fallback={null}>
         <Chatbot />
+      </Suspense>
+      <Suspense fallback={null}>
+        <JarvisAI />
       </Suspense>
     </>
   );
