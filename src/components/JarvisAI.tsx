@@ -182,6 +182,17 @@ const JarvisAI = () => {
                 </div>
               </div>
             ))}
+            {thinking && (
+              <div className="flex justify-start">
+                <div className="bg-primary/10 border border-primary/20 px-3 py-2 rounded-xl rounded-bl-sm">
+                  <div className="flex gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "300ms" }} />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="p-3 border-t border-primary/20 space-y-2">
