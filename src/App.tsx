@@ -58,6 +58,9 @@ const AppRoutes = () => {
       <Suspense fallback={null}>
         <Chatbot />
       </Suspense>
+      <Suspense fallback={null}>
+        <JarvisAI />
+      </Suspense>
     </>
   );
 };
