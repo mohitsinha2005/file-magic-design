@@ -156,7 +156,7 @@ const JarvisAI = () => {
               <div>
                 <div className="text-sm font-semibold text-foreground">J.A.R.V.I.S</div>
                 <div className="text-[10px] uppercase tracking-widest text-primary">
-                  {listening ? "Listening…" : speaking ? "Speaking…" : "Standing by"}
+                  {listening ? "Listening…" : thinking ? "Thinking…" : speaking ? "Speaking…" : "Online • Ready to help"}
                 </div>
               </div>
             </div>
