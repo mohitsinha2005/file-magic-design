@@ -201,7 +201,7 @@ const JarvisAI = () => {
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => {
-                  if (e.key === "Enter") { handleQuery(input); setInput(""); }
+                  if (e.key === "Enter" && !thinking) { handleQuery(input); }
                 }}
                 placeholder="Ask Jarvis anything…"
                 className="flex-1 px-3 py-2 rounded-lg bg-background border border-border text-sm focus:border-primary focus:outline-none"
