@@ -2,3 +2,7 @@ project_id = "mbosvdbojhhcgnbafshw"
 
 [functions.jarvis-chat]
 verify_jwt = false
+
+[functions.jarvis-speak]
+verify_jwt = false
+
