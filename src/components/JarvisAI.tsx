@@ -49,7 +49,10 @@ const JarvisAI = () => {
   ]);
   const [input, setInput] = useState("");
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  const listeningRef = useRef(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     const r = getRecognition();
