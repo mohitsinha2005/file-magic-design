@@ -180,9 +180,10 @@ const JarvisAI = () => {
 
 
   const toggleMute = () => {
-    if (!muted) window.speechSynthesis?.cancel();
+    if (!muted) stopAudio();
     setMuted(m => !m);
   };
+
 
   return (
     <>
