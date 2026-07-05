@@ -68,12 +68,19 @@ const JarvisAI = () => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
   }, [turns]);
 
-  const speak = useCallback((text: string) => {
-    if (muted || typeof window === "undefined" || !window.speechSynthesis) return;
+  const stopAudio = () => {
+    try { audioRef.current?.pause(); } catch {}
+    audioRef.current = null;
+    if (typeof window !== "undefined") window.speechSynthesis?.cancel();
+    setSpeaking(false);
+  };
+
+  const speakBrowser = (text: string) => {
+    if (typeof window === "undefined" || !window.speechSynthesis) return;
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.rate = 1;
-    u.pitch = 0.9;
+    u.pitch = 0.95;
     u.lang = "en-US";
     const voices = window.speechSynthesis.getVoices();
     const preferred = voices.find(v => /male|daniel|google uk english male/i.test(v.name)) || voices.find(v => v.lang.startsWith("en"));
@@ -82,7 +89,27 @@ const JarvisAI = () => {
     u.onend = () => setSpeaking(false);
     u.onerror = () => setSpeaking(false);
     window.speechSynthesis.speak(u);
+  };
+
+  const speak = useCallback(async (text: string) => {
+    if (muted) return;
+    stopAudio();
+    try {
+      const { data, error } = await supabase.functions.invoke("jarvis-speak", {
+        body: { text, voice: "onyx" },
+      });
+      if (error || !data?.audio) throw error || new Error("no audio");
+      const audio = new Audio(`data:${data.mime || "audio/mpeg"};base64,${data.audio}`);
+      audioRef.current = audio;
+      audio.onplay = () => setSpeaking(true);
+      audio.onended = () => setSpeaking(false);
+      audio.onerror = () => { setSpeaking(false); speakBrowser(text); };
+      await audio.play();
+    } catch {
+      speakBrowser(text);
+    }
   }, [muted]);
+
 
   const handleQuery = useCallback(async (text: string) => {
     const clean = text.trim();
