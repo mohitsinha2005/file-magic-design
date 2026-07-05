@@ -195,7 +195,21 @@ const JarvisAI = () => {
             )}
           </div>
 
+          {turns.length <= 1 && (
+            <div className="px-3 pb-2 flex flex-wrap gap-1.5">
+              {["What are Mohit's skills?", "Show his projects", "How to contact him?", "Tell me about his education"].map(q => (
+                <button
+                  key={q}
+                  onClick={() => handleQuery(q)}
+                  className="text-[11px] px-2.5 py-1 rounded-full border border-primary/30 bg-primary/5 text-primary hover:bg-primary/15 transition-colors"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="p-3 border-t border-primary/20 space-y-2">
+
             <div className="flex gap-2">
               <input
                 value={input}
