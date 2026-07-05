@@ -27,9 +27,10 @@ const getRecognition = (): SpeechRecognitionLike | null => {
   const r = new Ctor() as SpeechRecognitionLike;
   r.lang = "en-US";
   r.interimResults = false;
-  r.continuous = false;
+  r.continuous = true; // keep listening until user stops it (Copilot-style)
   return r;
 };
+
 
 interface Turn {
   role: "user" | "jarvis";
@@ -48,7 +49,10 @@ const JarvisAI = () => {
   ]);
   const [input, setInput] = useState("");
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  const listeningRef = useRef(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     const r = getRecognition();
@@ -64,12 +68,19 @@ const JarvisAI = () => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
   }, [turns]);
 
-  const speak = useCallback((text: string) => {
-    if (muted || typeof window === "undefined" || !window.speechSynthesis) return;
+  const stopAudio = () => {
+    try { audioRef.current?.pause(); } catch {}
+    audioRef.current = null;
+    if (typeof window !== "undefined") window.speechSynthesis?.cancel();
+    setSpeaking(false);
+  };
+
+  const speakBrowser = (text: string) => {
+    if (typeof window === "undefined" || !window.speechSynthesis) return;
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.rate = 1;
-    u.pitch = 0.9;
+    u.pitch = 0.95;
     u.lang = "en-US";
     const voices = window.speechSynthesis.getVoices();
     const preferred = voices.find(v => /male|daniel|google uk english male/i.test(v.name)) || voices.find(v => v.lang.startsWith("en"));
@@ -78,7 +89,27 @@ const JarvisAI = () => {
     u.onend = () => setSpeaking(false);
     u.onerror = () => setSpeaking(false);
     window.speechSynthesis.speak(u);
+  };
+
+  const speak = useCallback(async (text: string) => {
+    if (muted) return;
+    stopAudio();
+    try {
+      const { data, error } = await supabase.functions.invoke("jarvis-speak", {
+        body: { text, voice: "onyx" },
+      });
+      if (error || !data?.audio) throw error || new Error("no audio");
+      const audio = new Audio(`data:${data.mime || "audio/mpeg"};base64,${data.audio}`);
+      audioRef.current = audio;
+      audio.onplay = () => setSpeaking(true);
+      audio.onended = () => setSpeaking(false);
+      audio.onerror = () => { setSpeaking(false); speakBrowser(text); };
+      await audio.play();
+    } catch {
+      speakBrowser(text);
+    }
   }, [muted]);
+
 
   const handleQuery = useCallback(async (text: string) => {
     const clean = text.trim();
@@ -109,30 +140,50 @@ const JarvisAI = () => {
   const startListening = useCallback(() => {
     const r = recognitionRef.current;
     if (!r) return;
-    try { window.speechSynthesis?.cancel(); } catch {}
+    stopAudio();
     r.onresult = (e: any) => {
-      const transcript = e.results[0][0].transcript as string;
-      handleQuery(transcript);
+      // continuous mode: read only the newest final result
+      const res = e.results[e.results.length - 1];
+      if (res?.isFinal) {
+        const transcript = res[0].transcript as string;
+        if (transcript?.trim()) handleQuery(transcript);
+      }
     };
-    r.onerror = () => setListening(false);
-    r.onend = () => setListening(false);
+    r.onerror = (ev: any) => {
+      if (ev?.error === "no-speech" || ev?.error === "aborted") return;
+      listeningRef.current = false;
+      setListening(false);
+    };
+    r.onend = () => {
+      // auto-restart while the user still has the mic on
+      if (listeningRef.current) {
+        try { r.start(); } catch {}
+      } else {
+        setListening(false);
+      }
+    };
     try {
       r.start();
+      listeningRef.current = true;
       setListening(true);
     } catch {
+      listeningRef.current = false;
       setListening(false);
     }
   }, [handleQuery]);
 
   const stopListening = () => {
+    listeningRef.current = false;
     try { recognitionRef.current?.stop(); } catch {}
     setListening(false);
   };
 
+
   const toggleMute = () => {
-    if (!muted) window.speechSynthesis?.cancel();
+    if (!muted) stopAudio();
     setMuted(m => !m);
   };
+
 
   return (
     <>
