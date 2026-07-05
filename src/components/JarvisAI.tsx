@@ -140,25 +140,44 @@ const JarvisAI = () => {
   const startListening = useCallback(() => {
     const r = recognitionRef.current;
     if (!r) return;
-    try { window.speechSynthesis?.cancel(); } catch {}
+    stopAudio();
     r.onresult = (e: any) => {
-      const transcript = e.results[0][0].transcript as string;
-      handleQuery(transcript);
+      // continuous mode: read only the newest final result
+      const res = e.results[e.results.length - 1];
+      if (res?.isFinal) {
+        const transcript = res[0].transcript as string;
+        if (transcript?.trim()) handleQuery(transcript);
+      }
     };
-    r.onerror = () => setListening(false);
-    r.onend = () => setListening(false);
+    r.onerror = (ev: any) => {
+      if (ev?.error === "no-speech" || ev?.error === "aborted") return;
+      listeningRef.current = false;
+      setListening(false);
+    };
+    r.onend = () => {
+      // auto-restart while the user still has the mic on
+      if (listeningRef.current) {
+        try { r.start(); } catch {}
+      } else {
+        setListening(false);
+      }
+    };
     try {
       r.start();
+      listeningRef.current = true;
       setListening(true);
     } catch {
+      listeningRef.current = false;
       setListening(false);
     }
   }, [handleQuery]);
 
   const stopListening = () => {
+    listeningRef.current = false;
     try { recognitionRef.current?.stop(); } catch {}
     setListening(false);
   };
+
 
   const toggleMute = () => {
     if (!muted) window.speechSynthesis?.cancel();
