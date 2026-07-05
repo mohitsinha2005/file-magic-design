@@ -27,9 +27,10 @@ const getRecognition = (): SpeechRecognitionLike | null => {
   const r = new Ctor() as SpeechRecognitionLike;
   r.lang = "en-US";
   r.interimResults = false;
-  r.continuous = false;
+  r.continuous = true; // keep listening until user stops it (Copilot-style)
   return r;
 };
+
 
 interface Turn {
   role: "user" | "jarvis";
