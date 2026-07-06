@@ -4,6 +4,7 @@ import { ArrowLeft, MapPin, GraduationCap, Briefcase, Heart, Target, Lightbulb, 
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import profileAbout from "@/assets/profile-about.webp";
+import spaceBg from "@/assets/about-space-bg.jpg.asset.json";
 
 const AboutPage = () => {
   const stats = [
