@@ -12,8 +12,44 @@ import certTableau from "@/assets/certificates/cert-tableau-tnx.png";
 import certCoursera from "@/assets/certificates/cert-coursera-business.png";
 import certDeloitte from "@/assets/certificates/cert-deloitte-data-analytics.jpg";
 import certBritishAirways from "@/assets/certificates/cert-british-airways-data-science.jpg";
+import certChessMania from "@/assets/certificates/cert-chess-mania-paradox.png";
+import certProductMgmt from "@/assets/certificates/cert-product-management-nextleap.png";
+import certWebRedesign from "@/assets/certificates/cert-iitm-website-redesign.png";
+import certInterHouseChess from "@/assets/certificates/cert-inter-house-chess.jpeg";
 
 const certifications = [
+  {
+    title: "Inter-House Chess Championship - IITM Paradox'25",
+    issuer: "IIT Madras BS Degree Program",
+    date: "June 2025",
+    image: certInterHouseChess,
+    description: "Certificate of Appreciation for active participation in the Inter-House Chess Championship at IITM Paradox'25, presented by IIT Madras BS Degree Program in association with Chess.com and CircleChess.",
+    category: "Chess & Strategy",
+  },
+  {
+    title: "Chess Mania - IITM Paradox in Margazhi'25",
+    issuer: "IIT Madras BS Degree Program",
+    date: "January 2025",
+    image: certChessMania,
+    description: "Recognized for active participation in Chess Mania at IITM Paradox in Margazhi'25, awarded by the Head of Student Affairs, IIT Madras B.S. Degree Program.",
+    category: "Chess & Strategy",
+  },
+  {
+    title: "Product Management Workshop",
+    issuer: "Nextleap | Cognizance 2025, IIT Roorkee",
+    date: "March 2025",
+    image: certProductMgmt,
+    description: "Successfully participated in the Product Management workshop conducted by Nextleap in association with Cognizance 2025, the Annual Technical Fest of IIT Roorkee.",
+    category: "Product Management",
+  },
+  {
+    title: "IITM BS Website Redesigning Competition",
+    issuer: "IIT Madras B.S. Degree Program",
+    date: "January 2025",
+    image: certWebRedesign,
+    description: "Certificate of Participation awarded for contributing with creativity and innovation in the IITM BS Website Redesigning Competition, coordinated by Prof. Andrew Thangaraj.",
+    category: "Design & Innovation",
+  },
   {
     title: "Deloitte Data Analytics Job Simulation",
     issuer: "Deloitte | Forage",
