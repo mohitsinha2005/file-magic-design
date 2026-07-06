@@ -4,6 +4,7 @@ import { ArrowLeft, MapPin, GraduationCap, Briefcase, Heart, Target, Lightbulb, 
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import profileAbout from "@/assets/profile-about.webp";
+import spaceBg from "@/assets/about-space-bg.jpg.asset.json";
 
 const AboutPage = () => {
   const stats = [
@@ -53,7 +54,17 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Cosmic fixed background */}
+      <div
+        aria-hidden
+        className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${spaceBg.url})` }}
+      />
+      <div
+        aria-hidden
+        className="fixed inset-0 -z-10 bg-gradient-to-b from-background/85 via-background/70 to-background/95"
+      />
       <Helmet>
         <title>About Me | Mohit Sinha - Data Scientist & AI Enthusiast</title>
         <meta name="description" content="Learn about Mohit Sinha's background, education, and professional journey in Data Science and AI." />
@@ -106,7 +117,7 @@ const AboutPage = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 px-4 bg-card">
+      <section className="py-12 px-4 bg-card/40 backdrop-blur-md border-y border-border/40">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, idx) => (
@@ -158,7 +169,7 @@ const AboutPage = () => {
       </section>
 
       {/* Timeline Section */}
-      <section className="py-16 px-4 bg-card">
+      <section className="py-16 px-4 bg-card/40 backdrop-blur-md border-y border-border/40">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-foreground mb-12 text-center opacity-0 animate-fade-up font-heading">Journey</h2>
           
