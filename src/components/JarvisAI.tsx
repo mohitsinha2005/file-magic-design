@@ -176,10 +176,10 @@ const JarvisAI = () => {
       setListening(false);
     };
     r.onend = () => {
-      // auto-restart while the user still has the mic on
-      if (listeningRef.current) {
+      // auto-restart while mic is on and assistant isn't currently speaking
+      if (listeningRef.current && !speakingRef.current) {
         try { r.start(); } catch {}
-      } else {
+      } else if (!listeningRef.current) {
         setListening(false);
       }
     };
