@@ -12,6 +12,10 @@ import certTableau from "@/assets/certificates/cert-tableau-tnx.png";
 import certCoursera from "@/assets/certificates/cert-coursera-business.png";
 import certDeloitte from "@/assets/certificates/cert-deloitte-data-analytics.jpg";
 import certBritishAirways from "@/assets/certificates/cert-british-airways-data-science.jpg";
+import certChessMania from "@/assets/certificates/cert-chess-mania-paradox.png";
+import certProductMgmt from "@/assets/certificates/cert-product-management-nextleap.png";
+import certWebRedesign from "@/assets/certificates/cert-iitm-website-redesign.png";
+import certInterHouseChess from "@/assets/certificates/cert-inter-house-chess.jpeg";
 
 const certifications = [
   {
