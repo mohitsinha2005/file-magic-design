@@ -70,18 +70,20 @@ const JarvisAI = () => {
   }, [turns]);
 
   const pauseRecognition = () => {
+    speakingRef.current = true;
     try { recognitionRef.current?.stop(); } catch {}
   };
 
   const resumeRecognitionIfLive = () => {
+    speakingRef.current = false;
     if (!listeningRef.current) return;
     const r = recognitionRef.current;
     if (!r) return;
     // small delay so the mic doesn't pick up the tail of the assistant's audio
     setTimeout(() => {
-      if (!listeningRef.current) return;
+      if (!listeningRef.current || speakingRef.current) return;
       try { r.start(); } catch {}
-    }, 250);
+    }, 300);
   };
 
   const stopAudio = () => {
