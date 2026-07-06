@@ -117,7 +117,7 @@ const AboutPage = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 px-4 bg-card">
+      <section className="py-12 px-4 bg-card/40 backdrop-blur-md border-y border-border/40">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, idx) => (
@@ -169,7 +169,7 @@ const AboutPage = () => {
       </section>
 
       {/* Timeline Section */}
-      <section className="py-16 px-4 bg-card">
+      <section className="py-16 px-4 bg-card/40 backdrop-blur-md border-y border-border/40">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-foreground mb-12 text-center opacity-0 animate-fade-up font-heading">Journey</h2>
           
