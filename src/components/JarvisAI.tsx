@@ -119,7 +119,7 @@ const JarvisAI = () => {
     pauseRecognition();
     try {
       const { data, error } = await supabase.functions.invoke("jarvis-speak", {
-        body: { text, voice: "onyx" },
+        body: { text, voice: "ash" },
       });
       if (error || !data?.audio) throw error || new Error("no audio");
       const audio = new Audio(`data:${data.mime || "audio/mpeg"};base64,${data.audio}`);
