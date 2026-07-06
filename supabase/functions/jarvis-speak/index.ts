@@ -43,12 +43,8 @@ Deno.serve(async (req) => {
     const buf = await upstream.arrayBuffer();
     const bytes = new Uint8Array(buf);
     let binary = "";
-    const CHUNK = 8192;
-    for (let i = 0; i < bytes.length; i += CHUNK) {
-      binary += String.fromCharCode.apply(
-        null,
-        Array.from(bytes.subarray(i, Math.min(i + CHUNK, bytes.length))),
-      );
+    for (let i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
     }
     const b64 = btoa(binary);
     return new Response(JSON.stringify({ audio: b64, mime: "audio/mpeg" }), {
