@@ -68,6 +68,21 @@ const JarvisAI = () => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
   }, [turns]);
 
+  const pauseRecognition = () => {
+    try { recognitionRef.current?.stop(); } catch {}
+  };
+
+  const resumeRecognitionIfLive = () => {
+    if (!listeningRef.current) return;
+    const r = recognitionRef.current;
+    if (!r) return;
+    // small delay so the mic doesn't pick up the tail of the assistant's audio
+    setTimeout(() => {
+      if (!listeningRef.current) return;
+      try { r.start(); } catch {}
+    }, 250);
+  };
+
   const stopAudio = () => {
     try { audioRef.current?.pause(); } catch {}
     audioRef.current = null;
@@ -76,7 +91,10 @@ const JarvisAI = () => {
   };
 
   const speakBrowser = (text: string) => {
-    if (typeof window === "undefined" || !window.speechSynthesis) return;
+    if (typeof window === "undefined" || !window.speechSynthesis) {
+      resumeRecognitionIfLive();
+      return;
+    }
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.rate = 1;
@@ -86,14 +104,16 @@ const JarvisAI = () => {
     const preferred = voices.find(v => /male|daniel|google uk english male/i.test(v.name)) || voices.find(v => v.lang.startsWith("en"));
     if (preferred) u.voice = preferred;
     u.onstart = () => setSpeaking(true);
-    u.onend = () => setSpeaking(false);
-    u.onerror = () => setSpeaking(false);
+    u.onend = () => { setSpeaking(false); resumeRecognitionIfLive(); };
+    u.onerror = () => { setSpeaking(false); resumeRecognitionIfLive(); };
     window.speechSynthesis.speak(u);
   };
 
   const speak = useCallback(async (text: string) => {
-    if (muted) return;
+    if (muted) { resumeRecognitionIfLive(); return; }
     stopAudio();
+    // pause mic while assistant talks so it doesn't hear itself
+    pauseRecognition();
     try {
       const { data, error } = await supabase.functions.invoke("jarvis-speak", {
         body: { text, voice: "onyx" },
@@ -102,7 +122,7 @@ const JarvisAI = () => {
       const audio = new Audio(`data:${data.mime || "audio/mpeg"};base64,${data.audio}`);
       audioRef.current = audio;
       audio.onplay = () => setSpeaking(true);
-      audio.onended = () => setSpeaking(false);
+      audio.onended = () => { setSpeaking(false); resumeRecognitionIfLive(); };
       audio.onerror = () => { setSpeaking(false); speakBrowser(text); };
       await audio.play();
     } catch {
