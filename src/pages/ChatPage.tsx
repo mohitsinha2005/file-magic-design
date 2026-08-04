@@ -166,7 +166,7 @@ const ChatPage = () => {
               <Mail size={16} /> sinhamohit9870@gmail.com
             </a>
             <a
-              href="https://www.linkedin.com/in/mohit-sinha-1a2b3c/"
+              href="https://www.linkedin.com/in/mohit-sinha-5b5472255"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border/70 text-sm text-muted-foreground hover:text-primary hover:border-primary/60 transition-colors"
