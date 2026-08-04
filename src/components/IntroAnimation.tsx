@@ -345,7 +345,7 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
       window.scrollTo(0, 0);
       requestAnimationFrame(() => window.scrollTo(0, 0));
       onComplete();
-    }, 4200);
+    }, 1900);
 
     return () => {
       clearTimeout(textTimer);
