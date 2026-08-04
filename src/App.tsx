@@ -53,6 +53,7 @@ const AppRoutes = () => {
           <Route path="/certifications" element={<CertificationsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/chat" element={<ChatPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
