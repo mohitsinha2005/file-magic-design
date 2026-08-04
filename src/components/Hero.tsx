@@ -49,7 +49,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
       {/* Enhanced glow effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-violet-500/10 rounded-full blur-[100px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px]" />
       </div>
 
       <motion.div
@@ -66,7 +66,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
                 variants={itemVariants}
                 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight font-heading"
                 style={{
-                  background: "linear-gradient(135deg, #ffffff 0%, #00d4ff 50%, #8b5cf6 100%)",
+                  background: "linear-gradient(135deg, #ffffff 0%, #7cc4ff 45%, #3b82f6 100%)",
                   backgroundClip: "text",
                   WebkitBackgroundClip: "text",
                   color: "transparent",
@@ -79,7 +79,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
                 variants={itemVariants}
                 className="text-xl md:text-2xl font-medium"
                 style={{
-                  background: "linear-gradient(90deg, #00d4ff, #8b5cf6)",
+                  background: "linear-gradient(90deg, #60a5fa, #38bdf8)",
                   backgroundClip: "text",
                   WebkitBackgroundClip: "text",
                   color: "transparent",
@@ -158,7 +158,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
           >
             <div className="hero-image-frame w-72 h-72 md:w-96 md:h-96 relative group">
               {/* Neon glow ring */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-primary via-violet-500 to-primary rounded-full opacity-50 blur-xl group-hover:opacity-75 transition-opacity duration-500 animate-pulse" />
+              <div className="absolute -inset-2 bg-gradient-to-r from-primary via-accent to-primary rounded-full opacity-50 blur-xl group-hover:opacity-75 transition-opacity duration-500 animate-pulse" />
               
               <img
                 src={profileImage}

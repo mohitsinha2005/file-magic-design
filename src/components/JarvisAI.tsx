@@ -214,7 +214,7 @@ const JarvisAI = () => {
       <button
         onClick={() => setOpen(o => !o)}
         aria-label="Open Jarvis AI assistant"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-violet-500 shadow-[0_0_30px_rgba(37,99,235,0.6)] flex items-center justify-center hover:scale-110 transition-transform"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-accent shadow-[0_0_30px_rgba(37,99,235,0.6)] flex items-center justify-center hover:scale-110 transition-transform"
       >
         <Sparkles className="text-white" size={22} />
         {speaking && <span className="absolute inset-0 rounded-full border-2 border-primary animate-ping" />}
@@ -222,7 +222,7 @@ const JarvisAI = () => {
 
       {open && (
         <div className="fixed bottom-24 right-6 z-50 w-[min(92vw,380px)] bg-card/95 backdrop-blur-xl border border-primary/30 rounded-2xl shadow-2xl overflow-hidden animate-fade-in">
-          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-primary/20 to-violet-500/20 border-b border-primary/20">
+          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-primary/20 to-accent/20 border-b border-primary/20">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                 <Sparkles size={16} className="text-primary" />
