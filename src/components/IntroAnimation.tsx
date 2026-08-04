@@ -86,7 +86,7 @@ const NebulaClouds = () => {
     { pos: [2, 1, -2] as [number, number, number], scale: 1.2, color: '#6366f1' },
     { pos: [-2.5, -0.5, -1.5] as [number, number, number], scale: 0.9, color: '#ec4899' },
     { pos: [0, 1.5, -3] as [number, number, number], scale: 1.5, color: '#06b6d4' },
-    { pos: [-1.5, -1.5, -2.5] as [number, number, number], scale: 0.8, color: '#8b5cf6' },
+    { pos: [-1.5, -1.5, -2.5] as [number, number, number], scale: 0.8, color: '#38bdf8' },
   ], []);
 
   useFrame((state) => {
@@ -206,7 +206,7 @@ const DataOrbs = () => {
     { pos: [1.5, -1.5, -0.5] as [number, number, number], size: 0.08, color: '#ec4899' },
     { pos: [-1.5, 1.2, -0.3] as [number, number, number], size: 0.11, color: '#06b6d4' },
     { pos: [0, 2.2, -0.5] as [number, number, number], size: 0.09, color: '#3b82f6' },
-    { pos: [-0.5, -2, 0] as [number, number, number], size: 0.13, color: '#8b5cf6' },
+    { pos: [-0.5, -2, 0] as [number, number, number], size: 0.13, color: '#38bdf8' },
   ], []);
 
   useFrame((state) => {
@@ -336,8 +336,8 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
     const pin = () => window.scrollTo(0, 0);
     window.addEventListener('scroll', pin, { passive: true });
 
-    const textTimer = setTimeout(() => setShowText(true), 250);
-    const fadeTimer = setTimeout(() => setFadeOut(true), 1400);
+    const textTimer = setTimeout(() => setShowText(true), 200);
+    const fadeTimer = setTimeout(() => setFadeOut(true), 1000);
     const completeTimer = setTimeout(() => {
       window.removeEventListener('scroll', pin);
       document.documentElement.style.overflow = '';
@@ -345,7 +345,7 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
       window.scrollTo(0, 0);
       requestAnimationFrame(() => window.scrollTo(0, 0));
       onComplete();
-    }, 1900);
+    }, 1450);
 
     return () => {
       clearTimeout(textTimer);
@@ -471,7 +471,7 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
                       key={i}
                       className="w-2 h-2 rounded-full"
                       style={{ 
-                        background: ['#22d3ee', '#3b82f6', '#8b5cf6', '#a855f7', '#ec4899'][i]
+                        background: ['#22d3ee', '#3b82f6', '#38bdf8', '#a855f7', '#ec4899'][i]
                       }}
                       animate={{ 
                         scale: [1, 1.5, 1],

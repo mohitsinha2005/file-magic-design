@@ -174,11 +174,11 @@ const CertificationsPage = () => {
                 style={{ animationDelay: `${200 + index * 100}ms` }}
               >
                 {/* Certificate Image */}
-                <div className="relative bg-background/50 overflow-hidden flex items-center justify-center p-4">
+                <div className="relative bg-background/50 h-56 overflow-hidden flex items-center justify-center p-4">
                   <img
                     src={cert.image}
                     alt={cert.title}
-                    className="w-full h-auto object-contain transition-transform duration-700 hover:scale-105"
+                    className="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-700 hover:scale-105"
                   />
                   
                   

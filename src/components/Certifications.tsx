@@ -94,11 +94,11 @@ const Certifications = () => {
                 className="group relative bg-background rounded-xl overflow-hidden border border-border/50 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 h-full"
               >
                 {/* Certificate Image */}
-                <div className="relative bg-background/40 overflow-hidden flex items-center justify-center p-3">
+                <div className="relative bg-background/40 h-56 overflow-hidden flex items-center justify-center p-3">
                   <img
                     src={cert.image}
                     alt={cert.title}
-                    className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                    className="max-w-full max-h-full w-auto h-auto object-contain transition-transform duration-500 group-hover:scale-105"
                   />
 
                   {/* Date Badge */}
