@@ -11,6 +11,7 @@ const ProjectsPage = lazy(() => import("./pages/ProjectsPage"));
 const CertificationsPage = lazy(() => import("./pages/CertificationsPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
+const ChatPage = lazy(() => import("./pages/ChatPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Chatbot = lazy(() => import("./components/Chatbot"));
 const Background3D = lazy(() => import("./components/Background3D"));
