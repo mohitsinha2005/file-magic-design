@@ -22,6 +22,7 @@ const Navigation = () => {
     { href: "/certifications", label: "Certifications" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
+    { href: "/chat", label: "Chat" },
   ];
 
   return (

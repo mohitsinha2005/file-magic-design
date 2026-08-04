@@ -16,8 +16,17 @@ import certChessMania from "@/assets/certificates/cert-chess-mania-paradox.png";
 import certProductMgmt from "@/assets/certificates/cert-product-management-nextleap.png";
 import certWebRedesign from "@/assets/certificates/cert-iitm-website-redesign.png";
 import certInterHouseChess from "@/assets/certificates/cert-inter-house-chess.jpeg";
+import certInternship from "@/assets/certificates/cert-vertihub-internship.png";
 
 const certifications = [
+  {
+    title: "Software Internship Completion — Vertihub",
+    issuer: "Vertihub | IIT Madras",
+    date: "June 2026",
+    image: certInternship,
+    description: "Certificate of Completion of Internship awarded for a Software Intern tenure from 1st April 2026 to 1st June 2026, contributing to the design and implementation of engineering components for the Vertiport Management System Development project.",
+    category: "Internship",
+  },
   {
     title: "Inter-House Chess Championship - IITM Paradox'25",
     issuer: "IIT Madras BS Degree Program",

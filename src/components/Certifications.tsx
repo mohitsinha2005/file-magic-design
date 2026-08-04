@@ -9,8 +9,16 @@ import certTableau from "@/assets/certificates/cert-tableau-tnx.png";
 import certCoursera from "@/assets/certificates/cert-coursera-business.png";
 import certDeloitte from "@/assets/certificates/cert-deloitte-data-analytics.jpg";
 import certBritishAirways from "@/assets/certificates/cert-british-airways-data-science.jpg";
+import certInternship from "@/assets/certificates/cert-vertihub-internship.png";
 
 const certifications = [
+  {
+    title: "Software Internship Completion — Vertihub",
+    issuer: "Vertihub | IIT Madras",
+    date: "June 2026",
+    image: certInternship,
+    description: "Completed a professional Software Intern tenure (Apr–Jun 2026), contributing to the design and implementation of the Vertiport Management System.",
+  },
   {
     title: "Deloitte Data Analytics Job Simulation",
     issuer: "Deloitte | Forage",
