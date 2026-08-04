@@ -15,9 +15,9 @@ const GalaxyParticles = () => {
     
     const palette = [
       new THREE.Color('#22d3ee'),
-      new THREE.Color('#a855f7'),
-      new THREE.Color('#6366f1'),
-      new THREE.Color('#10b981'),
+      new THREE.Color('#38bdf8'),
+      new THREE.Color('#3b82f6'),
+      new THREE.Color('#60a5fa'),
       new THREE.Color('#3b82f6'),
     ];
     
@@ -111,7 +111,7 @@ const DataConstellation = () => {
       ))}
       {nodes.map((n, i) => (
         <Sphere key={`n${i}`} args={[0.04, 8, 8]} position={n}>
-          <meshBasicMaterial color={i % 2 === 0 ? '#22d3ee' : '#a855f7'} transparent opacity={0.5} />
+          <meshBasicMaterial color={i % 2 === 0 ? '#22d3ee' : '#38bdf8'} transparent opacity={0.5} />
         </Sphere>
       ))}
     </group>
@@ -142,8 +142,8 @@ const NeuralNetwork = () => {
         <Float key={i} speed={1.5} rotationIntensity={0.1} floatIntensity={0.4}>
           <Sphere args={[node.size, 16, 16]} position={node.pos}>
             <meshStandardMaterial
-              color="#10b981"
-              emissive="#10b981"
+              color="#60a5fa"
+              emissive="#60a5fa"
               emissiveIntensity={0.8}
               roughness={0.1}
               metalness={0.9}
@@ -182,8 +182,8 @@ const DataFlow = () => {
         <Float key={i} speed={cube.speed} rotationIntensity={0.5} floatIntensity={0.6}>
           <Box args={[cube.size, cube.size, cube.size]} position={cube.pos}>
             <meshStandardMaterial
-              color={i % 2 === 0 ? "#22d3ee" : "#a855f7"}
-              emissive={i % 2 === 0 ? "#06b6d4" : "#7c3aed"}
+              color={i % 2 === 0 ? "#22d3ee" : "#38bdf8"}
+              emissive={i % 2 === 0 ? "#06b6d4" : "#0ea5e9"}
               emissiveIntensity={0.6}
               roughness={0.1}
               metalness={0.9}
@@ -220,7 +220,7 @@ const OrbitRings = () => {
         <meshBasicMaterial color="#22d3ee" transparent opacity={0.4} />
       </Torus>
       <Torus ref={ring2Ref} args={[2.8, 0.015, 16, 80]} position={[0, 0.5, -3]} rotation={[Math.PI / 3, Math.PI / 4, 0]}>
-        <meshBasicMaterial color="#a855f7" transparent opacity={0.3} />
+        <meshBasicMaterial color="#38bdf8" transparent opacity={0.3} />
       </Torus>
     </>
   );
@@ -241,8 +241,8 @@ const AICore = () => {
     <Float speed={1.2} rotationIntensity={0.2} floatIntensity={0.5}>
       <Icosahedron ref={meshRef} args={[0.5, 0]} position={[0, 0.5, -2]}>
         <meshStandardMaterial
-          color="#6366f1"
-          emissive="#4f46e5"
+          color="#3b82f6"
+          emissive="#2563eb"
           emissiveIntensity={0.7}
           roughness={0.05}
           metalness={0.95}
@@ -261,8 +261,8 @@ const AccentOrbs = () => {
       <Float speed={2} rotationIntensity={0.2} floatIntensity={0.6}>
         <Sphere args={[0.15, 16, 16]} position={[3, 2.5, -3]}>
           <meshStandardMaterial
-            color="#f59e0b"
-            emissive="#d97706"
+            color="#93c5fd"
+            emissive="#60a5fa"
             emissiveIntensity={0.6}
             roughness={0.2}
             metalness={0.8}
@@ -273,8 +273,8 @@ const AccentOrbs = () => {
       <Float speed={1.6} rotationIntensity={0.3} floatIntensity={0.5}>
         <Sphere args={[0.1, 16, 16]} position={[-4, -2, -2]}>
           <meshStandardMaterial
-            color="#ec4899"
-            emissive="#db2777"
+            color="#0ea5e9"
+            emissive="#0284c7"
             emissiveIntensity={0.5}
             roughness={0.2}
             metalness={0.8}
@@ -284,7 +284,7 @@ const AccentOrbs = () => {
 
       <Float speed={1.8} rotationIntensity={0.2} floatIntensity={0.7}>
         <Sphere args={[0.12, 16, 16]} position={[2, -2.5, -4]}>
-          <meshBasicMaterial color="#10b981" transparent opacity={0.6} />
+          <meshBasicMaterial color="#60a5fa" transparent opacity={0.6} />
         </Sphere>
       </Float>
 
@@ -338,8 +338,8 @@ const Scene = () => {
     <>
       <ambientLight intensity={0.15} />
       <pointLight position={[10, 10, 10]} intensity={0.5} color="#22d3ee" />
-      <pointLight position={[-10, -5, 5]} intensity={0.3} color="#a855f7" />
-      <pointLight position={[0, 8, 5]} intensity={0.4} color="#6366f1" />
+      <pointLight position={[-10, -5, 5]} intensity={0.3} color="#38bdf8" />
+      <pointLight position={[0, 8, 5]} intensity={0.4} color="#3b82f6" />
       
       <BackgroundStars />
       <GalaxyParticles />
