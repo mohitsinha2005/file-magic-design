@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const TILT_SELECTOR = ".elevated-card, .cert-card, .project-card, [data-tilt]";
-const PARALLAX_SELECTOR = ".section-title, .hero-image-frame, [data-parallax]";
+const TILT_SELECTOR = ".elevated-card, .cert-card, .project-card, .card-3d, [data-tilt]";
+const PARALLAX_SELECTOR =
+  ".section-title, .page-header-3d h1, .page-header-3d p, .hero-image-frame, [data-parallax]";
 
 const MAX_TILT = 7; // degrees
 const MAX_LIFT = 10; // px
