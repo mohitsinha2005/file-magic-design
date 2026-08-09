@@ -2,11 +2,13 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const SELECTOR = [
-  "main section > *",
-  "main .elevated-card",
-  "main .cert-card",
-  "main .project-card",
+  "section > *",
+  ".elevated-card",
+  ".cert-card",
+  ".project-card",
 ].join(", ");
+
+const EXCLUDE = "nav, header, footer, [data-no-reveal], .fixed, canvas";
 
 /**
  * Adds a subtle 3D scroll-reveal to page content that isn't already animated,
@@ -35,7 +37,10 @@ const AutoReveal = () => {
     let index = 0;
     const scan = () => {
       const nodes = Array.from(document.querySelectorAll<HTMLElement>(SELECTOR)).filter(
-        (el) => !el.dataset.reveal && !el.closest("[data-no-reveal]")
+        (el) =>
+          !el.dataset.reveal &&
+          !el.dataset.parallaxBound &&
+          !el.closest(EXCLUDE)
       );
       nodes.forEach((el) => {
         el.dataset.reveal = "true";

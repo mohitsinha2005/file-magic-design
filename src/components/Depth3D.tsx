@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const TILT_SELECTOR = ".elevated-card, .cert-card, .project-card, [data-tilt]";
-const PARALLAX_SELECTOR = "section h2.section-title, .hero-image-frame, [data-parallax]";
+const PARALLAX_SELECTOR = ".section-title, .hero-image-frame, [data-parallax]";
 
 const MAX_TILT = 7; // degrees
 const MAX_LIFT = 10; // px
@@ -91,7 +91,8 @@ const Depth3D = () => {
 
     const bindParallax = () => {
       document.querySelectorAll<HTMLElement>(PARALLAX_SELECTOR).forEach((el) => {
-        if (el.dataset.parallaxBound) return;
+        if (el.dataset.parallaxBound || el.dataset.reveal) return;
+        if (el.closest("nav, header, footer, [data-no-parallax]")) return;
         el.dataset.parallaxBound = "true";
         el.classList.add("parallax-layer");
         layers.push(el);
