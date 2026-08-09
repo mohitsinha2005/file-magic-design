@@ -9,7 +9,7 @@ const SELECTOR = [
 ].join(", ");
 
 /**
- * Adds a subtle scroll-reveal to page content that isn't already animated,
+ * Adds a subtle 3D scroll-reveal to page content that isn't already animated,
  * so every route shares the same motion language.
  */
 const AutoReveal = () => {
@@ -19,37 +19,51 @@ const AutoReveal = () => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (typeof IntersectionObserver === "undefined") return;
 
-    let observer: IntersectionObserver | null = null;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            el.classList.add("reveal-in");
+            observer.unobserve(el);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.05 }
+    );
 
-    const timer = window.setTimeout(() => {
+    let index = 0;
+    const scan = () => {
       const nodes = Array.from(document.querySelectorAll<HTMLElement>(SELECTOR)).filter(
         (el) => !el.dataset.reveal && !el.closest("[data-no-reveal]")
       );
-
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const el = entry.target as HTMLElement;
-              el.classList.add("reveal-in");
-              observer?.unobserve(el);
-            }
-          });
-        },
-        { rootMargin: "0px 0px -8% 0px", threshold: 0.05 }
-      );
-
-      nodes.forEach((el, i) => {
+      nodes.forEach((el) => {
         el.dataset.reveal = "true";
-        el.style.transitionDelay = `${Math.min(i, 6) * 60}ms`;
+        el.style.transitionDelay = `${Math.min(index++, 6) * 60}ms`;
         el.classList.add("reveal");
-        observer?.observe(el);
+        observer.observe(el);
       });
-    }, 120);
+    };
+
+    // Content can arrive late (lazy routes, suspense) — rescan on DOM changes.
+    let debounce = 0;
+    const mo = new MutationObserver(() => {
+      window.clearTimeout(debounce);
+      debounce = window.setTimeout(scan, 80);
+    });
+
+    scan();
+    mo.observe(document.body, { childList: true, subtree: true });
+    const stop = window.setTimeout(() => mo.disconnect(), 6000);
 
     return () => {
-      window.clearTimeout(timer);
-      observer?.disconnect();
+      window.clearTimeout(debounce);
+      window.clearTimeout(stop);
+      mo.disconnect();
+      observer.disconnect();
+      document
+        .querySelectorAll<HTMLElement>("[data-reveal]")
+        .forEach((el) => delete el.dataset.reveal);
     };
   }, [pathname]);
 
