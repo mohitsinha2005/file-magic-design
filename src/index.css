@@ -339,10 +339,12 @@
 
   /* Pointer-driven 3D tilt (applied by Depth3D) */
   .tilt-3d {
+    position: relative;
     transform-style: preserve-3d;
     transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
     will-change: transform;
   }
+
 
   .tilt-3d.tilt-active {
     transition: transform 0.12s ease-out, box-shadow 0.45s ease;
