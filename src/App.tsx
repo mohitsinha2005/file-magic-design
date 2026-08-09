@@ -8,6 +8,8 @@ import { AnimatePresence } from "framer-motion";
 import PageTransition from "./components/PageTransition";
 import ScrollProgress from "./components/ScrollProgress";
 import AutoReveal from "./components/AutoReveal";
+import Depth3D from "./components/Depth3D";
+
 import Index from "./pages/Index";
 
 
