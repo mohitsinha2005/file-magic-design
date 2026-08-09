@@ -323,23 +323,65 @@
 }
 
 @layer utilities {
-  /* Auto scroll reveal (applied by AutoReveal) */
+  /* Auto scroll reveal (applied by AutoReveal) — 3D depth entrance */
   .reveal {
     opacity: 0;
-    transform: translateY(24px) scale(0.985);
-    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: perspective(1200px) translate3d(0, 28px, -60px) rotateX(6deg) scale(0.985);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: opacity, transform;
   }
 
   .reveal-in {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: perspective(1200px) translate3d(0, 0, 0) rotateX(0deg) scale(1);
+  }
+
+  /* Pointer-driven 3D tilt (applied by Depth3D) */
+  .tilt-3d {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+    will-change: transform;
+  }
+
+
+  .tilt-3d.tilt-active {
+    transition: transform 0.12s ease-out, box-shadow 0.45s ease;
+    box-shadow: 0 24px 60px hsl(var(--glow-primary) / 0.22),
+      0 0 80px hsl(var(--glow-accent) / 0.08);
+  }
+
+  .tilt-3d::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(
+      420px circle at var(--glare-x, 50%) var(--glare-y, 50%),
+      hsl(var(--primary) / 0.14),
+      transparent 60%
+    );
+  }
+
+  .tilt-3d.tilt-active::after {
+    opacity: 1;
+  }
+
+  /* Scroll parallax layers (applied by Depth3D) */
+  .parallax-layer {
+    will-change: transform;
+    transform-style: preserve-3d;
   }
 
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; }
+    .tilt-3d, .parallax-layer { transform: none !important; }
   }
+
 
   /* Interactive lift used across cards and links */
   .motion-lift {

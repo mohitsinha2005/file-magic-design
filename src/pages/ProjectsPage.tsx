@@ -52,7 +52,7 @@ const ProjectsPage = () => {
             rel="noopener noreferrer"
             className="group block max-w-4xl mx-auto"
           >
-            <div className="relative rounded-3xl border border-border/40 bg-card/60 backdrop-blur-md overflow-hidden hover:border-primary/60 hover:shadow-[0_0_60px_-15px_hsl(var(--primary)/0.3)] transition-all duration-500">
+            <div data-tilt className="relative rounded-3xl border border-border/40 bg-card/60 backdrop-blur-md overflow-hidden hover:border-primary/60 hover:shadow-[0_0_60px_-15px_hsl(var(--primary)/0.3)] transition-all duration-500">
               {/* Project Image */}
               <div className="relative overflow-hidden">
                 <AspectRatio ratio={16 / 9}>
@@ -110,7 +110,7 @@ const ProjectsPage = () => {
             rel="noopener noreferrer"
             className="group block max-w-4xl mx-auto"
           >
-            <div className="relative rounded-3xl border border-border/40 bg-card/60 backdrop-blur-md overflow-hidden hover:border-primary/60 hover:shadow-[0_0_60px_-15px_hsl(var(--primary)/0.3)] transition-all duration-500">
+            <div data-tilt className="relative rounded-3xl border border-border/40 bg-card/60 backdrop-blur-md overflow-hidden hover:border-primary/60 hover:shadow-[0_0_60px_-15px_hsl(var(--primary)/0.3)] transition-all duration-500">
               <div className="relative overflow-hidden">
                 <AspectRatio ratio={16 / 9}>
                   <img
@@ -173,6 +173,7 @@ const ProjectsPage = () => {
             ].map((item, index) => (
               <div
                 key={index}
+                data-tilt
                 className="group relative p-8 rounded-2xl border border-dashed border-border/50 bg-muted/20 hover:border-primary/50 hover:bg-primary/5 transition-all duration-500"
               >
                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
