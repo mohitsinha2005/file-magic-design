@@ -48,6 +48,9 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
         </SafeCanvas>
       )}
       
+      {/* Coding rain motion layer */}
+      <CodeRain opacity={0.18} />
+
       {/* Enhanced glow effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]" />
