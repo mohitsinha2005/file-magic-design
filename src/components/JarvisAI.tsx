@@ -219,8 +219,8 @@ const JarvisAI = () => {
     if (greetedRef.current) return;
     greetedRef.current = true;
     const t = window.setTimeout(() => {
+      if (supported) startListening(); // wires handlers; speak() pauses/resumes it
       speak(WELCOME);
-      if (supported) startListening();
     }, 400);
     return () => window.clearTimeout(t);
   }, [open, speak, startListening, supported]);
