@@ -117,9 +117,16 @@ const JarvisAI = () => {
     stopAudio();
     // pause mic while assistant talks so it doesn't hear itself
     pauseRecognition();
+    // strip markdown/symbols so the voice sounds natural, not robotic
+    const spoken = text
+      .replace(/```[\s\S]*?```/g, " ")
+      .replace(/[*_`#>]/g, "")
+      .replace(/\[(.*?)\]\((.*?)\)/g, "$1")
+      .replace(/\s+/g, " ")
+      .trim();
     try {
       const { data, error } = await supabase.functions.invoke("jarvis-speak", {
-        body: { text, voice: "ash" },
+        body: { text: spoken, voice: "ash" },
       });
       if (error || !data?.audio) throw error || new Error("no audio");
       const audio = new Audio(`data:${data.mime || "audio/mpeg"};base64,${data.audio}`);

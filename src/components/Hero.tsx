@@ -2,6 +2,8 @@ import { lazy, Suspense } from "react";
 import { Mail, ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import SafeCanvas from "./SafeCanvas";
+import CodeRain from "./CodeRain";
+import CodeTyping from "./CodeTyping";
 const Hero3D = lazy(() => import("./Hero3D"));
 
 interface HeroProps {
@@ -46,6 +48,9 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
         </SafeCanvas>
       )}
       
+      {/* Coding rain motion layer */}
+      <CodeRain opacity={0.18} />
+
       {/* Enhanced glow effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]" />
@@ -151,9 +156,9 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
             </motion.div>
           </div>
 
-          {/* Profile Image */}
+          {/* Profile Image + live code panel */}
           <motion.div
-            className="order-1 md:order-2 flex justify-center md:justify-end perspective-1000"
+            className="order-1 md:order-2 flex flex-col items-center md:items-end gap-6 perspective-1000"
             variants={imageVariants}
           >
             <div className="hero-image-frame w-72 h-72 md:w-96 md:h-96 relative group">
@@ -165,6 +170,10 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
                 alt="Mohit Sinha - AI & Data Science Professional"
                 className="relative w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
+            </div>
+
+            <div className="w-full max-w-md">
+              <CodeTyping />
             </div>
           </motion.div>
         </div>

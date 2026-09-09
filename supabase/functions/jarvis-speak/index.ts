@@ -28,7 +28,10 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         model: "openai/gpt-4o-mini-tts",
         input: text.slice(0, 4000),
-        voice: voice || "onyx",
+        voice: voice || "ash",
+        instructions:
+          "Speak like a calm, confident human assistant. Warm, natural and conversational — not robotic. Clear articulation, relaxed pacing with natural pauses at commas and full stops, gentle intonation, and a friendly professional tone.",
+        speed: 0.98,
         response_format: "mp3",
       }),
     });
