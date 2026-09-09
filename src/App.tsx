@@ -51,6 +51,7 @@ const AppRoutes = () => {
       <ScrollProgress />
       <AutoReveal />
       <Depth3D />
+      <CodeStrip />
 
       {showBackground3D && (
         <Suspense fallback={null}>
