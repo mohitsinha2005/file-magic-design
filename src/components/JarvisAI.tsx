@@ -208,11 +208,29 @@ const JarvisAI = () => {
     setListening(false);
   };
 
+  // Auto-start: greet out loud and open the mic the first time Jarvis is opened.
+  const greetedRef = useRef(false);
+  useEffect(() => {
+    if (!open) {
+      stopAudio();
+      if (listeningRef.current) stopListening();
+      return;
+    }
+    if (greetedRef.current) return;
+    greetedRef.current = true;
+    const t = window.setTimeout(() => {
+      speak(WELCOME);
+      if (supported) startListening();
+    }, 400);
+    return () => window.clearTimeout(t);
+  }, [open, speak, startListening, supported]);
 
   const toggleMute = () => {
     if (!muted) stopAudio();
     setMuted(m => !m);
   };
+
+
 
 
   return (
