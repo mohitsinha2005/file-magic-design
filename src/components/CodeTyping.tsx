@@ -10,7 +10,7 @@ const LINES = [
   "model = RandomForestClassifier(n_estimators=300)",
   "model.fit(X, y)",
   "print(f'accuracy: {model.score(X, y):.2%}')",
-  "# >> accuracy: 96.４%",
+  "# >> accuracy: 96.4%",
 ];
 
 const prefersReduced = () =>
