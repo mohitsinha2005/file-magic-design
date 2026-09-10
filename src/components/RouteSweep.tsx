@@ -30,19 +30,12 @@ const RouteSweep = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        {/* tinted wipe */}
+        {/* slim progress line — restrained, professional */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-primary/25 via-background/70 to-accent/25 backdrop-blur-[2px]"
-          initial={{ x: "-100%" }}
-          animate={{ x: "100%" }}
-          transition={{ duration: 0.75, ease: [0.65, 0, 0.35, 1] }}
-        />
-        {/* scan bar */}
-        <motion.div
-          className="absolute inset-y-0 w-24 bg-gradient-to-r from-transparent via-primary to-transparent blur-md"
-          initial={{ x: "-20vw", opacity: 0.9 }}
-          animate={{ x: "105vw", opacity: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute top-0 left-0 h-[2px] bg-gradient-to-r from-primary via-accent to-primary"
+          initial={{ width: "0%", opacity: 1 }}
+          animate={{ width: "100%", opacity: 0 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         />
       </motion.div>
     </AnimatePresence>

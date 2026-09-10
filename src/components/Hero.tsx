@@ -49,7 +49,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
       )}
       
       {/* Coding rain motion layer */}
-      <CodeRain opacity={0.28} />
+      <CodeRain opacity={0.2} />
 
       {/* Enhanced glow effects */}
       <div className="absolute inset-0 pointer-events-none">
