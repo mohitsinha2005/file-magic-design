@@ -5,8 +5,8 @@ const TILT_SELECTOR = ".elevated-card, .cert-card, .project-card, .card-3d, [dat
 const PARALLAX_SELECTOR =
   ".section-title, .page-header-3d h1, .page-header-3d p, .hero-image-frame, [data-parallax]";
 
-const MAX_TILT = 7; // degrees
-const MAX_LIFT = 10; // px
+const MAX_TILT = 4; // degrees
+const MAX_LIFT = 6; // px
 
 /**
  * Global depth layer: pointer-driven 3D tilt on cards plus scroll parallax on

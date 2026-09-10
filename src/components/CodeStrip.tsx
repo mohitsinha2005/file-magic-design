@@ -10,10 +10,10 @@ const CodeStrip = () => (
       WebkitMaskImage: "linear-gradient(to top, black 25%, transparent 100%)",
     }}
   >
-    <CodeRain opacity={0.4} />
+    <CodeRain opacity={0.26} />
     {/* subtle scanline texture for a terminal feel */}
     <div
-      className="absolute inset-0 opacity-[0.12]"
+      className="absolute inset-0 opacity-[0.07]"
       style={{
         backgroundImage:
           "repeating-linear-gradient(to bottom, rgba(165,216,255,0.35) 0px, rgba(165,216,255,0.35) 1px, transparent 1px, transparent 4px)",
