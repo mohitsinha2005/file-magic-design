@@ -10,6 +10,7 @@ import ScrollProgress from "./components/ScrollProgress";
 import AutoReveal from "./components/AutoReveal";
 import Depth3D from "./components/Depth3D";
 import CodeStrip from "./components/CodeStrip";
+import RouteSweep from "./components/RouteSweep";
 
 import Index from "./pages/Index";
 
@@ -52,6 +53,7 @@ const AppRoutes = () => {
       <AutoReveal />
       <Depth3D />
       <CodeStrip />
+      <RouteSweep />
 
       {showBackground3D && (
         <Suspense fallback={null}>
@@ -61,7 +63,7 @@ const AppRoutes = () => {
       <Suspense fallback={<PageFallback />}>
         <AnimatePresence mode="wait" initial={false}>
           <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<PageTransition><Index /></PageTransition>} />
             <Route path="/skills" element={<PageTransition><SkillsPage /></PageTransition>} />
             <Route path="/projects" element={<PageTransition><ProjectsPage /></PageTransition>} />
             <Route path="/certifications" element={<PageTransition><CertificationsPage /></PageTransition>} />
