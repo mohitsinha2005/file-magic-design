@@ -6,7 +6,7 @@ const corsHeaders = {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
   try {
-    const { text, voice } = await req.json();
+    const { text, voice, speed } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
       return new Response(JSON.stringify({ error: "AI not configured" }), {
@@ -30,8 +30,8 @@ Deno.serve(async (req) => {
         input: text.slice(0, 4000),
         voice: voice || "ash",
         instructions:
-          "Speak like a calm, confident human assistant. Warm, natural and conversational — not robotic. Clear articulation, relaxed pacing with natural pauses at commas and full stops, gentle intonation, and a friendly professional tone.",
-        speed: 0.98,
+          "Speak like a calm, confident, professional human assistant. Very clear, crisp articulation with every word fully pronounced. Neutral warm tone, steady pacing, natural pauses at commas and full stops, no robotic or rushed delivery.",
+        speed: typeof speed === "number" ? speed : 1,
         response_format: "mp3",
       }),
     });
