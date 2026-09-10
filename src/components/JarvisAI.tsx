@@ -5,8 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 // JARVIS-style voice assistant powered by Lovable AI (Gemini) via edge function.
 // Uses Web Speech API for mic input and speechSynthesis for spoken replies.
 
-const WELCOME =
-  "Hello, I'm Jarvis — Mohit's personal AI assistant. I'm here to help you. Ask me anything about Mohit's skills, projects, education, or how to get in touch.";
+const WELCOME = "Hi, I'm Mohit's Jarvis. I'm here to help you.";
 
 
 type SpeechRecognitionLike = {
@@ -126,7 +125,7 @@ const JarvisAI = () => {
       .trim();
     try {
       const { data, error } = await supabase.functions.invoke("jarvis-speak", {
-        body: { text: spoken, voice: "ash" },
+        body: { text: spoken, voice: "ash", speed: 1 },
       });
       if (error || !data?.audio) throw error || new Error("no audio");
       const audio = new Audio(`data:${data.mime || "audio/mpeg"};base64,${data.audio}`);
@@ -218,9 +217,15 @@ const JarvisAI = () => {
     }
     if (greetedRef.current) return;
     greetedRef.current = true;
+    // Greet out loud only once per visit — later chats start silently.
+    let alreadyGreeted = false;
+    try { alreadyGreeted = sessionStorage.getItem("jarvis-greeted") === "1"; } catch {}
     const t = window.setTimeout(() => {
       if (supported) startListening(); // wires handlers; speak() pauses/resumes it
-      speak(WELCOME);
+      if (!alreadyGreeted) {
+        try { sessionStorage.setItem("jarvis-greeted", "1"); } catch {}
+        speak(WELCOME);
+      }
     }, 400);
     return () => window.clearTimeout(t);
   }, [open, speak, startListening, supported]);
