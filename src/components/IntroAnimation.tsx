@@ -414,6 +414,50 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
             </Canvas>
           </SafeCanvas>
 
+          {/* Code terminal typing sequence */}
+          <AnimatePresence>
+            {!showText && (
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center px-4 pointer-events-none"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="w-full max-w-xl rounded-xl border border-cyan-400/20 bg-[#05060f]/80 backdrop-blur-md shadow-[0_0_60px_rgba(34,211,238,0.15)] overflow-hidden">
+                  {/* Terminal bar */}
+                  <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/5 bg-white/[0.03]">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/70" />
+                    <span className="ml-3 text-[11px] tracking-widest text-cyan-300/60 uppercase font-mono">
+                      mohit@portfolio ~ python
+                    </span>
+                  </div>
+
+                  {/* Code body */}
+                  <div className="p-5 font-mono text-[13px] md:text-sm leading-relaxed min-h-[150px]">
+                    {CODE_LINES.map((line, i) => {
+                      if (i > lineIdx) return null;
+                      const value = i < lineIdx ? line.text : line.text.slice(0, charIdx);
+                      return (
+                        <div key={i} className="flex gap-3">
+                          <span className="select-none text-white/20 w-4 text-right">{i + 1}</span>
+                          <span style={{ color: line.color }}>
+                            <span className="text-emerald-400/70 mr-2">{">>>"}</span>
+                            {value}
+                            {i === lineIdx && (
+                              <span className="inline-block w-[7px] h-[15px] align-middle bg-cyan-300 ml-0.5 animate-pulse" />
+                            )}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Animated text overlay */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
