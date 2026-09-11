@@ -363,8 +363,8 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
     const pin = () => window.scrollTo(0, 0);
     window.addEventListener('scroll', pin, { passive: true });
 
-    const textTimer = setTimeout(() => setShowText(true), 200);
-    const fadeTimer = setTimeout(() => setFadeOut(true), 1000);
+    const textTimer = setTimeout(() => setShowText(true), 2350);
+    const fadeTimer = setTimeout(() => setFadeOut(true), 3400);
     const completeTimer = setTimeout(() => {
       window.removeEventListener('scroll', pin);
       document.documentElement.style.overflow = '';
