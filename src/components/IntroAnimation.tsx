@@ -332,7 +332,7 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
     if (lineIdx >= CODE_LINES.length) return;
     const current = CODE_LINES[lineIdx].text;
     if (charIdx <= current.length) {
-      const t = setTimeout(() => setCharIdx((c) => c + 1), 26);
+      const t = setTimeout(() => setCharIdx((c) => c + 1), 14);
       return () => clearTimeout(t);
     }
     const t = setTimeout(() => {
