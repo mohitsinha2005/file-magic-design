@@ -312,9 +312,36 @@ interface IntroAnimationProps {
   onComplete: () => void;
 }
 
+// Data-science code lines typed in the intro terminal
+const CODE_LINES = [
+  { text: "import mohit_sinha as ms", color: "#22d3ee" },
+  { text: "skills = ['Python', 'ML', 'AI', 'Data Science']", color: "#a5b4fc" },
+  { text: "profile = ms.load(skills)", color: "#38bdf8" },
+  { text: "profile.enter_portfolio()  # welcome", color: "#34d399" },
+];
+
 const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
   const [showText, setShowText] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
+  const [typed, setTyped] = useState<string[]>([]);
+  const [lineIdx, setLineIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+
+  // Type code lines one character at a time
+  useEffect(() => {
+    if (lineIdx >= CODE_LINES.length) return;
+    const current = CODE_LINES[lineIdx].text;
+    if (charIdx <= current.length) {
+      const t = setTimeout(() => setCharIdx((c) => c + 1), 26);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => {
+      setTyped((prev) => [...prev, current]);
+      setLineIdx((i) => i + 1);
+      setCharIdx(0);
+    }, 160);
+    return () => clearTimeout(t);
+  }, [lineIdx, charIdx]);
 
   useEffect(() => {
     // Disable browser scroll restoration so refresh always lands at top
