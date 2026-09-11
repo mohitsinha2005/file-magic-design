@@ -339,7 +339,7 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
       setTyped((prev) => [...prev, current]);
       setLineIdx((i) => i + 1);
       setCharIdx(0);
-    }, 160);
+    }, 90);
     return () => clearTimeout(t);
   }, [lineIdx, charIdx]);
 
