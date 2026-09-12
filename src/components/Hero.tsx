@@ -2,7 +2,6 @@ import { lazy, Suspense } from "react";
 import { Mail, ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import SafeCanvas from "./SafeCanvas";
-import CodeRain from "./CodeRain";
 import CodeTyping from "./CodeTyping";
 const Hero3D = lazy(() => import("./Hero3D"));
 
@@ -48,9 +47,6 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
         </SafeCanvas>
       )}
       
-      {/* Coding rain motion layer */}
-      <CodeRain opacity={0.2} />
-
       {/* Enhanced glow effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]" />

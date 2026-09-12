@@ -22,7 +22,6 @@ const AboutPage = lazy(() => import("./pages/AboutPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const ChatPage = lazy(() => import("./pages/ChatPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const Chatbot = lazy(() => import("./components/Chatbot"));
 const Background3D = lazy(() => import("./components/Background3D"));
 const JarvisAI = lazy(() => import("./components/JarvisAI"));
 
@@ -75,9 +74,6 @@ const AppRoutes = () => {
         </AnimatePresence>
       </Suspense>
 
-      <Suspense fallback={null}>
-        <Chatbot />
-      </Suspense>
       <Suspense fallback={null}>
         <JarvisAI />
       </Suspense>
