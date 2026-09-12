@@ -4,7 +4,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
 import PageTransition from "./components/PageTransition";
 import ScrollProgress from "./components/ScrollProgress";
 import AutoReveal from "./components/AutoReveal";
@@ -60,18 +59,16 @@ const AppRoutes = () => {
         </Suspense>
       )}
       <Suspense fallback={<PageFallback />}>
-        <AnimatePresence mode="wait" initial={false}>
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-            <Route path="/skills" element={<PageTransition><SkillsPage /></PageTransition>} />
-            <Route path="/projects" element={<PageTransition><ProjectsPage /></PageTransition>} />
-            <Route path="/certifications" element={<PageTransition><CertificationsPage /></PageTransition>} />
-            <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
-            <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
-            <Route path="/chat" element={<PageTransition><ChatPage /></PageTransition>} />
-            <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
-          </Routes>
-        </AnimatePresence>
+        <Routes location={location}>
+          <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+          <Route path="/skills" element={<PageTransition><SkillsPage /></PageTransition>} />
+          <Route path="/projects" element={<PageTransition><ProjectsPage /></PageTransition>} />
+          <Route path="/certifications" element={<PageTransition><CertificationsPage /></PageTransition>} />
+          <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
+          <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
+          <Route path="/chat" element={<PageTransition><ChatPage /></PageTransition>} />
+          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+        </Routes>
       </Suspense>
 
       <Suspense fallback={null}>
