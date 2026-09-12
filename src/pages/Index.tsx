@@ -55,25 +55,27 @@ const Index = () => {
         {!introComplete && <IntroAnimation onComplete={handleIntroComplete} />}
       </AnimatePresence>
 
-      {/* Main Content - fades in after intro */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: introComplete ? 1 : 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <Navigation />
-        <main>
-          <Hero profileImage={profileImage} isVisible={introComplete} />
-          <Skills />
-          <Projects />
-          <Certifications />
-          <About profileImage={aboutImage} />
-          <Resources />
-          <Suspense fallback={null}><LiveChat /></Suspense>
-          <CTA />
-        </main>
-        <Footer />
-      </motion.div>
+      {/* Mount the portfolio after the intro so hidden sections cannot restore scroll. */}
+      {introComplete && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+        >
+          <Navigation />
+          <main>
+            <Hero profileImage={profileImage} isVisible />
+            <Skills />
+            <Projects />
+            <Certifications />
+            <About profileImage={aboutImage} />
+            <Resources />
+            <Suspense fallback={null}><LiveChat /></Suspense>
+            <CTA />
+          </main>
+          <Footer />
+        </motion.div>
+      )}
     </div>
   );
 };

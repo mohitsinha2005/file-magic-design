@@ -322,7 +322,6 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
 
   useEffect(() => {
     // Disable browser scroll restoration so refresh always lands at top
-    const prevRestoration = window.history.scrollRestoration;
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
@@ -358,9 +357,6 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
       window.removeEventListener('scroll', pin);
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
-      if ('scrollRestoration' in window.history) {
-        window.history.scrollRestoration = prevRestoration || 'auto';
-      }
     };
   }, [onComplete]);
 
