@@ -1,6 +1,6 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Sphere, Torus, Box, Icosahedron, Line } from "@react-three/drei";
+import { Float, Line } from "@react-three/drei";
 import * as THREE from "three";
 
 // Dense galaxy spiral particles
@@ -110,9 +110,10 @@ const DataConstellation = () => {
         />
       ))}
       {nodes.map((n, i) => (
-        <Sphere key={`n${i}`} args={[0.04, 8, 8]} position={n}>
+        <mesh key={`n${i}`} position={n}>
+          <sphereGeometry args={[0.04, 8, 8]} />
           <meshBasicMaterial color={i % 2 === 0 ? '#22d3ee' : '#38bdf8'} transparent opacity={0.5} />
-        </Sphere>
+        </mesh>
       ))}
     </group>
   );
@@ -140,7 +141,8 @@ const NeuralNetwork = () => {
     <group ref={groupRef}>
       {nodes.map((node, i) => (
         <Float key={i} speed={1.5} rotationIntensity={0.1} floatIntensity={0.4}>
-          <Sphere args={[node.size, 16, 16]} position={node.pos}>
+          <mesh position={node.pos}>
+            <sphereGeometry args={[node.size, 12, 12]} />
             <meshStandardMaterial
               color="#60a5fa"
               emissive="#60a5fa"
@@ -148,7 +150,7 @@ const NeuralNetwork = () => {
               roughness={0.1}
               metalness={0.9}
             />
-          </Sphere>
+          </mesh>
         </Float>
       ))}
     </group>
@@ -180,7 +182,8 @@ const DataFlow = () => {
     <group ref={groupRef}>
       {cubes.map((cube, i) => (
         <Float key={i} speed={cube.speed} rotationIntensity={0.5} floatIntensity={0.6}>
-          <Box args={[cube.size, cube.size, cube.size]} position={cube.pos}>
+          <mesh position={cube.pos}>
+            <boxGeometry args={[cube.size, cube.size, cube.size]} />
             <meshStandardMaterial
               color={i % 2 === 0 ? "#22d3ee" : "#38bdf8"}
               emissive={i % 2 === 0 ? "#06b6d4" : "#0ea5e9"}
@@ -190,7 +193,7 @@ const DataFlow = () => {
               transparent
               opacity={0.85}
             />
-          </Box>
+          </mesh>
         </Float>
       ))}
     </group>
@@ -216,12 +219,14 @@ const OrbitRings = () => {
 
   return (
     <>
-      <Torus ref={ring1Ref} args={[2.2, 0.02, 16, 80]} position={[0, 0.5, -3]} rotation={[Math.PI / 2, 0, 0]}>
+      <mesh ref={ring1Ref} position={[0, 0.5, -3]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[2.2, 0.02, 16, 80]} />
         <meshBasicMaterial color="#22d3ee" transparent opacity={0.4} />
-      </Torus>
-      <Torus ref={ring2Ref} args={[2.8, 0.015, 16, 80]} position={[0, 0.5, -3]} rotation={[Math.PI / 3, Math.PI / 4, 0]}>
+      </mesh>
+      <mesh ref={ring2Ref} position={[0, 0.5, -3]} rotation={[Math.PI / 3, Math.PI / 4, 0]}>
+        <torusGeometry args={[2.8, 0.015, 16, 80]} />
         <meshBasicMaterial color="#38bdf8" transparent opacity={0.3} />
-      </Torus>
+      </mesh>
     </>
   );
 };
@@ -239,7 +244,8 @@ const AICore = () => {
 
   return (
     <Float speed={1.2} rotationIntensity={0.2} floatIntensity={0.5}>
-      <Icosahedron ref={meshRef} args={[0.5, 0]} position={[0, 0.5, -2]}>
+      <mesh ref={meshRef} position={[0, 0.5, -2]}>
+        <icosahedronGeometry args={[0.5, 0]} />
         <meshStandardMaterial
           color="#3b82f6"
           emissive="#2563eb"
@@ -249,7 +255,7 @@ const AICore = () => {
           transparent
           opacity={0.9}
         />
-      </Icosahedron>
+      </mesh>
     </Float>
   );
 };
@@ -259,7 +265,8 @@ const AccentOrbs = () => {
   return (
     <>
       <Float speed={2} rotationIntensity={0.2} floatIntensity={0.6}>
-        <Sphere args={[0.15, 16, 16]} position={[3, 2.5, -3]}>
+        <mesh position={[3, 2.5, -3]}>
+          <sphereGeometry args={[0.15, 12, 12]} />
           <meshStandardMaterial
             color="#93c5fd"
             emissive="#60a5fa"
@@ -267,11 +274,12 @@ const AccentOrbs = () => {
             roughness={0.2}
             metalness={0.8}
           />
-        </Sphere>
+        </mesh>
       </Float>
 
       <Float speed={1.6} rotationIntensity={0.3} floatIntensity={0.5}>
-        <Sphere args={[0.1, 16, 16]} position={[-4, -2, -2]}>
+        <mesh position={[-4, -2, -2]}>
+          <sphereGeometry args={[0.1, 12, 12]} />
           <meshStandardMaterial
             color="#0ea5e9"
             emissive="#0284c7"
@@ -279,19 +287,21 @@ const AccentOrbs = () => {
             roughness={0.2}
             metalness={0.8}
           />
-        </Sphere>
+        </mesh>
       </Float>
 
       <Float speed={1.8} rotationIntensity={0.2} floatIntensity={0.7}>
-        <Sphere args={[0.12, 16, 16]} position={[2, -2.5, -4]}>
+        <mesh position={[2, -2.5, -4]}>
+          <sphereGeometry args={[0.12, 12, 12]} />
           <meshBasicMaterial color="#60a5fa" transparent opacity={0.6} />
-        </Sphere>
+        </mesh>
       </Float>
 
       <Float speed={2.2} rotationIntensity={0.25} floatIntensity={0.5}>
-        <Sphere args={[0.08, 16, 16]} position={[-2.5, 2, -2.5]}>
+        <mesh position={[-2.5, 2, -2.5]}>
+          <sphereGeometry args={[0.08, 12, 12]} />
           <meshBasicMaterial color="#22d3ee" transparent opacity={0.7} />
-        </Sphere>
+        </mesh>
       </Float>
     </>
   );
@@ -354,13 +364,37 @@ const Scene = () => {
 };
 
 const Hero3D = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isActive, setIsActive] = useState(true);
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element || typeof IntersectionObserver === "undefined") return;
+
+    const updateVisibility = (visible: boolean) => {
+      setIsActive(visible && document.visibilityState === "visible");
+    };
+    const observer = new IntersectionObserver(
+      ([entry]) => updateVisibility(entry?.isIntersecting ?? false),
+      { rootMargin: "120px 0px" }
+    );
+    const onVisibility = () => updateVisibility(element.getBoundingClientRect().bottom > -120);
+
+    observer.observe(element);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, []);
+
   return (
-    <div className="absolute inset-0 pointer-events-none opacity-60">
+    <div ref={containerRef} className="absolute inset-0 pointer-events-none opacity-60">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         style={{ background: "transparent" }}
         dpr={[1, 1.25]}
-        frameloop="always"
+        frameloop={isActive ? "always" : "never"}
         performance={{ min: 0.5 }}
         gl={{ antialias: false, powerPreference: "high-performance", failIfMajorPerformanceCaveat: false }}
       >

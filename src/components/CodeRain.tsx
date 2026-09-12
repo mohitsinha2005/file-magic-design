@@ -14,6 +14,7 @@ const CodeRain = ({ opacity = 0.22 }: { opacity?: number }) => {
     if (!ctx) return;
 
     let raf = 0;
+    let active = true;
     let cols = 0;
     let drops: number[] = [];
     const fontSize = 14;
@@ -30,6 +31,7 @@ const CodeRain = ({ opacity = 0.22 }: { opacity?: number }) => {
     let last = 0;
     const draw = (t: number) => {
       raf = requestAnimationFrame(draw);
+      if (!active || document.visibilityState !== "visible") return;
       if (t - last < 55) return;
       last = t;
       ctx.fillStyle = "rgba(5, 9, 20, 0.18)";
@@ -44,10 +46,17 @@ const CodeRain = ({ opacity = 0.22 }: { opacity?: number }) => {
         drops[i]++;
       }
     };
+    const observer = typeof IntersectionObserver !== "undefined"
+      ? new IntersectionObserver(([entry]) => {
+          active = entry?.isIntersecting ?? false;
+        }, { rootMargin: "100px" })
+      : null;
+    observer?.observe(canvas);
     raf = requestAnimationFrame(draw);
 
     return () => {
       cancelAnimationFrame(raf);
+      observer?.disconnect();
       window.removeEventListener("resize", resize);
     };
   }, []);

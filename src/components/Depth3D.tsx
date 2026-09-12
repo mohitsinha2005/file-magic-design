@@ -106,24 +106,15 @@ const Depth3D = () => {
       bindParallax();
     };
 
-    // Lazy routes mount late — rescan while the page settles.
-    let debounce = 0;
-    const mo = new MutationObserver(() => {
-      window.clearTimeout(debounce);
-      debounce = window.setTimeout(scan, 80);
-    });
-
-    scan();
-    mo.observe(document.body, { childList: true, subtree: true });
-    const stop = window.setTimeout(() => mo.disconnect(), 6000);
+    const firstScan = window.requestAnimationFrame(scan);
+    const settledScan = window.setTimeout(scan, 300);
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
 
     return () => {
-      window.clearTimeout(debounce);
-      window.clearTimeout(stop);
-      mo.disconnect();
+      window.cancelAnimationFrame(firstScan);
+      window.clearTimeout(settledScan);
       if (raf) cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);

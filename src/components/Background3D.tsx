@@ -1,6 +1,6 @@
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Sphere } from "@react-three/drei";
+import { Float } from "@react-three/drei";
 import * as THREE from "three";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -76,7 +76,8 @@ const FloatingOrbs = () => {
   return (
     <>
       <Float speed={1} rotationIntensity={0.2} floatIntensity={0.5}>
-        <Sphere args={[0.35, 12, 12]} position={[-5, 2, -6]}>
+        <mesh position={[-5, 2, -6]}>
+          <sphereGeometry args={[0.35, 12, 12]} />
           <meshStandardMaterial
             color="#22d3ee"
             roughness={0.4}
@@ -84,11 +85,12 @@ const FloatingOrbs = () => {
             transparent
             opacity={0.3}
           />
-        </Sphere>
+        </mesh>
       </Float>
 
       <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.6}>
-        <Sphere args={[0.25, 12, 12]} position={[6, -2, -7]}>
+        <mesh position={[6, -2, -7]}>
+          <sphereGeometry args={[0.25, 12, 12]} />
           <meshStandardMaterial
             color="#a855f7"
             roughness={0.5}
@@ -96,11 +98,12 @@ const FloatingOrbs = () => {
             transparent
             opacity={0.25}
           />
-        </Sphere>
+        </mesh>
       </Float>
 
       <Float speed={0.8} rotationIntensity={0.25} floatIntensity={0.4}>
-        <Sphere args={[0.3, 12, 12]} position={[4, 3, -8]}>
+        <mesh position={[4, 3, -8]}>
+          <sphereGeometry args={[0.3, 12, 12]} />
           <meshStandardMaterial
             color="#6366f1"
             roughness={0.3}
@@ -108,7 +111,7 @@ const FloatingOrbs = () => {
             transparent
             opacity={0.3}
           />
-        </Sphere>
+        </mesh>
       </Float>
     </>
   );
