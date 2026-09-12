@@ -46,15 +46,17 @@ const CodeRain = ({ opacity = 0.22 }: { opacity?: number }) => {
         drops[i]++;
       }
     };
-    const observer = new IntersectionObserver(([entry]) => {
-      active = entry?.isIntersecting ?? false;
-    }, { rootMargin: "100px" });
-    observer.observe(canvas);
+    const observer = typeof IntersectionObserver !== "undefined"
+      ? new IntersectionObserver(([entry]) => {
+          active = entry?.isIntersecting ?? false;
+        }, { rootMargin: "100px" })
+      : null;
+    observer?.observe(canvas);
     raf = requestAnimationFrame(draw);
 
     return () => {
       cancelAnimationFrame(raf);
-      observer.disconnect();
+      observer?.disconnect();
       window.removeEventListener("resize", resize);
     };
   }, []);

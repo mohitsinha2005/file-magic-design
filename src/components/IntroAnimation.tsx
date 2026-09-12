@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float, Sphere, Points, PointMaterial } from "@react-three/drei";
+import { Float } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 import * as THREE from "three";
 import SafeCanvas from "./SafeCanvas";
@@ -99,7 +99,8 @@ const NebulaClouds = () => {
     <group ref={groupRef}>
       {clouds.map((cloud, i) => (
         <Float key={i} speed={0.5 + i * 0.1} rotationIntensity={0.1} floatIntensity={0.2}>
-          <Sphere args={[cloud.scale, 24, 24]} position={cloud.pos}>
+          <mesh position={cloud.pos}>
+            <sphereGeometry args={[cloud.scale, 16, 16]} />
             <meshStandardMaterial
               color={cloud.color}
               emissive={cloud.color}
@@ -109,7 +110,7 @@ const NebulaClouds = () => {
               roughness={1}
               metalness={0}
             />
-          </Sphere>
+          </mesh>
         </Float>
       ))}
     </group>
@@ -140,10 +141,12 @@ const CentralStar = () => {
 
   return (
     <group>
-      <Sphere ref={glowRef} args={[0.6, 32, 32]} scale={0.01}>
+      <mesh ref={glowRef} scale={0.01}>
+        <sphereGeometry args={[0.6, 24, 24]} />
         <meshBasicMaterial color="#3b82f6" transparent opacity={0.15} />
-      </Sphere>
-      <Sphere ref={meshRef} args={[0.5, 32, 32]} scale={0.01}>
+      </mesh>
+      <mesh ref={meshRef} scale={0.01}>
+        <sphereGeometry args={[0.5, 24, 24]} />
         <meshStandardMaterial
           color="#ffffff"
           emissive="#60a5fa"
@@ -151,7 +154,7 @@ const CentralStar = () => {
           roughness={0}
           metalness={1}
         />
-      </Sphere>
+      </mesh>
     </group>
   );
 };
@@ -219,7 +222,8 @@ const DataOrbs = () => {
     <group ref={groupRef}>
       {orbs.map((orb, i) => (
         <Float key={i} speed={1.5 + i * 0.2} rotationIntensity={0.2} floatIntensity={0.5}>
-          <Sphere args={[orb.size, 16, 16]} position={orb.pos}>
+          <mesh position={orb.pos}>
+            <sphereGeometry args={[orb.size, 12, 12]} />
             <meshStandardMaterial
               color={orb.color}
               emissive={orb.color}
@@ -227,7 +231,7 @@ const DataOrbs = () => {
               roughness={0.1}
               metalness={0.9}
             />
-          </Sphere>
+          </mesh>
         </Float>
       ))}
     </group>
@@ -374,10 +378,10 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
           <SafeCanvas>
             <Canvas
               camera={{ position: [0, 0, 15], fov: 60 }}
-              dpr={[1, 1.5]}
+              dpr={1}
               style={{ background: "transparent" }}
               gl={{
-                antialias: true,
+                antialias: false,
                 alpha: true,
                 powerPreference: "high-performance",
                 failIfMajorPerformanceCaveat: false,

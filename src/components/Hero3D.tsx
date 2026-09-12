@@ -1,6 +1,6 @@
 import { useRef, useMemo, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Sphere, Line } from "@react-three/drei";
+import { Float, Line } from "@react-three/drei";
 import * as THREE from "three";
 
 // Dense galaxy spiral particles
@@ -110,9 +110,10 @@ const DataConstellation = () => {
         />
       ))}
       {nodes.map((n, i) => (
-        <Sphere key={`n${i}`} args={[0.04, 8, 8]} position={n}>
+        <mesh key={`n${i}`} position={n}>
+          <sphereGeometry args={[0.04, 8, 8]} />
           <meshBasicMaterial color={i % 2 === 0 ? '#22d3ee' : '#38bdf8'} transparent opacity={0.5} />
-        </Sphere>
+        </mesh>
       ))}
     </group>
   );
@@ -140,7 +141,8 @@ const NeuralNetwork = () => {
     <group ref={groupRef}>
       {nodes.map((node, i) => (
         <Float key={i} speed={1.5} rotationIntensity={0.1} floatIntensity={0.4}>
-          <Sphere args={[node.size, 16, 16]} position={node.pos}>
+          <mesh position={node.pos}>
+            <sphereGeometry args={[node.size, 12, 12]} />
             <meshStandardMaterial
               color="#60a5fa"
               emissive="#60a5fa"
@@ -148,7 +150,7 @@ const NeuralNetwork = () => {
               roughness={0.1}
               metalness={0.9}
             />
-          </Sphere>
+          </mesh>
         </Float>
       ))}
     </group>
@@ -263,7 +265,8 @@ const AccentOrbs = () => {
   return (
     <>
       <Float speed={2} rotationIntensity={0.2} floatIntensity={0.6}>
-        <Sphere args={[0.15, 16, 16]} position={[3, 2.5, -3]}>
+        <mesh position={[3, 2.5, -3]}>
+          <sphereGeometry args={[0.15, 12, 12]} />
           <meshStandardMaterial
             color="#93c5fd"
             emissive="#60a5fa"
@@ -271,11 +274,12 @@ const AccentOrbs = () => {
             roughness={0.2}
             metalness={0.8}
           />
-        </Sphere>
+        </mesh>
       </Float>
 
       <Float speed={1.6} rotationIntensity={0.3} floatIntensity={0.5}>
-        <Sphere args={[0.1, 16, 16]} position={[-4, -2, -2]}>
+        <mesh position={[-4, -2, -2]}>
+          <sphereGeometry args={[0.1, 12, 12]} />
           <meshStandardMaterial
             color="#0ea5e9"
             emissive="#0284c7"
@@ -283,19 +287,21 @@ const AccentOrbs = () => {
             roughness={0.2}
             metalness={0.8}
           />
-        </Sphere>
+        </mesh>
       </Float>
 
       <Float speed={1.8} rotationIntensity={0.2} floatIntensity={0.7}>
-        <Sphere args={[0.12, 16, 16]} position={[2, -2.5, -4]}>
+        <mesh position={[2, -2.5, -4]}>
+          <sphereGeometry args={[0.12, 12, 12]} />
           <meshBasicMaterial color="#60a5fa" transparent opacity={0.6} />
-        </Sphere>
+        </mesh>
       </Float>
 
       <Float speed={2.2} rotationIntensity={0.25} floatIntensity={0.5}>
-        <Sphere args={[0.08, 16, 16]} position={[-2.5, 2, -2.5]}>
+        <mesh position={[-2.5, 2, -2.5]}>
+          <sphereGeometry args={[0.08, 12, 12]} />
           <meshBasicMaterial color="#22d3ee" transparent opacity={0.7} />
-        </Sphere>
+        </mesh>
       </Float>
     </>
   );
