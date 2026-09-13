@@ -26,6 +26,21 @@ const Index = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    if (!introComplete) return;
+    const resetTop = () => window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    resetTop();
+    const frame = requestAnimationFrame(resetTop);
+    const settle = window.setTimeout(resetTop, 250);
+    const release = window.setTimeout(resetTop, 700);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(settle);
+      window.clearTimeout(release);
+    };
+  }, [introComplete]);
+
   const handleIntroComplete = useCallback(() => {
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
