@@ -31,13 +31,13 @@ const Index = () => {
     const resetTop = () => window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     resetTop();
     const frame = requestAnimationFrame(resetTop);
-    const settle = window.setTimeout(resetTop, 250);
-    const release = window.setTimeout(resetTop, 700);
+    const settleTimers = [100, 250, 500, 800, 1200, 1600].map((delay) =>
+      window.setTimeout(resetTop, delay),
+    );
 
     return () => {
       cancelAnimationFrame(frame);
-      window.clearTimeout(settle);
-      window.clearTimeout(release);
+      settleTimers.forEach(window.clearTimeout);
     };
   }, [introComplete]);
 
