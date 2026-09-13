@@ -28,16 +28,26 @@ const Index = () => {
 
   useEffect(() => {
     if (!introComplete) return;
-    const resetTop = () => window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    const resetTop = () => {
+      document.documentElement.style.scrollBehavior = "auto";
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
     resetTop();
     const frame = requestAnimationFrame(resetTop);
     const settleTimers = [100, 250, 500, 800, 1200, 1600].map((delay) =>
       window.setTimeout(resetTop, delay),
     );
+    const restoreSmoothScroll = window.setTimeout(() => {
+      document.documentElement.style.removeProperty("scroll-behavior");
+    }, 1700);
 
     return () => {
       cancelAnimationFrame(frame);
       settleTimers.forEach(window.clearTimeout);
+      window.clearTimeout(restoreSmoothScroll);
+      document.documentElement.style.removeProperty("scroll-behavior");
     };
   }, [introComplete]);
 
