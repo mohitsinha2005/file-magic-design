@@ -28,24 +28,16 @@ const Index = () => {
 
   useEffect(() => {
     if (!introComplete) return;
-    const root = document.documentElement;
-    const previousAnchor = root.style.overflowAnchor;
-    root.style.overflowAnchor = "none";
-
     const resetTop = () => window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     resetTop();
     const frame = requestAnimationFrame(resetTop);
     const settle = window.setTimeout(resetTop, 250);
-    const release = window.setTimeout(() => {
-      resetTop();
-      root.style.overflowAnchor = previousAnchor;
-    }, 700);
+    const release = window.setTimeout(resetTop, 700);
 
     return () => {
       cancelAnimationFrame(frame);
       window.clearTimeout(settle);
       window.clearTimeout(release);
-      root.style.overflowAnchor = previousAnchor;
     };
   }, [introComplete]);
 

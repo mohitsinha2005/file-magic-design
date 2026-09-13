@@ -96,6 +96,7 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    overflow-x: hidden;
     font-family: 'Inter', sans-serif;
     background-image: 
       /* Subtle star field effect */
@@ -117,6 +118,8 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    overflow-anchor: none;
     -webkit-text-size-adjust: 100%;
   }
 
