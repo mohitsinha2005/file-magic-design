@@ -1,6 +1,8 @@
+import { forwardRef } from "react";
+import { Link } from "react-router-dom";
 import { Github, Linkedin, Mail } from "lucide-react";
 
-const Footer = () => {
+const Footer = forwardRef<HTMLElement>((_props, ref) => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
@@ -31,7 +33,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="footer-section">
+    <footer ref={ref} className="footer-section">
       <div className="section-container">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
@@ -66,9 +68,20 @@ const Footer = () => {
               <ul className="space-y-2">
                 {group.links.map((link, i) => (
                   <li key={i}>
-                    <a href={link.href} className="text-muted-foreground hover:text-foreground transition-colors text-sm">
-                      {link.label}
-                    </a>
+                    {link.href.startsWith("/") && !link.href.startsWith("/resume") ? (
+                      <Link to={link.href} className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                        target={link.href.startsWith("http") || link.href.startsWith("/resume") ? "_blank" : undefined}
+                        rel="noopener noreferrer"
+                      >
+                        {link.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -93,6 +106,8 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+});
+
+Footer.displayName = "Footer";
 
 export default Footer;
