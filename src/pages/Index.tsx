@@ -11,7 +11,7 @@ import Resources from "@/components/Resources";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import IntroAnimation from "@/components/IntroAnimation";
-import profileMohit from "@/assets/profile-mohit.jpg";
+import profileMohit from "@/assets/profile-library.jpg.asset.json";
 import profileHero from "@/assets/profile-hero.jpg";
 
 const LiveChat = lazy(() => import("@/components/LiveChat"));
