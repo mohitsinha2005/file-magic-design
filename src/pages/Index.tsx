@@ -19,7 +19,7 @@ const LiveChat = lazy(() => import("@/components/LiveChat"));
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
   const profileImage = profileHero;
-  const aboutImage = profileMohit;
+  const aboutImage = profileMohit.url;
 
   // Force scroll to top on mount
   useEffect(() => {
