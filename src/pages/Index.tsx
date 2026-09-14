@@ -11,7 +11,7 @@ import Resources from "@/components/Resources";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import IntroAnimation from "@/components/IntroAnimation";
-import profileMohit from "@/assets/profile-mohit.jpg";
+import profileMohit from "@/assets/profile-library.jpg.asset.json";
 import profileHero from "@/assets/profile-hero.jpg";
 
 const LiveChat = lazy(() => import("@/components/LiveChat"));
@@ -19,7 +19,7 @@ const LiveChat = lazy(() => import("@/components/LiveChat"));
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
   const profileImage = profileHero;
-  const aboutImage = profileMohit;
+  const aboutImage = profileMohit.url;
 
   // Force scroll to top on mount
   useEffect(() => {
