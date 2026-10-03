@@ -19,7 +19,9 @@ const LiveChat = lazy(() => import("@/components/LiveChat"));
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
   const profileImage = profileHero;
-  const aboutImage = profileMohit.url;
+  // The asset path is not served by third-party hosts (and the local preview
+  // can return index.html for it); the published asset origin serves the photo.
+  const aboutImage = `https://file-magic-design.lovable.app${profileMohit.url}`;
 
   // Force scroll to top on mount
   useEffect(() => {

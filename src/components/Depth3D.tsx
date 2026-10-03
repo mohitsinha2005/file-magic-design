@@ -108,6 +108,19 @@ const Depth3D = () => {
 
     const firstScan = window.requestAnimationFrame(scan);
     const settledScan = window.setTimeout(scan, 300);
+    // The home content mounts after the intro, and other pages are lazy loaded.
+    // Rebind when new content is inserted rather than missing those elements.
+    let pendingScan = 0;
+    const observer = new MutationObserver((mutations) => {
+      if (!mutations.some(({ addedNodes }) =>
+        Array.from(addedNodes).some((node) => node instanceof HTMLElement &&
+          (node.matches("section, main, [data-tilt], .card-3d") || node.querySelector("section, main, [data-tilt], .card-3d"))))) return;
+      if (!pendingScan) pendingScan = requestAnimationFrame(() => {
+        pendingScan = 0;
+        scan();
+      });
+    });
+    observer.observe(document.getElementById("root") ?? document.body, { childList: true, subtree: true });
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
@@ -115,6 +128,8 @@ const Depth3D = () => {
     return () => {
       window.cancelAnimationFrame(firstScan);
       window.clearTimeout(settledScan);
+      observer.disconnect();
+      if (pendingScan) cancelAnimationFrame(pendingScan);
       if (raf) cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
