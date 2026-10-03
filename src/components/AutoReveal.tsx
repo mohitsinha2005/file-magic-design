@@ -52,10 +52,23 @@ const AutoReveal = () => {
 
     const firstScan = window.requestAnimationFrame(scan);
     const settledScan = window.setTimeout(scan, 300);
+    let pendingScan = 0;
+    const addedContent = new MutationObserver((mutations) => {
+      if (!mutations.some(({ addedNodes }) =>
+        Array.from(addedNodes).some((node) => node instanceof HTMLElement &&
+          (node.matches("section, main") || node.querySelector("section, main"))))) return;
+      if (!pendingScan) pendingScan = requestAnimationFrame(() => {
+        pendingScan = 0;
+        scan();
+      });
+    });
+    addedContent.observe(document.getElementById("root") ?? document.body, { childList: true, subtree: true });
 
     return () => {
       window.cancelAnimationFrame(firstScan);
       window.clearTimeout(settledScan);
+      addedContent.disconnect();
+      if (pendingScan) cancelAnimationFrame(pendingScan);
       observer.disconnect();
       document
         .querySelectorAll<HTMLElement>("[data-reveal]")

@@ -56,16 +56,17 @@ const About = ({ profileImage }: AboutProps) => {
           {/* Visual with Stats */}
           <ScrollReveal direction="right" delay={0.2}>
             <div className="flex flex-col items-center gap-8">
-              <div className="hero-image-frame w-64 h-64 rounded-2xl overflow-hidden">
+              <div className="profile-portrait-frame relative w-72 h-72 sm:w-80 sm:h-80" data-tilt>
                 <img
                   src={profileImage}
-                  alt="Mohit Sinha"
-                  className="w-full h-full object-cover"
+                  alt="Mohit Sinha seated at a library desk"
+                  className="relative block w-full h-full rounded-lg object-cover object-center"
+                  loading="lazy"
                 />
               </div>
 
               {/* Stats */}
-              <div className="flex gap-6">
+              <div className="flex flex-wrap justify-center gap-3 sm:gap-6">
                 {stats.map((stat, index) => (
                   <ScrollReveal key={index} delay={0.4 + index * 0.1} direction="up">
                     <div className="stat-circle">
