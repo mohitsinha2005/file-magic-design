@@ -1,5 +1,6 @@
 # Current work
 
-- [x] Restore the last home-page portrait with an image address that loads in the preview and deployed site.
-- [x] Improve the portrait presentation and ensure existing 3D/reveal motion binds after delayed pages mount.
-- [x] Verify the photo and motion on desktop and mobile in the live preview.
+- [ ] Replace the main home portrait with the new professionally edited headshot.
+- [ ] Correct the Professional Profile portrait crop and alignment.
+- [ ] Refine page-wide reveal and 3D motion without reducing performance or accessibility.
+- [ ] Verify portraits and motion on desktop and mobile.

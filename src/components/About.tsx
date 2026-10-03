@@ -56,11 +56,11 @@ const About = ({ profileImage }: AboutProps) => {
           {/* Visual with Stats */}
           <ScrollReveal direction="right" delay={0.2}>
             <div className="flex flex-col items-center gap-8">
-              <div className="profile-portrait-frame relative w-72 h-72 sm:w-80 sm:h-80" data-tilt>
+              <div className="profile-portrait-frame relative w-64 sm:w-72 aspect-[4/5]" data-tilt>
                 <img
                   src={profileImage}
                   alt="Mohit Sinha seated at a library desk"
-                  className="relative block w-full h-full rounded-lg object-cover object-center"
+                  className="profile-portrait-image relative block w-full h-full rounded-lg object-cover"
                   loading="lazy"
                 />
               </div>

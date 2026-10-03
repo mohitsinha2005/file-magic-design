@@ -47,12 +47,6 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
         </SafeCanvas>
       )}
       
-      {/* Enhanced glow effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[100px]" />
-      </div>
-
       <motion.div
         className="section-container relative z-10"
         variants={containerVariants}
@@ -65,26 +59,14 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
             <motion.div className="space-y-6" variants={containerVariants}>
               <motion.h1
                 variants={itemVariants}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight font-heading"
-                style={{
-                  background: "linear-gradient(135deg, #ffffff 0%, #7cc4ff 45%, #3b82f6 100%)",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  color: "transparent",
-                }}
+                className="hero-name text-4xl md:text-5xl lg:text-6xl font-bold leading-tight font-heading"
               >
                 Mohit Sinha
               </motion.h1>
               
               <motion.p
                 variants={itemVariants}
-                className="text-xl md:text-2xl font-medium"
-                style={{
-                  background: "linear-gradient(90deg, #60a5fa, #38bdf8)",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  color: "transparent",
-                }}
+                className="gradient-text text-xl md:text-2xl font-medium"
               >
                 AI & Data Science Professional
               </motion.p>
@@ -157,14 +139,13 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
             className="order-1 md:order-2 flex flex-col items-center md:items-end gap-6 perspective-1000"
             variants={imageVariants}
           >
-            <div className="hero-image-frame w-72 h-72 md:w-96 md:h-96 relative group">
-              {/* Neon glow ring */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-primary via-accent to-primary rounded-full opacity-50 blur-xl group-hover:opacity-75 transition-opacity duration-500 animate-pulse" />
-              
+            <div className="hero-portrait-shell hero-image-frame w-72 h-72 md:w-96 md:h-96 relative group" data-tilt>
+              <span className="portrait-corner portrait-corner-top" aria-hidden="true" />
+              <span className="portrait-corner portrait-corner-bottom" aria-hidden="true" />
               <img
                 src={profileImage}
                 alt="Mohit Sinha - AI & Data Science Professional"
-                className="relative w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="relative w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.025]"
               />
             </div>
 
