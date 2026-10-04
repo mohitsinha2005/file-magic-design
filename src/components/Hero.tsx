@@ -149,6 +149,19 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
                   </motion.a>
                 ))}
               </motion.div>
+
+              {/* Data Science Stats */}
+              <motion.div variants={itemVariants} className="hero-stats">
+                {heroStats.map((stat) => (
+                  <div key={stat.label} className="hero-stat">
+                    <stat.icon size={18} className="text-accent" />
+                    <div>
+                      <div className="hero-stat-value">{stat.value}</div>
+                      <div className="hero-stat-label">{stat.label}</div>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
             </motion.div>
           </div>
 
