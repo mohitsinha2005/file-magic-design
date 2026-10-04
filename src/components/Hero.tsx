@@ -53,7 +53,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center section pt-24 relative overflow-hidden">
+    <section id="home" className="min-h-screen flex items-center section pt-24 relative overflow-hidden data-grid-bg">
       {isVisible && (
         <SafeCanvas>
           <Suspense fallback={null}><Hero3D /></Suspense>
