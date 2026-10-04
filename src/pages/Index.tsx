@@ -12,13 +12,13 @@ import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import IntroAnimation from "@/components/IntroAnimation";
 import profileMohit from "@/assets/profile-library.jpg.asset.json";
-import profileHero from "@/assets/mohit-professional-headshot.png";
+import profileHero from "@/assets/mohit-studio-portrait.png.asset.json";
 
 const LiveChat = lazy(() => import("@/components/LiveChat"));
 
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
-  const profileImage = profileHero;
+  const profileImage = `https://file-magic-design.lovable.app${profileHero.url}`;
   // The asset path is not served by third-party hosts (and the local preview
   // can return index.html for it); the published asset origin serves the photo.
   const aboutImage = `https://file-magic-design.lovable.app${profileMohit.url}`;

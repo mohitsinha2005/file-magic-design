@@ -145,7 +145,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
               <img
                 src={profileImage}
                 alt="Mohit Sinha - AI & Data Science Professional"
-                className="relative w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.025]"
+                className="relative w-full h-full object-cover object-center transition-transform duration-700"
               />
             </div>
 

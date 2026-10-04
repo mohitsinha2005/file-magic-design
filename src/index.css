@@ -255,6 +255,12 @@
 
   .hero-portrait-shell img {
     border-radius: 0.7rem;
+    backface-visibility: hidden;
+    transform: translateZ(10px);
+  }
+
+  .hero-portrait-shell.tilt-active img {
+    transform: translateZ(22px) scale(1.015);
   }
 
   .portrait-corner {
@@ -284,6 +290,7 @@
     isolation: isolate;
     border: 1px solid hsl(var(--primary) / 0.45);
     border-radius: 0.5rem;
+    background: hsl(var(--card));
     box-shadow: 0 22px 48px hsl(var(--background) / 0.6), 0 0 32px hsl(var(--primary) / 0.13);
   }
 
@@ -300,8 +307,13 @@
   .profile-portrait-frame img { backface-visibility: hidden; }
 
   .profile-portrait-image {
-    object-position: 50% 28%;
-    filter: contrast(1.04) saturate(0.96) brightness(0.98);
+    object-position: center;
+    filter: contrast(1.03) saturate(0.98);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .profile-portrait-frame.tilt-active img {
+    transform: translateZ(14px) scale(1.01);
   }
 
   /* Stat circle */
@@ -452,6 +464,7 @@
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; }
     .tilt-3d, .parallax-layer { transform: none !important; }
+    .hero-portrait-shell img, .profile-portrait-frame img { transform: none !important; }
   }
 
 
