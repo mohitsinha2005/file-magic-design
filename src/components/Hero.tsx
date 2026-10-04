@@ -70,6 +70,11 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
           {/* Text Content */}
           <div className="order-2 md:order-1">
             <motion.div className="space-y-6" variants={containerVariants}>
+              <motion.div variants={itemVariants} className="edu-badge">
+                <GraduationCap size={16} className="text-accent" />
+                <span>BCA &nbsp;·&nbsp; BS Data Science &amp; Applications</span>
+              </motion.div>
+
               <motion.h1
                 variants={itemVariants}
                 className="hero-name text-4xl md:text-5xl lg:text-6xl font-bold leading-tight font-heading"
