@@ -12,7 +12,7 @@ import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import IntroAnimation from "@/components/IntroAnimation";
 import profileMohit from "@/assets/profile-library.jpg.asset.json";
-import profileHero from "@/assets/mohit-studio-portrait.png.asset.json";
+import profileHero from "@/assets/mohit-hero-portrait.png.asset.json";
 
 const LiveChat = lazy(() => import("@/components/LiveChat"));
 
