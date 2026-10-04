@@ -185,6 +185,18 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
             </div>
           </motion.div>
         </div>
+
+        {/* Tech ticker */}
+        <motion.div variants={itemVariants} className="tech-ticker" aria-hidden="true">
+          <div className="tech-ticker-track">
+            {[...techTicker, ...techTicker].map((tech, i) => (
+              <span key={i} className="tech-ticker-item">
+                <span className="tech-ticker-dot" />
+                {tech}
+              </span>
+            ))}
+          </div>
+        </motion.div>
       </motion.div>
     </section>
   );
