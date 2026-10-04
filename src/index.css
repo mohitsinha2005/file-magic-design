@@ -588,3 +588,76 @@
       0 0 60px hsl(var(--glow-accent) / 0.1);
   }
 }
+/* ===== Data Science landing theme ===== */
+@layer components {
+  /* Faint blueprint data grid behind the hero */
+  .data-grid-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(hsl(var(--primary) / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--primary) / 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse at 50% 40%, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 40%, black 30%, transparent 75%);
+  }
+
+  .edu-badge {
+    @apply inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-stats {
+    @apply grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6;
+  }
+
+  .hero-stat {
+    @apply flex items-center gap-3 rounded-xl border border-border/60 bg-card/60 backdrop-blur-sm px-4 py-3 transition-colors;
+  }
+  .hero-stat:hover {
+    @apply border-accent/40 bg-card/80;
+  }
+
+  .hero-stat-value {
+    @apply text-lg font-bold text-foreground font-heading leading-none;
+  }
+
+  .hero-stat-label {
+    @apply text-xs text-muted-foreground mt-1 leading-tight;
+  }
+
+  .tech-ticker {
+    @apply relative mt-14 overflow-hidden border-y border-border/50 py-3;
+    mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+  }
+
+  .tech-ticker-track {
+    display: flex;
+    width: max-content;
+    gap: 2.5rem;
+    animation: ticker-scroll 36s linear infinite;
+  }
+  .tech-ticker:hover .tech-ticker-track {
+    animation-play-state: paused;
+  }
+
+  .tech-ticker-item {
+    @apply flex items-center gap-2 text-sm font-medium text-muted-foreground whitespace-nowrap;
+  }
+
+  .tech-ticker-dot {
+    @apply inline-block w-1.5 h-1.5 rounded-full bg-accent/70;
+  }
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-ticker-track { animation: none; }
+}

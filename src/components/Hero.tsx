@@ -1,9 +1,22 @@
 import { lazy, Suspense } from "react";
-import { Mail, ArrowRight, Download } from "lucide-react";
+import { Mail, ArrowRight, Download, GraduationCap, Brain, BarChart3, Database, Award } from "lucide-react";
 import { motion } from "framer-motion";
 import SafeCanvas from "./SafeCanvas";
 import CodeTyping from "./CodeTyping";
 const Hero3D = lazy(() => import("./Hero3D"));
+
+const heroStats = [
+  { icon: Brain, value: "5+", label: "ML Projects Built" },
+  { icon: BarChart3, value: "10+", label: "Dashboards & Analyses" },
+  { icon: Award, value: "5", label: "Certifications" },
+  { icon: Database, value: "2", label: "Degrees in Progress" },
+];
+
+const techTicker = [
+  "Python", "SQL", "Machine Learning", "Pandas", "NumPy", "Scikit-learn",
+  "TensorFlow", "Data Visualization", "Tableau", "Statistics", "React",
+  "Deep Learning", "NLP", "Predictive Modeling", "EDA", "Power BI",
+];
 
 interface HeroProps {
   profileImage: string;
@@ -40,7 +53,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center section pt-24 relative overflow-hidden">
+    <section id="home" className="min-h-screen flex items-center section pt-24 relative overflow-hidden data-grid-bg">
       {isVisible && (
         <SafeCanvas>
           <Suspense fallback={null}><Hero3D /></Suspense>
@@ -57,6 +70,11 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
           {/* Text Content */}
           <div className="order-2 md:order-1">
             <motion.div className="space-y-6" variants={containerVariants}>
+              <motion.div variants={itemVariants} className="edu-badge">
+                <GraduationCap size={16} className="text-accent" />
+                <span>BCA &nbsp;·&nbsp; BS Data Science &amp; Applications</span>
+              </motion.div>
+
               <motion.h1
                 variants={itemVariants}
                 className="hero-name text-4xl md:text-5xl lg:text-6xl font-bold leading-tight font-heading"
@@ -131,6 +149,19 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
                   </motion.a>
                 ))}
               </motion.div>
+
+              {/* Data Science Stats */}
+              <motion.div variants={itemVariants} className="hero-stats">
+                {heroStats.map((stat) => (
+                  <div key={stat.label} className="hero-stat">
+                    <stat.icon size={18} className="text-accent" />
+                    <div>
+                      <div className="hero-stat-value">{stat.value}</div>
+                      <div className="hero-stat-label">{stat.label}</div>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
             </motion.div>
           </div>
 
@@ -154,6 +185,18 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
             </div>
           </motion.div>
         </div>
+
+        {/* Tech ticker */}
+        <motion.div variants={itemVariants} className="tech-ticker" aria-hidden="true">
+          <div className="tech-ticker-track">
+            {[...techTicker, ...techTicker].map((tech, i) => (
+              <span key={i} className="tech-ticker-item">
+                <span className="tech-ticker-dot" />
+                {tech}
+              </span>
+            ))}
+          </div>
+        </motion.div>
       </motion.div>
     </section>
   );
