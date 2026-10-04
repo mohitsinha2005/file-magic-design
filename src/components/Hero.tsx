@@ -1,9 +1,22 @@
 import { lazy, Suspense } from "react";
-import { Mail, ArrowRight, Download } from "lucide-react";
+import { Mail, ArrowRight, Download, GraduationCap, Brain, BarChart3, Database, Award } from "lucide-react";
 import { motion } from "framer-motion";
 import SafeCanvas from "./SafeCanvas";
 import CodeTyping from "./CodeTyping";
 const Hero3D = lazy(() => import("./Hero3D"));
+
+const heroStats = [
+  { icon: Brain, value: "5+", label: "ML Projects Built" },
+  { icon: BarChart3, value: "10+", label: "Dashboards & Analyses" },
+  { icon: Award, value: "5", label: "Certifications" },
+  { icon: Database, value: "2", label: "Degrees in Progress" },
+];
+
+const techTicker = [
+  "Python", "SQL", "Machine Learning", "Pandas", "NumPy", "Scikit-learn",
+  "TensorFlow", "Data Visualization", "Tableau", "Statistics", "React",
+  "Deep Learning", "NLP", "Predictive Modeling", "EDA", "Power BI",
+];
 
 interface HeroProps {
   profileImage: string;
