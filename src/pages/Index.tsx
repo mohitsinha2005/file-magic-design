@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, lazy, Suspense } from "react";
 import { Helmet } from "react-helmet";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import Skills from "@/components/Skills";
@@ -17,7 +17,8 @@ import profileHero from "@/assets/mohit-studio-portrait.png.asset.json";
 const LiveChat = lazy(() => import("@/components/LiveChat"));
 
 const Index = () => {
-  const [introComplete, setIntroComplete] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const [introComplete, setIntroComplete] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const profileImage = `https://file-magic-design.lovable.app${profileHero.url}`;
   // The asset path is not served by third-party hosts (and the local preview
   // can return index.html for it); the published asset origin serves the photo.
@@ -28,40 +29,11 @@ const Index = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
-    if (!introComplete) return;
-    const resetTop = () => {
-      document.documentElement.style.scrollBehavior = "auto";
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    };
-    resetTop();
-    const frame = requestAnimationFrame(resetTop);
-    const settleTimers = [100, 250, 500, 800, 1200, 1600].map((delay) =>
-      window.setTimeout(resetTop, delay),
-    );
-    const restoreSmoothScroll = window.setTimeout(() => {
-      document.documentElement.style.removeProperty("scroll-behavior");
-    }, 1700);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      settleTimers.forEach(window.clearTimeout);
-      window.clearTimeout(restoreSmoothScroll);
-      document.documentElement.style.removeProperty("scroll-behavior");
-    };
-  }, [introComplete]);
-
   const handleIntroComplete = useCallback(() => {
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
     setIntroComplete(true);
-    requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
-      requestAnimationFrame(() => window.scrollTo(0, 0));
-    });
   }, []);
 
   return (
@@ -79,7 +51,7 @@ const Index = () => {
 
       {/* Cinematic Intro Animation */}
       <AnimatePresence>
-        {!introComplete && <IntroAnimation onComplete={handleIntroComplete} />}
+        {!introComplete && !reduceMotion && <IntroAnimation onComplete={handleIntroComplete} />}
       </AnimatePresence>
 
       {/* Mount the portfolio after the intro so hidden sections cannot restore scroll. */}

@@ -15,6 +15,7 @@ const CodeRain = ({ opacity = 0.22 }: { opacity?: number }) => {
 
     let raf = 0;
     let active = true;
+    let visible = document.visibilityState === "visible";
     let cols = 0;
     let drops: number[] = [];
     const fontSize = 14;
@@ -29,9 +30,11 @@ const CodeRain = ({ opacity = 0.22 }: { opacity?: number }) => {
     window.addEventListener("resize", resize);
 
     let last = 0;
+    const onVisibility = () => { visible = document.visibilityState === "visible"; };
+    document.addEventListener("visibilitychange", onVisibility);
     const draw = (t: number) => {
+      if (!active || !visible) { raf = 0; return; }
       raf = requestAnimationFrame(draw);
-      if (!active || document.visibilityState !== "visible") return;
       if (t - last < 55) return;
       last = t;
       ctx.fillStyle = "rgba(5, 9, 20, 0.18)";
@@ -49,6 +52,7 @@ const CodeRain = ({ opacity = 0.22 }: { opacity?: number }) => {
     const observer = typeof IntersectionObserver !== "undefined"
       ? new IntersectionObserver(([entry]) => {
           active = entry?.isIntersecting ?? false;
+          if (active && visible && !raf) raf = requestAnimationFrame(draw);
         }, { rootMargin: "100px" })
       : null;
     observer?.observe(canvas);
@@ -57,6 +61,7 @@ const CodeRain = ({ opacity = 0.22 }: { opacity?: number }) => {
     return () => {
       cancelAnimationFrame(raf);
       observer?.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("resize", resize);
     };
   }, []);
