@@ -389,7 +389,7 @@ const Hero3D = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="absolute inset-0 pointer-events-none opacity-60">
+    <div ref={containerRef} className="absolute inset-0 pointer-events-none opacity-25" aria-hidden="true">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         style={{ background: "transparent" }}

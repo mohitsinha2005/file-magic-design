@@ -36,15 +36,16 @@ const PageTransition = ({ children }: Props) => {
     setTyped(0);
     setDone(false);
     let i = 0;
+    let finishTimer = 0;
     const typer = window.setInterval(() => {
       i += 1;
       setTyped(i);
       if (i >= command.length) {
         window.clearInterval(typer);
-        window.setTimeout(() => setDone(true), HOLD_MS);
+        finishTimer = window.setTimeout(() => setDone(true), HOLD_MS);
       }
     }, TYPE_MS);
-    return () => window.clearInterval(typer);
+    return () => { window.clearInterval(typer); window.clearTimeout(finishTimer); };
   }, [command, reduceMotion]);
 
   return (
@@ -52,8 +53,8 @@ const PageTransition = ({ children }: Props) => {
       {/* Page content fades in once the command finishes typing */}
       <motion.div
         key={pathname}
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: done ? 1 : 0, y: done ? 0 : 12 }}
+         initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+         animate={{ opacity: done ? 1 : 0, y: done ? 0 : 12 }}
         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
       >
         {children}
