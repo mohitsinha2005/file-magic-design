@@ -1,6 +1,5 @@
 # Current work
 
-- [x] Replace the main home portrait with the uploaded studio headshot.
-- [x] Correct the Professional Profile portrait crop and alignment.
-- [x] Refine portrait 3D motion without reducing performance or accessibility.
-- [x] Verify portraits and motion on desktop and mobile.
+- [ ] Smooth site-wide motion and remove competing effects or expensive offscreen work.
+- [ ] Improve desktop and phone layout, especially home imagery and navigation.
+- [ ] Verify key pages and interactions on desktop and phone.
