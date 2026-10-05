@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const TILT_SELECTOR = ".elevated-card, .cert-card, .project-card, .card-3d, [data-tilt]";
-const PARALLAX_SELECTOR =
-  ".section-title, .page-header-3d h1, .page-header-3d p, [data-parallax]";
+const PARALLAX_SELECTOR = "[data-parallax]";
 
 const MAX_TILT = 4; // degrees
 const MAX_LIFT = 6; // px
@@ -27,7 +26,7 @@ const Depth3D = () => {
     const bindTilt = () => {
       if (!fine) return;
       document.querySelectorAll<HTMLElement>(TILT_SELECTOR).forEach((el) => {
-        if (el.dataset.depth3d) return;
+        if (el.dataset.depth3d || el.closest("[data-no-tilt]")) return;
         el.dataset.depth3d = "tilt";
         el.classList.add("tilt-3d");
 

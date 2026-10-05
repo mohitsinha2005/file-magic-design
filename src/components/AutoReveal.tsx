@@ -40,11 +40,13 @@ const AutoReveal = () => {
         (el) =>
           !el.dataset.reveal &&
           !el.dataset.parallaxBound &&
-          !el.closest(EXCLUDE)
+          !el.closest(EXCLUDE) &&
+          !el.matches("[data-no-reveal], .section-title, .page-header-3d h1, .page-header-3d p") &&
+          !el.querySelector(".reveal, [data-no-reveal]")
       );
       nodes.forEach((el) => {
         el.dataset.reveal = "true";
-        el.style.transitionDelay = `${Math.min(index++, 6) * 60}ms`;
+        el.style.transitionDelay = `${Math.min(index++, 4) * 45}ms`;
         el.classList.add("reveal");
         observer.observe(el);
       });
