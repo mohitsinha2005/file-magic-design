@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useMemo } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Float } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 import * as THREE from "three";
@@ -363,25 +363,7 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
         >
-          {/* 3D Galaxy Canvas */}
-            <SafeCanvas>
-             <Canvas
-              camera={{ position: [0, 0, 15], fov: 60 }}
-              dpr={1}
-              style={{ background: "transparent" }}
-              gl={{
-                antialias: false,
-                alpha: true,
-                powerPreference: "high-performance",
-                failIfMajorPerformanceCaveat: false,
-              }}
-              onCreated={({ gl }) => {
-                gl.domElement.addEventListener("webglcontextlost", (event) => event.preventDefault(), { once: true });
-              }}
-            >
-              <GalaxyScene />
-            </Canvas>
-          </SafeCanvas>
+          <div aria-hidden="true" className="absolute inset-0 hero-tech-grid opacity-70" />
 
 
           {/* Animated text overlay */}
