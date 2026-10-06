@@ -25,9 +25,7 @@ const ChatPage = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (turns.length > 1 || loading) {
-      endRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [turns, loading]);
 
   useEffect(() => {

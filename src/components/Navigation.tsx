@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-
-  useEffect(() => { setIsMobileMenuOpen(false); }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,7 +37,7 @@ const Navigation = () => {
             Mohit Sinha
           </Link>
 
-          <div className="hidden lg:flex items-center gap-5 xl:gap-8">
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link 
                 key={link.href} 
@@ -52,22 +49,16 @@ const Navigation = () => {
             ))}
           </div>
 
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
+          <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden text-foreground"
-            aria-label={isMobileMenuOpen ? "Close navigation" : "Open navigation"}
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-navigation"
+            className="md:hidden text-foreground p-2"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </Button>
+          </button>
         </div>
 
         {isMobileMenuOpen && (
-          <div id="mobile-navigation" className="lg:hidden py-3 border-t border-border bg-background/95 backdrop-blur-md max-h-[calc(100svh-4rem)] overflow-y-auto">
+          <div className="md:hidden py-4 border-t border-border bg-background/95 backdrop-blur-md">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <Link

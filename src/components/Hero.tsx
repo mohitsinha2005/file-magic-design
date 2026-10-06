@@ -1,6 +1,9 @@
+import { lazy, Suspense } from "react";
 import { Mail, ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
+import SafeCanvas from "./SafeCanvas";
 import CodeTyping from "./CodeTyping";
+const Hero3D = lazy(() => import("./Hero3D"));
 
 interface HeroProps {
   profileImage: string;
@@ -37,8 +40,12 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
   };
 
   return (
-    <section id="home" className="flex items-center section pt-24 md:pt-28 relative overflow-hidden min-h-[min(850px,90svh)]">
-      <div aria-hidden="true" className="absolute inset-0 hero-tech-grid opacity-40" />
+    <section id="home" className="min-h-screen flex items-center section pt-24 relative overflow-hidden">
+      {isVisible && (
+        <SafeCanvas>
+          <Suspense fallback={null}><Hero3D /></Suspense>
+        </SafeCanvas>
+      )}
       
       <motion.div
         className="section-container relative z-10"
@@ -46,9 +53,9 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
         initial="hidden"
         animate={isVisible ? "visible" : "hidden"}
       >
-        <div className="grid md:grid-cols-2 gap-8 md:gap-x-12 md:gap-y-6 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
-          <div className="order-2 md:order-1 md:row-span-2">
+          <div className="order-2 md:order-1">
             <motion.div className="space-y-6" variants={containerVariants}>
               <motion.h1
                 variants={itemVariants}
@@ -129,10 +136,10 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
 
           {/* Profile Image + live code panel */}
           <motion.div
-            className="order-1 md:order-2 flex items-center justify-center md:justify-end perspective-1000"
+            className="order-1 md:order-2 flex flex-col items-center md:items-end gap-6 perspective-1000"
             variants={imageVariants}
           >
-            <div className="hero-portrait-shell hero-image-frame w-[min(58vw,240px)] aspect-square md:w-[min(32vw,360px)] relative group" data-tilt>
+            <div className="hero-portrait-shell hero-image-frame w-72 h-72 md:w-96 md:h-96 relative group" data-tilt>
               <span className="portrait-corner portrait-corner-top" aria-hidden="true" />
               <span className="portrait-corner portrait-corner-bottom" aria-hidden="true" />
               <img
@@ -142,10 +149,10 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
               />
             </div>
 
+            <div className="w-full max-w-md">
+              <CodeTyping />
+            </div>
           </motion.div>
-          <div className="order-3 w-full max-w-md mx-auto md:mr-0 md:ml-auto" data-no-reveal>
-            <CodeTyping />
-          </div>
         </div>
       </motion.div>
     </section>

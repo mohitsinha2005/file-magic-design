@@ -1,5 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, Send, Bot, User, Sparkles } from "lucide-react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Float, Sphere, Torus } from "@react-three/drei";
+import * as THREE from "three";
+import SafeCanvas from "./SafeCanvas";
+import LazyMount from "./LazyMount";
 
 interface Message {
   role: "user" | "bot";
@@ -31,6 +36,46 @@ const getResponse = (query: string): string => {
   return `Thanks for reaching out! Feel free to ask about my skills, projects, or contact info. You can also email me at ${portfolioInfo.email}`;
 };
 
+// Floating chat bubble 3D element
+const ChatBubble3D = () => {
+  const meshRef = useRef<THREE.Mesh>(null);
+  
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.3;
+    }
+  });
+
+  return (
+    <>
+      <ambientLight intensity={0.6} />
+      <pointLight position={[5, 5, 5]} intensity={0.8} color="#2563eb" />
+      
+      <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.5}>
+        <Sphere ref={meshRef} args={[0.8, 16, 16]} position={[0, 0, 0]}>
+          <meshStandardMaterial
+            color="#2563eb"
+            roughness={0.2}
+            metalness={0.8}
+            transparent
+            opacity={0.9}
+          />
+        </Sphere>
+      </Float>
+      
+      <Float speed={2} rotationIntensity={0.5} floatIntensity={0.4}>
+        <Torus args={[1.2, 0.08, 12, 48]} position={[0, 0, 0]} rotation={[Math.PI / 4, 0, 0]}>
+          <meshStandardMaterial
+            color="#60a5fa"
+            roughness={0.3}
+            metalness={0.7}
+          />
+        </Torus>
+      </Float>
+    </>
+  );
+};
+
 const LiveChat = () => {
   const [messages, setMessages] = useState<Message[]>([
     { role: "bot", content: "Hi! 👋 I'm Mohit's AI assistant. Ask me anything about skills, projects, or how to connect!" }
@@ -40,7 +85,7 @@ const LiveChat = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    if (messages.length > 1) messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -93,8 +138,27 @@ const LiveChat = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
+          {/* 3D Animation */}
+          <LazyMount className="hidden lg:block h-[400px] relative">
+            <div className="absolute inset-0 bg-gradient-radial from-primary/5 to-transparent rounded-3xl" />
+            <SafeCanvas>
+              <Canvas
+                camera={{ position: [0, 0, 4], fov: 50 }}
+                style={{ background: "transparent" }}
+                dpr={[1, 1.25]}
+                gl={{ antialias: false, powerPreference: "low-power", failIfMajorPerformanceCaveat: false }}
+              >
+                <ChatBubble3D />
+              </Canvas>
+            </SafeCanvas>
+            {/* Floating elements */}
+            <div className="absolute top-10 left-10 w-3 h-3 rounded-full bg-primary/40 animate-pulse" />
+            <div className="absolute bottom-20 right-10 w-2 h-2 rounded-full bg-primary/30 animate-pulse" style={{ animationDelay: "0.5s" }} />
+            <div className="absolute top-1/2 left-5 w-2 h-2 rounded-full bg-primary/20 animate-pulse" style={{ animationDelay: "1s" }} />
+          </LazyMount>
+
           {/* Chat Interface */}
-          <div className="bg-card border border-border rounded-2xl shadow-xl overflow-hidden lg:col-span-2 max-w-3xl w-full mx-auto" data-tilt>
+          <div className="bg-card border border-border rounded-2xl shadow-xl overflow-hidden">
             {/* Chat Header */}
             <div className="bg-gradient-to-r from-primary to-primary/80 p-4 flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">

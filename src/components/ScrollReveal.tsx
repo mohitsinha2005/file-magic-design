@@ -1,4 +1,4 @@
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, ReactNode } from "react";
 
 interface ScrollRevealProps {
@@ -20,7 +20,6 @@ const ScrollReveal = ({
 }: ScrollRevealProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once, margin: "-50px" });
-  const reduceMotion = useReducedMotion();
 
   const getInitialPosition = () => {
     switch (direction) {
@@ -44,8 +43,8 @@ const ScrollReveal = ({
   return (
     <motion.div
       ref={ref}
-      initial={reduceMotion ? false : { opacity: 0, ...initial }}
-      animate={reduceMotion || isInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, ...initial }}
+      initial={{ opacity: 0, ...initial }}
+      animate={isInView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, ...initial }}
       transition={{
         duration,
         delay,

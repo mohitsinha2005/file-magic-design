@@ -52,7 +52,7 @@ const ProjectsPage = () => {
             rel="noopener noreferrer"
             className="group block max-w-4xl mx-auto"
           >
-              <div data-tilt className="relative rounded-2xl md:rounded-3xl border border-border/40 bg-card/60 backdrop-blur-md overflow-hidden hover:border-primary/60 hover:shadow-[0_0_60px_-15px_hsl(var(--primary)/0.3)] transition-all duration-500">
+            <div data-tilt className="relative rounded-3xl border border-border/40 bg-card/60 backdrop-blur-md overflow-hidden hover:border-primary/60 hover:shadow-[0_0_60px_-15px_hsl(var(--primary)/0.3)] transition-all duration-500">
               {/* Project Image */}
               <div className="relative overflow-hidden">
                 <AspectRatio ratio={16 / 9}>
@@ -67,7 +67,7 @@ const ProjectsPage = () => {
               </div>
 
               {/* Project Info */}
-               <div className="relative p-5 sm:p-8 md:p-10">
+              <div className="relative p-8 md:p-10">
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
@@ -110,7 +110,7 @@ const ProjectsPage = () => {
             rel="noopener noreferrer"
             className="group block max-w-4xl mx-auto"
           >
-             <div data-tilt className="relative rounded-2xl md:rounded-3xl border border-border/40 bg-card/60 backdrop-blur-md overflow-hidden hover:border-primary/60 hover:shadow-[0_0_60px_-15px_hsl(var(--primary)/0.3)] transition-all duration-500">
+            <div data-tilt className="relative rounded-3xl border border-border/40 bg-card/60 backdrop-blur-md overflow-hidden hover:border-primary/60 hover:shadow-[0_0_60px_-15px_hsl(var(--primary)/0.3)] transition-all duration-500">
               <div className="relative overflow-hidden">
                 <AspectRatio ratio={16 / 9}>
                   <img
@@ -122,7 +122,7 @@ const ProjectsPage = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
                 </AspectRatio>
               </div>
-              <div className="relative p-5 sm:p-8 md:p-10">
+              <div className="relative p-8 md:p-10">
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[hsl(var(--accent))] to-[hsl(var(--primary))] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
