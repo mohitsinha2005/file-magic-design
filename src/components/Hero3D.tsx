@@ -397,6 +397,9 @@ const Hero3D = () => {
         frameloop={isActive ? "always" : "never"}
         performance={{ min: 0.5 }}
         gl={{ antialias: false, powerPreference: "high-performance", failIfMajorPerformanceCaveat: false }}
+        onCreated={({ gl }) => {
+          gl.domElement.addEventListener("webglcontextlost", (event) => event.preventDefault(), { once: true });
+        }}
       >
         <Scene />
       </Canvas>

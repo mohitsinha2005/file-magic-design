@@ -152,7 +152,7 @@ const CertificationsPage = () => {
           </div>
 
           {/* Stats badges */}
-          <div className="flex gap-4 mt-8 opacity-0 animate-fade-up delay-400">
+          <div className="flex flex-wrap gap-3 mt-8 opacity-0 animate-fade-up delay-400">
             <div className="px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-primary text-sm font-medium">
               5+ Certifications
             </div>
@@ -174,7 +174,7 @@ const CertificationsPage = () => {
                 style={{ animationDelay: `${200 + index * 100}ms` }}
               >
                 {/* Certificate Image */}
-                <div className="relative bg-background/50 h-56 overflow-hidden flex items-center justify-center p-4">
+                <div className="relative bg-background/50 h-52 sm:h-64 overflow-hidden flex items-center justify-center p-3 sm:p-4">
                   <img
                     src={cert.image}
                     alt={cert.title}
@@ -189,7 +189,7 @@ const CertificationsPage = () => {
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
+                <div className="p-5 sm:p-6">
                   <h3 className="text-xl font-bold text-foreground mb-3 font-heading group-hover:text-primary transition-colors line-clamp-2">
                     {cert.title}
                   </h3>

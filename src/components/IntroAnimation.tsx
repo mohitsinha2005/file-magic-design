@@ -335,18 +335,12 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
 
-    // Keep page pinned to top while intro plays
-    const pin = () => window.scrollTo(0, 0);
-    window.addEventListener('scroll', pin, { passive: true });
-
     const textTimer = setTimeout(() => setShowText(true), 200);
     const fadeTimer = setTimeout(() => setFadeOut(true), 1000);
     const completeTimer = setTimeout(() => {
-      window.removeEventListener('scroll', pin);
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
       window.scrollTo(0, 0);
-      requestAnimationFrame(() => window.scrollTo(0, 0));
       onComplete();
     }, 1450);
 
@@ -354,7 +348,6 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
       clearTimeout(textTimer);
       clearTimeout(fadeTimer);
       clearTimeout(completeTimer);
-      window.removeEventListener('scroll', pin);
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
     };
@@ -371,8 +364,8 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
           transition={{ duration: 0.7, ease: "easeInOut" }}
         >
           {/* 3D Galaxy Canvas */}
-          <SafeCanvas>
-            <Canvas
+            <SafeCanvas>
+             <Canvas
               camera={{ position: [0, 0, 15], fov: 60 }}
               dpr={1}
               style={{ background: "transparent" }}
@@ -381,6 +374,9 @@ const IntroAnimation = ({ onComplete }: IntroAnimationProps) => {
                 alpha: true,
                 powerPreference: "high-performance",
                 failIfMajorPerformanceCaveat: false,
+              }}
+              onCreated={({ gl }) => {
+                gl.domElement.addEventListener("webglcontextlost", (event) => event.preventDefault(), { once: true });
               }}
             >
               <GalaxyScene />
