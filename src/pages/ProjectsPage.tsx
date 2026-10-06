@@ -122,7 +122,7 @@ const ProjectsPage = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
                 </AspectRatio>
               </div>
-              <div className="relative p-8 md:p-10">
+              <div className="relative p-5 sm:p-8 md:p-10">
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[hsl(var(--accent))] to-[hsl(var(--primary))] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
