@@ -1,9 +1,6 @@
-import { lazy, Suspense } from "react";
 import { Mail, ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
-import SafeCanvas from "./SafeCanvas";
 import CodeTyping from "./CodeTyping";
-const Hero3D = lazy(() => import("./Hero3D"));
 
 interface HeroProps {
   profileImage: string;
@@ -41,11 +38,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
 
   return (
     <section id="home" className="flex items-center section pt-24 md:pt-28 relative overflow-hidden min-h-[min(850px,90svh)]">
-      {isVisible && (
-        <SafeCanvas>
-          <Suspense fallback={null}><Hero3D /></Suspense>
-        </SafeCanvas>
-      )}
+      <div aria-hidden="true" className="absolute inset-0 hero-tech-grid opacity-40" />
       
       <motion.div
         className="section-container relative z-10"

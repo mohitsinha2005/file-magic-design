@@ -21,7 +21,6 @@ const AboutPage = lazy(() => import("./pages/AboutPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const ChatPage = lazy(() => import("./pages/ChatPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const Background3D = lazy(() => import("./components/Background3D"));
 const JarvisAI = lazy(() => import("./components/JarvisAI"));
 
 const queryClient = new QueryClient();
@@ -46,8 +45,6 @@ const PageFallback = () => <div className="min-h-screen bg-background" />;
 
 const AppRoutes = () => {
   const location = useLocation();
-  const showBackground3D = location.pathname !== "/";
-
   return (
     <>
       <ScrollToTop />
@@ -57,11 +54,6 @@ const AppRoutes = () => {
       <CodeStrip />
       <RouteSweep />
 
-      {showBackground3D && (
-        <Suspense fallback={null}>
-          <Background3D />
-        </Suspense>
-      )}
       <Suspense fallback={<PageFallback />}>
         <Routes location={location}>
           <Route path="/" element={<PageTransition><Index /></PageTransition>} />

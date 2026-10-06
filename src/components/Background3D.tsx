@@ -151,6 +151,9 @@ const Background3D = () => {
           stencil: false,
           depth: false,
         }}
+        onCreated={({ gl }) => {
+          gl.domElement.addEventListener("webglcontextlost", (event) => event.preventDefault(), { once: true });
+        }}
       >
         <Scene />
       </Canvas>

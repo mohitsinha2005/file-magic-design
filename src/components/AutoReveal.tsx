@@ -48,7 +48,12 @@ const AutoReveal = () => {
         el.dataset.reveal = "true";
         el.style.transitionDelay = `${Math.min(index++, 4) * 45}ms`;
         el.classList.add("reveal");
-        observer.observe(el);
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.94 && rect.bottom > 0) {
+          el.classList.add("reveal-in");
+        } else {
+          observer.observe(el);
+        }
       });
     };
 
