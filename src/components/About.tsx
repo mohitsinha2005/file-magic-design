@@ -29,7 +29,7 @@ const About = ({ profileImage }: AboutProps) => {
   return (
     <section id="about" className="section">
       <div className="section-container">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Content */}
           <ScrollReveal direction="left">
             <div className="elevated-card">
@@ -55,8 +55,8 @@ const About = ({ profileImage }: AboutProps) => {
 
           {/* Visual with Stats */}
           <ScrollReveal direction="right" delay={0.2}>
-            <div className="flex flex-col items-center gap-8 w-full">
-              <div className="profile-portrait-frame relative w-full max-w-[22rem] aspect-square" data-tilt>
+            <div className="flex flex-col items-center gap-8 w-full min-w-0">
+              <div className="profile-portrait-frame relative w-[calc(100%-1rem)] max-w-[22rem] aspect-square" data-tilt>
                 <img
                   src={profileImage}
                   alt="Mohit Sinha seated at a library desk"
@@ -66,7 +66,7 @@ const About = ({ profileImage }: AboutProps) => {
               </div>
 
               {/* Stats */}
-              <div className="flex flex-wrap justify-center gap-3 sm:gap-6">
+              <div className="grid grid-cols-3 gap-2 sm:gap-6 w-full max-w-sm justify-items-center">
                 {stats.map((stat, index) => (
                   <ScrollReveal key={index} delay={0.4 + index * 0.1} direction="up">
                     <div className="stat-circle">

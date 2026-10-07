@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -39,6 +40,24 @@ const Navigation = () => {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    const media = window.matchMedia("(min-width: 1024px)");
+    const onResize = () => { if (media.matches) setOpen(false); };
+    window.addEventListener("keydown", onKeyDown);
+    media.addEventListener("change", onResize);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      media.removeEventListener("change", onResize);
+    };
+  }, []);
+
   return (
     <motion.nav
       initial={{ y: -24, opacity: 0 }}
@@ -54,7 +73,7 @@ const Navigation = () => {
             Mohit <span className="gradient-text">Sinha</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => {
               const active = location.pathname === link.href;
               return (
@@ -75,13 +94,17 @@ const Navigation = () => {
             })}
           </div>
 
-          <button
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => setOpen(!open)}
             aria-label={open ? "Close menu" : "Open menu"}
-            className="md:hidden text-foreground p-2 -mr-2 rounded-lg active:scale-95 transition-transform"
+            aria-expanded={open}
+            aria-controls="phone-navigation"
+            className="lg:hidden text-foreground h-11 w-11 -mr-2 active:scale-95 transition-transform"
           >
             {open ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -89,12 +112,13 @@ const Navigation = () => {
         {open && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "100dvh", opacity: 1 }}
+            animate={{ height: "calc(100dvh - 4rem)", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden overflow-hidden bg-background/95 backdrop-blur-md"
+            id="phone-navigation"
+            className="lg:hidden overflow-y-auto overscroll-contain bg-background/95 backdrop-blur-md"
           >
-            <div className="flex flex-col gap-1 px-6 py-6">
+            <div className="flex flex-col gap-1 px-6 py-4">
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.href}

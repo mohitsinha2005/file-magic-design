@@ -82,13 +82,13 @@ const CodeTyping = () => {
         </span>
       </div>
 
-      <pre className="relative p-4 text-[12px] md:text-[13px] leading-relaxed font-mono min-h-[230px] whitespace-pre-wrap">
+      <pre className="relative p-4 text-[12px] md:text-[13px] leading-relaxed font-mono h-[250px] md:h-[290px] overflow-auto whitespace-pre-wrap">
         {rendered.map((line, idx) => (
           <div key={idx} className="flex gap-3">
             <span className="select-none w-5 shrink-0 text-right text-muted-foreground/40">
               {idx + 1}
             </span>
-            <span className="flex-1">
+            <span className="min-w-0 flex-1 break-words">
               {highlight(line)}
               {idx === rendered.length - 1 && (
                 <span className="inline-block w-[7px] h-[13px] align-middle bg-primary ml-0.5 animate-pulse" />

@@ -40,7 +40,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center section pt-24 relative overflow-hidden">
+    <section id="home" className="hero-section min-h-screen flex items-center section relative overflow-hidden">
       {isVisible && (
         <SafeCanvas>
           <Suspense fallback={null}><Hero3D /></Suspense>
@@ -53,9 +53,9 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
         initial="hidden"
         animate={isVisible ? "visible" : "hidden"}
       >
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center">
           {/* Text Content */}
-          <div className="order-2 md:order-1">
+          <div className="min-w-0">
             <motion.div className="space-y-6" variants={containerVariants}>
               <motion.h1
                 variants={itemVariants}
@@ -73,7 +73,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
               
               <motion.p
                 variants={itemVariants}
-                className="text-muted-foreground text-lg leading-relaxed max-w-xl"
+                className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-xl"
               >
                 A dedicated professional pursuing BCA and BS in Data Science, specializing in 
                 transforming complex datasets into actionable business insights. Proficient in 
@@ -82,7 +82,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
               </motion.p>
 
               {/* Action Buttons */}
-              <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-4">
+              <motion.div variants={itemVariants} className="hero-actions grid grid-cols-1 sm:flex sm:flex-wrap gap-3 pt-2">
                 <motion.a
                   href="mailto:sinhamohit9870@gmail.com"
                   className="btn-primary group relative overflow-hidden"
@@ -136,10 +136,10 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
 
           {/* Profile Image + live code panel */}
           <motion.div
-            className="order-1 md:order-2 flex flex-col items-center md:items-end gap-6 perspective-1000"
+            className="min-w-0 flex flex-col items-center md:items-end gap-6 perspective-1000"
             variants={imageVariants}
           >
-            <div className="hero-portrait-shell hero-image-frame w-72 h-72 md:w-96 md:h-96 relative group" data-tilt>
+            <div className="hero-portrait-shell hero-image-frame w-full max-w-72 lg:max-w-96 aspect-square relative group" data-tilt>
               <span className="portrait-corner portrait-corner-top" aria-hidden="true" />
               <span className="portrait-corner portrait-corner-bottom" aria-hidden="true" />
               <img
@@ -149,7 +149,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
               />
             </div>
 
-            <div className="w-full max-w-md">
+            <div className="w-full min-w-0 max-w-md">
               <CodeTyping />
             </div>
           </motion.div>

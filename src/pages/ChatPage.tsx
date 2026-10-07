@@ -4,6 +4,7 @@ import { Send, Mail, Linkedin, MessageSquare } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
 
 type Turn = { role: "user" | "jarvis"; text: string };
 
@@ -21,16 +22,14 @@ const ChatPage = () => {
   const [turns, setTurns] = useState<Turn[]>([{ role: "jarvis", text: WELCOME }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const endRef = useRef<HTMLDivElement>(null);
+  const conversationRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
+    const conversation = conversationRef.current;
+    if (!conversation) return;
+    conversation.scrollTo({ top: conversation.scrollHeight, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   }, [turns, loading]);
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
 
   const send = async (raw: string) => {
     const clean = raw.trim();
@@ -61,7 +60,7 @@ const ChatPage = () => {
       ]);
     } finally {
       setLoading(false);
-      inputRef.current?.focus();
+      inputRef.current?.focus({ preventScroll: true });
     }
   };
 
@@ -77,7 +76,7 @@ const ChatPage = () => {
 
       <Navigation />
 
-      <main className="flex-1 pt-28 pb-16 px-4">
+      <main className="flex-1 pt-24 md:pt-28 pb-12 md:pb-16 px-4">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-4">
@@ -94,7 +93,7 @@ const ChatPage = () => {
           </div>
 
           <div className="rounded-2xl border border-border/60 bg-card/70 backdrop-blur-md overflow-hidden shadow-xl shadow-primary/5">
-            <div className="h-[420px] overflow-y-auto p-5 space-y-4">
+            <div ref={conversationRef} role="log" aria-label="Conversation with Jarvis" aria-live="polite" className="h-[300px] sm:h-[420px] max-h-[55dvh] overflow-y-auto overscroll-contain p-4 sm:p-5 space-y-4 break-words">
               {turns.map((t, i) => (
                 <div
                   key={i}
@@ -117,19 +116,20 @@ const ChatPage = () => {
               {loading && (
                 <div className="text-sm text-muted-foreground animate-pulse">Thinking…</div>
               )}
-              <div ref={endRef} />
             </div>
 
             <div className="border-t border-border/60 p-4 space-y-3">
               <div className="flex flex-wrap gap-2">
                 {SUGGESTIONS.map((s) => (
-                  <button
+                  <Button
+                    variant="outline"
                     key={s}
                     onClick={() => send(s)}
-                    className="px-3 py-1.5 text-xs rounded-full border border-border/70 text-muted-foreground hover:text-primary hover:border-primary/60 transition-colors"
+                    disabled={loading}
+                    className="h-auto min-h-10 px-3 py-2 text-xs whitespace-normal text-left rounded-full border-border/70 text-muted-foreground hover:text-primary hover:border-primary/60"
                   >
                     {s}
-                  </button>
+                  </Button>
                 ))}
               </div>
               <form
@@ -144,16 +144,18 @@ const ChatPage = () => {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Type your message…"
-                  className="flex-1 rounded-xl bg-background border border-border/70 px-4 py-3 text-sm text-foreground outline-none focus:border-primary/70 transition-colors"
+                  aria-label="Message to Jarvis"
+                  className="min-w-0 flex-1 rounded-lg bg-background border border-border/70 px-3 py-3 text-base text-foreground outline-none focus:border-primary/70 transition-colors"
                 />
-                <button
+                <Button
+                  size="icon"
                   type="submit"
                   disabled={loading || !input.trim()}
-                  className="rounded-xl bg-primary text-primary-foreground px-4 py-3 disabled:opacity-40 transition-opacity"
+                  className="rounded-lg h-12 w-12 shrink-0"
                   aria-label="Send message"
                 >
                   <Send size={18} />
-                </button>
+                </Button>
               </form>
             </div>
           </div>
