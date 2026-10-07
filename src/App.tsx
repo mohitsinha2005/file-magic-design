@@ -79,9 +79,11 @@ const AppRoutes = () => {
         </Routes>
       </Suspense>
 
-      <Suspense fallback={null}>
-        <JarvisAI />
-      </Suspense>
+      {location.pathname !== "/chat" && (
+        <Suspense fallback={null}>
+          <JarvisAI />
+        </Suspense>
+      )}
     </>
   );
 };
