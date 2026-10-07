@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Mic, MicOff, Volume2, VolumeX, X, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
 
 // JARVIS-style voice assistant powered by Lovable AI (Gemini) via edge function.
 // Uses Web Speech API for mic input and speechSynthesis for spoken replies.
@@ -241,17 +242,19 @@ const JarvisAI = () => {
   return (
     <>
       {/* Floating trigger */}
-      <button
+      <Button
+        size="icon"
         onClick={() => setOpen(o => !o)}
         aria-label="Open Jarvis AI assistant"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-accent shadow-[0_0_30px_rgba(37,99,235,0.6)] flex items-center justify-center hover:scale-110 transition-transform"
+        aria-expanded={open}
+        className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 sm:bottom-6 sm:right-6 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-primary to-accent shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
       >
-        <Sparkles className="text-white" size={22} />
+        <Sparkles className="text-primary-foreground" size={22} />
         {speaking && <span className="absolute inset-0 rounded-full border-2 border-primary animate-ping" />}
-      </button>
+      </Button>
 
       {open && (
-        <div className="fixed bottom-24 right-6 z-50 w-[min(92vw,380px)] bg-card/95 backdrop-blur-xl border border-primary/30 rounded-2xl shadow-2xl overflow-hidden animate-fade-in">
+        <div role="dialog" aria-label="Jarvis AI assistant" className="fixed bottom-20 right-3 sm:bottom-24 sm:right-6 z-50 w-[calc(100vw-1.5rem)] sm:w-[380px] max-h-[calc(100dvh-6rem)] flex flex-col bg-card/95 backdrop-blur-xl border border-primary/30 rounded-lg shadow-2xl overflow-hidden animate-fade-in">
           <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-primary/20 to-accent/20 border-b border-primary/20">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
@@ -274,7 +277,7 @@ const JarvisAI = () => {
             </div>
           </div>
 
-          <div ref={listRef} className="h-64 overflow-y-auto p-4 space-y-3 text-sm">
+          <div ref={listRef} className="h-64 min-h-16 shrink overflow-y-auto overscroll-contain p-4 space-y-3 text-sm break-words">
             {turns.map((t, i) => (
               <div key={i} className={`flex ${t.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div className={`max-w-[85%] px-3 py-2 rounded-xl ${
@@ -322,7 +325,8 @@ const JarvisAI = () => {
                   if (e.key === "Enter" && !thinking) { handleQuery(input); }
                 }}
                 placeholder="Ask Jarvis anything…"
-                className="flex-1 px-3 py-2 rounded-lg bg-background border border-border text-sm focus:border-primary focus:outline-none"
+                aria-label="Question for Jarvis"
+                className="min-w-0 flex-1 px-3 py-2 rounded-lg bg-background border border-border text-base focus:border-primary focus:outline-none"
               />
               <button
                 onClick={listening ? stopListening : startListening}
