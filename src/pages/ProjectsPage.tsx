@@ -67,10 +67,10 @@ const ProjectsPage = () => {
               </div>
 
               {/* Project Info */}
-              <div className="relative p-8 md:p-10">
+              <div className="relative p-4 sm:p-6 md:p-10">
                 <div className="flex items-start justify-between gap-4 mb-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-10 h-10 sm:w-14 sm:h-14 shrink-0 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                       <Cloud size={28} className="text-white" />
                     </div>
                     <div>
@@ -122,10 +122,10 @@ const ProjectsPage = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
                 </AspectRatio>
               </div>
-              <div className="relative p-8 md:p-10">
+              <div className="relative p-4 sm:p-6 md:p-10">
                 <div className="flex items-start justify-between gap-4 mb-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[hsl(var(--accent))] to-[hsl(var(--primary))] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-10 h-10 sm:w-14 sm:h-14 shrink-0 rounded-xl bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                       <HeartPulse size={28} className="text-white" />
                     </div>
                     <div>
@@ -134,7 +134,7 @@ const ProjectsPage = () => {
                       </h3>
                       <div className="flex items-center gap-1.5 mt-1">
                         <Globe size={14} className="text-primary/70" />
-                        <span className="text-sm text-primary/70 font-mono">mohitmedai11.netlify.app</span>
+                        <span className="text-xs sm:text-sm text-primary/70 font-mono break-all">mohitmedai11.netlify.app</span>
                       </div>
                     </div>
                   </div>

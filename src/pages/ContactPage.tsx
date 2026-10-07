@@ -136,7 +136,7 @@ const ContactPage = () => {
                 Chat via Email
               </a>
 
-              <div className="flex justify-center gap-6 mt-8">
+              <div className="flex flex-wrap justify-center gap-4 mt-8">
                 <div className="flex items-center gap-2 text-primary-foreground/70 text-sm">
                   <Clock size={16} />
                   Response within 24hrs

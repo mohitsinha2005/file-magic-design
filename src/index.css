@@ -156,6 +156,10 @@
     @apply max-w-6xl mx-auto;
   }
 
+  .hero-section {
+    padding-top: 6rem;
+  }
+
   .section-title {
     @apply text-3xl md:text-4xl font-bold text-foreground mb-4;
   }
@@ -605,6 +609,14 @@
   .reveal-in .section-title::after, .section-title.reveal-in::after { transform: scaleX(1); }
   @media (max-width: 640px) {
     .section { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+    .hero-section { padding-top: 6rem; min-height: auto; }
+    .page-header-3d { padding-top: 6.5rem; padding-bottom: 3rem; }
+    .page-header-3d h1 { font-size: 2.25rem; line-height: 1.15; overflow-wrap: anywhere; }
+    .page-header-3d p { font-size: 1rem; line-height: 1.7; }
+    .stat-circle { width: 5rem; height: 5rem; }
+    .stat-label { text-align: center; }
+    input, textarea, select { font-size: 16px; }
+    main { padding-bottom: 5rem; }
     .section-title { font-size: 1.75rem; line-height: 2.2rem; }
     .elevated-card { padding: 1.25rem; }
     .elevated-card:hover { transform: none; }

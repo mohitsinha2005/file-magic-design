@@ -99,7 +99,7 @@ const AboutPage = () => {
             {/* Profile Image */}
             <div className="flex justify-center opacity-0 animate-scale-in-3d delay-400">
               <div className="relative">
-                <div className="w-72 h-72 rounded-3xl overflow-hidden border-2 border-primary/30 animate-glow-pulse">
+                <div className="w-60 h-60 sm:w-72 sm:h-72 rounded-3xl overflow-hidden border-2 border-primary/30 animate-glow-pulse">
                   <img
                     src={profileAbout}
                     alt="Mohit Sinha"
@@ -181,7 +181,7 @@ const AboutPage = () => {
               {timeline.map((item, idx) => (
                 <div 
                   key={idx} 
-                  className="card-3d relative flex gap-6 opacity-0 animate-flip-in"
+                  className="card-3d relative flex flex-col sm:flex-row gap-4 sm:gap-6 opacity-0 animate-flip-in"
                   style={{ animationDelay: `${idx * 150}ms` }}
                 >
                   {/* Icon */}
