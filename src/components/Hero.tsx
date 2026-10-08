@@ -53,10 +53,10 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
         initial="hidden"
         animate={isVisible ? "visible" : "hidden"}
       >
-        <div className="grid md:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-10 md:gap-y-6 lg:gap-x-12 items-center">
           {/* Text Content */}
-          <div className="min-w-0">
-            <motion.div className="space-y-6" variants={containerVariants}>
+          <div className="min-w-0 order-2 md:order-1 md:row-span-2">
+            <motion.div className="space-y-4 md:space-y-6" variants={containerVariants}>
               <motion.h1
                 variants={itemVariants}
                 className="hero-name text-4xl md:text-5xl lg:text-6xl font-bold leading-tight font-heading"
@@ -134,24 +134,28 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
             </motion.div>
           </div>
 
-          {/* Profile Image + live code panel */}
+          {/* Photo appears first on phones; desktop keeps its two-column layout. */}
           <motion.div
-            className="min-w-0 flex flex-col items-center md:items-end gap-6 perspective-1000"
+            className="min-w-0 order-1 md:order-2 flex justify-center md:justify-end perspective-1000"
             variants={imageVariants}
           >
-            <div className="hero-portrait-shell hero-image-frame w-full max-w-72 lg:max-w-96 aspect-square relative group" data-tilt>
+            <div className="hero-portrait-shell hero-image-frame w-52 sm:w-64 md:w-full md:max-w-72 lg:max-w-96 aspect-square relative group" data-tilt>
               <span className="portrait-corner portrait-corner-top" aria-hidden="true" />
               <span className="portrait-corner portrait-corner-bottom" aria-hidden="true" />
               <img
                 src={profileImage}
                 alt="Mohit Sinha - AI & Data Science Professional"
+                width={1254}
+                height={1254}
+                loading="eager"
+                fetchPriority="high"
                 className="relative w-full h-full object-cover object-center transition-transform duration-700"
               />
             </div>
 
-            <div className="w-full min-w-0 max-w-md">
-              <CodeTyping />
-            </div>
+          </motion.div>
+          <motion.div variants={itemVariants} className="order-3 w-full min-w-0 max-w-md justify-self-center md:justify-self-end">
+            <CodeTyping />
           </motion.div>
         </div>
       </motion.div>

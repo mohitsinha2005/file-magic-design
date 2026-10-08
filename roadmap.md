@@ -1,5 +1,8 @@
 # Current work
 
+- [ ] Bring the main photo into the first phone screen and prevent clipped content.
+- [ ] Verify both home photos and phone/laptop alignment.
+
 - [x] Fix phone sizing, homepage order, and laptop navigation.
 - [x] Keep chat scrolling inside the conversation and fit its phone controls.
 - [x] Verify all pages and phone menu on small phones and laptops.
