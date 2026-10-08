@@ -53,10 +53,10 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
         initial="hidden"
         animate={isVisible ? "visible" : "hidden"}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-10 md:gap-y-6 lg:gap-x-12 items-center">
+        <div className="hero-layout grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-10 md:gap-y-6 lg:gap-x-12 items-center">
           {/* Text Content */}
           <div className="min-w-0 order-2 md:order-1 md:row-span-2">
-            <motion.div className="space-y-4 md:space-y-6" variants={containerVariants}>
+            <motion.div className="hero-copy space-y-4 md:space-y-6" variants={containerVariants}>
               <motion.h1
                 variants={itemVariants}
                 className="hero-name text-4xl md:text-5xl lg:text-6xl font-bold leading-tight font-heading"
@@ -118,7 +118,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
               </motion.div>
 
               {/* Quick Links */}
-              <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-4">
+              <motion.div variants={itemVariants} className="hero-quick-links flex flex-wrap gap-4 pt-4">
                 {["Skills", "Projects", "Certifications", "Contact"].map((link) => (
                   <motion.a
                     key={link}
