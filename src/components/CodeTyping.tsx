@@ -69,14 +69,14 @@ const CodeTyping = () => {
       {/* premium sheen */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-70" />
 
-      <div className="relative flex items-center gap-2 px-4 py-2.5 border-b border-primary/15 bg-primary/5">
+      <div className="relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 border-b border-primary/15 bg-primary/5">
         <span className="w-2.5 h-2.5 rounded-full bg-destructive/70" />
         <span className="w-2.5 h-2.5 rounded-full bg-accent/70" />
         <span className="w-2.5 h-2.5 rounded-full bg-primary/70" />
-        <span className="ml-2 text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
+        <span className="min-w-0 truncate ml-1 sm:ml-2 text-[10px] sm:text-[11px] tracking-normal sm:tracking-[0.2em] uppercase text-muted-foreground">
           model_training.py
         </span>
-        <span className="ml-auto flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-primary">
+        <span className="ml-auto shrink-0 flex items-center gap-1.5 text-[10px] uppercase tracking-normal sm:tracking-widest text-primary">
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
           running
         </span>
