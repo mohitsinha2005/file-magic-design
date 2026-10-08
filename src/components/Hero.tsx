@@ -145,8 +145,8 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
               <img
                 src={profileImage}
                 alt="Mohit Sinha - AI & Data Science Professional"
-                width={1254}
-                height={1254}
+                width={720}
+                height={720}
                 loading="eager"
                 fetchPriority="high"
                 className="relative w-full h-full object-cover object-center transition-transform duration-700"
