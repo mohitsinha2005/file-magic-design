@@ -3,12 +3,19 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Line } from "@react-three/drei";
 import * as THREE from "three";
 
+// Lighter scene on phones: fewer particles and no expensive line/metal meshes.
+const isLightweight =
+  typeof window !== "undefined" &&
+  (window.matchMedia("(max-width: 767px)").matches ||
+    (navigator as { deviceMemory?: number }).deviceMemory !== undefined &&
+      (navigator as { deviceMemory?: number }).deviceMemory! <= 4);
+
 // Dense galaxy spiral particles
 const GalaxyParticles = () => {
   const points = useRef<THREE.Points>(null);
   
   const { positions, colors, sizes } = useMemo(() => {
-    const count = 1800;
+    const count = isLightweight ? 600 : 1800;
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
     const sizes = new Float32Array(count);
