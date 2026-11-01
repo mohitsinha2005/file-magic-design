@@ -278,6 +278,51 @@
     pointer-events: none;
   }
 
+  /* Orbital rings + soft halo behind the hero portrait */
+  .portrait-ring {
+    position: absolute;
+    z-index: 0;
+    border-radius: 9999px;
+    pointer-events: none;
+  }
+
+  .portrait-ring-a {
+    inset: -1.75rem;
+    border: 1px dashed hsl(var(--primary) / 0.4);
+    animation: portrait-spin 48s linear infinite;
+  }
+
+  .portrait-ring-b {
+    inset: -3rem;
+    border: 1px solid hsl(var(--accent) / 0.2);
+    border-top-color: transparent;
+    border-left-color: transparent;
+    animation: portrait-spin-rev 72s linear infinite;
+  }
+
+  .portrait-halo {
+    position: absolute;
+    z-index: 0;
+    inset: -1rem;
+    border-radius: 9999px;
+    pointer-events: none;
+    background: radial-gradient(circle, hsl(var(--primary) / 0.16), transparent 68%);
+    animation: portrait-breathe 7s ease-in-out infinite;
+  }
+
+  @keyframes portrait-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes portrait-spin-rev {
+    to { transform: rotate(-360deg); }
+  }
+
+  @keyframes portrait-breathe {
+    0%, 100% { opacity: 0.65; transform: scale(0.97); }
+    50% { opacity: 1; transform: scale(1.04); }
+  }
+
   .portrait-corner-top {
     top: -0.55rem;
     left: -0.55rem;
@@ -610,8 +655,10 @@
   .hero-copy > * + * { margin-top: 0.75rem; }
   .hero-name { font-size: 1.875rem; line-height: 1.2; }
   .hero-copy > .gradient-text { font-size: 1rem; line-height: 1.4; }
-  .hero-portrait-shell { width: 9rem; max-width: 100%; }
+  .hero-portrait-shell { width: 11rem; max-width: 100%; }
   .portrait-corner { width: 2rem; height: 2rem; }
+  .portrait-ring-a { inset: -0.9rem; }
+  .portrait-ring-b { inset: -1.6rem; }
   .hero-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; padding-top: 0; }
   .hero-actions a { min-width: 0; min-height: 44px; padding: 0.625rem 0.5rem; font-size: 0.8125rem; }
   .hero-actions a:last-child { grid-column: 1 / -1; }

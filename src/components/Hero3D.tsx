@@ -351,9 +351,24 @@ const BackgroundStars = () => {
   );
 };
 
+// Cinematic camera rig: slow drift plus gentle pointer parallax.
+const CameraRig = () => {
+  useFrame((state, delta) => {
+    const t = state.clock.getElapsedTime();
+    const k = Math.min(delta * 2.2, 1);
+    const targetX = state.pointer.x * 0.55 + Math.sin(t * 0.1) * 0.25;
+    const targetY = 0.25 + Math.sin(t * 0.13) * 0.35 + state.pointer.y * 0.35;
+    state.camera.position.x += (targetX - state.camera.position.x) * k;
+    state.camera.position.y += (targetY - state.camera.position.y) * k;
+    state.camera.lookAt(0, 0.4, -3);
+  });
+  return null;
+};
+
 const Scene = () => {
   return (
     <>
+      <CameraRig />
       <ambientLight intensity={0.15} />
       <pointLight position={[10, 10, 10]} intensity={0.5} color="#22d3ee" />
       <pointLight position={[-10, -5, 5]} intensity={0.3} color="#38bdf8" />
