@@ -139,7 +139,11 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
             className="min-w-0 order-1 md:order-2 flex justify-center md:justify-end perspective-1000"
             variants={imageVariants}
           >
-            <div className="hero-portrait-shell hero-image-frame w-52 sm:w-64 md:w-full md:max-w-72 lg:max-w-96 aspect-square relative group" data-tilt>
+            <div className="hero-portrait-shell hero-image-frame w-60 sm:w-72 md:w-full md:max-w-80 lg:max-w-[26rem] aspect-square relative group" data-tilt>
+              {/* JARVIS-style counter-rotating orbital rings behind the portrait */}
+              <span className="portrait-ring portrait-ring-a" aria-hidden="true" />
+              <span className="portrait-ring portrait-ring-b" aria-hidden="true" />
+              <span className="portrait-halo" aria-hidden="true" />
               <span className="portrait-corner portrait-corner-top" aria-hidden="true" />
               <span className="portrait-corner portrait-corner-bottom" aria-hidden="true" />
               <img
