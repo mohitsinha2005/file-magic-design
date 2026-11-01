@@ -323,16 +323,6 @@
     50% { opacity: 1; transform: scale(1.04); }
   }
 
-  /* Gentle idle float for the whole portrait stack */
-  .hero-portrait-shell {
-    animation: portrait-float 8s ease-in-out infinite;
-  }
-
-  @keyframes portrait-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-  }
-
   .portrait-corner-top {
     top: -0.55rem;
     left: -0.55rem;
