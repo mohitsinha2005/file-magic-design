@@ -319,8 +319,9 @@ const BackgroundStars = () => {
   const starsRef = useRef<THREE.Points>(null);
   
   const positions = useMemo(() => {
-    const pos = new Float32Array(200 * 3);
-    for (let i = 0; i < 200; i++) {
+    const starCount = isLightweight ? 80 : 200;
+    const pos = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
       const i3 = i * 3;
       pos[i3] = (Math.random() - 0.5) * 25;
       pos[i3 + 1] = (Math.random() - 0.5) * 15;
@@ -360,12 +361,12 @@ const Scene = () => {
       
       <BackgroundStars />
       <GalaxyParticles />
-      <DataConstellation />
-      <NeuralNetwork />
-      <DataFlow />
+      {!isLightweight && <DataConstellation />}
+      {!isLightweight && <NeuralNetwork />}
+      {!isLightweight && <DataFlow />}
       <OrbitRings />
       <AICore />
-      <AccentOrbs />
+      {!isLightweight && <AccentOrbs />}
     </>
   );
 };
@@ -400,7 +401,7 @@ const Hero3D = () => {
       <Canvas
         camera={{ position: [0, 0, 8], fov: 50 }}
         style={{ background: "transparent" }}
-        dpr={[1, 1.25]}
+        dpr={isLightweight ? 1 : [1, 1.25]}
         frameloop={isActive ? "always" : "never"}
         performance={{ min: 0.5 }}
         gl={{ antialias: false, powerPreference: "high-performance", failIfMajorPerformanceCaveat: false }}
