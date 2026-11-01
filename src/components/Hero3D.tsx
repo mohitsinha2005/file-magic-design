@@ -360,12 +360,12 @@ const Scene = () => {
       
       <BackgroundStars />
       <GalaxyParticles />
-      <DataConstellation />
-      <NeuralNetwork />
-      <DataFlow />
+      {!isLightweight && <DataConstellation />}
+      {!isLightweight && <NeuralNetwork />}
+      {!isLightweight && <DataFlow />}
       <OrbitRings />
       <AICore />
-      <AccentOrbs />
+      {!isLightweight && <AccentOrbs />}
     </>
   );
 };
