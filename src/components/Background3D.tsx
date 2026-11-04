@@ -25,7 +25,7 @@ const GalaxyField = () => {
       
       const mixedColor = new THREE.Color();
       const innerColor = new THREE.Color('#22d3ee');
-      const outerColor = new THREE.Color('#a855f7');
+      const outerColor = new THREE.Color('#3b82f6');
       mixedColor.lerpColors(innerColor, outerColor, radius / 15);
       
       colors[i3] = mixedColor.r;
@@ -117,12 +117,54 @@ const FloatingOrbs = () => {
   );
 };
 
+// Flowing data streams — packets travelling along horizontal channels.
+const DataStreams = () => {
+  const meshes = useRef<(THREE.Mesh | null)[]>([]);
+
+  const streams = useMemo(
+    () =>
+      Array.from({ length: 18 }, () => ({
+        x: (Math.random() - 0.5) * 24,
+        y: (Math.random() - 0.5) * 8,
+        z: -6 - Math.random() * 6,
+        speed: 1.5 + Math.random() * 2,
+        len: 0.3 + Math.random() * 0.6,
+      })),
+    []
+  );
+
+  useFrame((_, delta) => {
+    meshes.current.forEach((mesh, i) => {
+      if (!mesh) return;
+      mesh.position.x += streams[i].speed * delta;
+      if (mesh.position.x > 14) mesh.position.x = -14;
+    });
+  });
+
+  return (
+    <group>
+      {streams.map((s, i) => (
+        <mesh
+          key={i}
+          ref={(el) => {
+            meshes.current[i] = el;
+          }}
+          position={[s.x, s.y, s.z]}
+        >
+          <boxGeometry args={[s.len, 0.02, 0.02]} />
+          <meshBasicMaterial color="#38bdf8" transparent opacity={0.5} />
+        </mesh>
+      ))}
+    </group>
+  );
+};
+
 const Scene = () => {
   return (
     <>
       <ambientLight intensity={0.2} />
       <pointLight position={[10, 10, 10]} intensity={0.3} color="#22d3ee" />
-      <FloatingOrbs />
+      <DataStreams />
       <GalaxyField />
     </>
   );
