@@ -207,6 +207,111 @@ const DataFlow = () => {
   );
 };
 
+// 3D scatter plot with axes, clustered points and a histogram — the data-science motif.
+const ScatterPlot3D = () => {
+  const groupRef = useRef<THREE.Group>(null);
+
+  const { points, bars } = useMemo(() => {
+    const points: [number, number, number][] = [];
+    for (let i = 0; i < 64; i++) {
+      const x = (Math.random() - 0.5) * 6;
+      const y = x * 0.35 + (Math.random() - 0.5) * 1.6;
+      const z = (Math.random() - 0.5) * 3;
+      points.push([x, y, z]);
+    }
+    const bars = Array.from({ length: 9 }, (_, i) => ({
+      h: 0.4 + Math.abs(Math.sin(i * 1.1)) * 1.6,
+      x: (i - 4) * 0.55,
+    }));
+    return { points, bars };
+  }, []);
+
+  useFrame((state) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.08) * 0.12;
+    }
+  });
+
+  return (
+    <group ref={groupRef} position={[4.5, -1.2, -4]}>
+      <Line points={[[-3, 0, 0], [3, 0, 0]]} color="#38bdf8" transparent opacity={0.35} lineWidth={1} />
+      <Line points={[[0, -1.8, 0], [0, 2.4, 0]]} color="#38bdf8" transparent opacity={0.35} lineWidth={1} />
+      <Line points={[[0, 0, -1.6], [0, 0, 1.6]]} color="#38bdf8" transparent opacity={0.2} lineWidth={1} />
+      {points.map((p, i) => (
+        <mesh key={i} position={p}>
+          <sphereGeometry args={[0.05, 8, 8]} />
+          <meshBasicMaterial color={i % 3 === 0 ? '#22d3ee' : '#60a5fa'} transparent opacity={0.75} />
+        </mesh>
+      ))}
+      {bars.map((b, i) => (
+        <mesh key={`b${i}`} position={[b.x, b.h / 2 - 1, -1.2]}>
+          <boxGeometry args={[0.28, b.h, 0.28]} />
+          <meshStandardMaterial
+            color="#2563eb"
+            emissive="#2563eb"
+            emissiveIntensity={0.35}
+            transparent
+            opacity={0.4}
+            roughness={0.3}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+};
+
+// Rotating decision tree — classification nodes branching downward.
+const DecisionTree = () => {
+  const groupRef = useRef<THREE.Group>(null);
+
+  const { nodes, edges } = useMemo(() => {
+    const nodes: { pos: [number, number, number]; r: number }[] = [
+      { pos: [0, 1.6, 0], r: 0.14 },
+      { pos: [-1.1, 0.6, 0.2], r: 0.11 }, { pos: [1.1, 0.6, -0.2], r: 0.11 },
+      { pos: [-1.7, -0.3, 0.1], r: 0.08 }, { pos: [-0.6, -0.3, -0.1], r: 0.08 },
+      { pos: [0.6, -0.3, 0.2], r: 0.08 }, { pos: [1.8, -0.3, -0.1], r: 0.08 },
+      { pos: [-2, -1.1, 0], r: 0.06 }, { pos: [-1.2, -1.1, 0.2], r: 0.06 },
+      { pos: [0.2, -1.1, -0.2], r: 0.06 }, { pos: [1, -1.1, 0.1], r: 0.06 }, { pos: [2.2, -1.1, 0], r: 0.06 },
+    ];
+    const edges: [[number, number, number], [number, number, number]][] = [
+      [nodes[0].pos, nodes[1].pos], [nodes[0].pos, nodes[2].pos],
+      [nodes[1].pos, nodes[3].pos], [nodes[1].pos, nodes[4].pos],
+      [nodes[2].pos, nodes[5].pos], [nodes[2].pos, nodes[6].pos],
+      [nodes[3].pos, nodes[7].pos], [nodes[3].pos, nodes[8].pos],
+      [nodes[4].pos, nodes[9].pos], [nodes[5].pos, nodes[10].pos], [nodes[6].pos, nodes[11].pos],
+    ];
+    return { nodes, edges };
+  }, []);
+
+  useFrame((state) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.06) * 0.2;
+    }
+  });
+
+  return (
+    <group ref={groupRef} position={[-5, 1.2, -4]}>
+      {edges.map((e, i) => (
+        <Line key={i} points={e} color="#60a5fa" transparent opacity={0.3} lineWidth={1} />
+      ))}
+      {nodes.map((n, i) => (
+        <Float key={i} speed={1.2} rotationIntensity={0.2} floatIntensity={0.3}>
+          <mesh position={n.pos}>
+            <sphereGeometry args={[n.r, 12, 12]} />
+            <meshStandardMaterial
+              color={i === 0 ? '#22d3ee' : '#3b82f6'}
+              emissive={i === 0 ? '#22d3ee' : '#2563eb'}
+              emissiveIntensity={0.7}
+              roughness={0.2}
+              metalness={0.8}
+            />
+          </mesh>
+        </Float>
+      ))}
+    </group>
+  );
+};
+
 // Orbit rings
 const OrbitRings = () => {
   const ring1Ref = useRef<THREE.Mesh>(null);
@@ -351,9 +456,24 @@ const BackgroundStars = () => {
   );
 };
 
+// Cinematic camera rig: slow drift plus gentle pointer parallax.
+const CameraRig = () => {
+  useFrame((state, delta) => {
+    const t = state.clock.getElapsedTime();
+    const k = Math.min(delta * 2.2, 1);
+    const targetX = state.pointer.x * 0.55 + Math.sin(t * 0.1) * 0.25;
+    const targetY = 0.25 + Math.sin(t * 0.13) * 0.35 + state.pointer.y * 0.35;
+    state.camera.position.x += (targetX - state.camera.position.x) * k;
+    state.camera.position.y += (targetY - state.camera.position.y) * k;
+    state.camera.lookAt(0, 0.4, -3);
+  });
+  return null;
+};
+
 const Scene = () => {
   return (
     <>
+      <CameraRig />
       <ambientLight intensity={0.15} />
       <pointLight position={[10, 10, 10]} intensity={0.5} color="#22d3ee" />
       <pointLight position={[-10, -5, 5]} intensity={0.3} color="#38bdf8" />
@@ -364,6 +484,8 @@ const Scene = () => {
       {!isLightweight && <DataConstellation />}
       {!isLightweight && <NeuralNetwork />}
       {!isLightweight && <DataFlow />}
+      {!isLightweight && <ScatterPlot3D />}
+      {!isLightweight && <DecisionTree />}
       <OrbitRings />
       <AICore />
       {!isLightweight && <AccentOrbs />}
