@@ -1,5 +1,6 @@
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import { Float } from "@react-three/drei";
 import * as THREE from "three";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -24,7 +25,7 @@ const GalaxyField = () => {
       
       const mixedColor = new THREE.Color();
       const innerColor = new THREE.Color('#22d3ee');
-      const outerColor = new THREE.Color('#3b82f6');
+      const outerColor = new THREE.Color('#a855f7');
       mixedColor.lerpColors(innerColor, outerColor, radius / 15);
       
       colors[i3] = mixedColor.r;
@@ -70,47 +71,49 @@ const GalaxyField = () => {
   );
 };
 
-// Data streams (see below) replace the decorative floating orbs.
-
-// Flowing data streams — packets travelling along horizontal channels.
-const DataStreams = () => {
-  const meshes = useRef<(THREE.Mesh | null)[]>([]);
-
-  const streams = useMemo(
-    () =>
-      Array.from({ length: 18 }, () => ({
-        x: (Math.random() - 0.5) * 24,
-        y: (Math.random() - 0.5) * 8,
-        z: -6 - Math.random() * 6,
-        speed: 1.5 + Math.random() * 2,
-        len: 0.3 + Math.random() * 0.6,
-      })),
-    []
-  );
-
-  useFrame((_, delta) => {
-    meshes.current.forEach((mesh, i) => {
-      if (!mesh) return;
-      mesh.position.x += streams[i].speed * delta;
-      if (mesh.position.x > 14) mesh.position.x = -14;
-    });
-  });
-
+// Floating orbs
+const FloatingOrbs = () => {
   return (
-    <group>
-      {streams.map((s, i) => (
-        <mesh
-          key={i}
-          ref={(el) => {
-            meshes.current[i] = el;
-          }}
-          position={[s.x, s.y, s.z]}
-        >
-          <boxGeometry args={[s.len, 0.02, 0.02]} />
-          <meshBasicMaterial color="#38bdf8" transparent opacity={0.5} />
+    <>
+      <Float speed={1} rotationIntensity={0.2} floatIntensity={0.5}>
+        <mesh position={[-5, 2, -6]}>
+          <sphereGeometry args={[0.35, 12, 12]} />
+          <meshStandardMaterial
+            color="#22d3ee"
+            roughness={0.4}
+            metalness={0.6}
+            transparent
+            opacity={0.3}
+          />
         </mesh>
-      ))}
-    </group>
+      </Float>
+
+      <Float speed={1.2} rotationIntensity={0.15} floatIntensity={0.6}>
+        <mesh position={[6, -2, -7]}>
+          <sphereGeometry args={[0.25, 12, 12]} />
+          <meshStandardMaterial
+            color="#a855f7"
+            roughness={0.5}
+            metalness={0.5}
+            transparent
+            opacity={0.25}
+          />
+        </mesh>
+      </Float>
+
+      <Float speed={0.8} rotationIntensity={0.25} floatIntensity={0.4}>
+        <mesh position={[4, 3, -8]}>
+          <sphereGeometry args={[0.3, 12, 12]} />
+          <meshStandardMaterial
+            color="#6366f1"
+            roughness={0.3}
+            metalness={0.7}
+            transparent
+            opacity={0.3}
+          />
+        </mesh>
+      </Float>
+    </>
   );
 };
 
@@ -119,7 +122,7 @@ const Scene = () => {
     <>
       <ambientLight intensity={0.2} />
       <pointLight position={[10, 10, 10]} intensity={0.3} color="#22d3ee" />
-      <DataStreams />
+      <FloatingOrbs />
       <GalaxyField />
     </>
   );
