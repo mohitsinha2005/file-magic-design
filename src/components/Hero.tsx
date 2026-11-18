@@ -3,6 +3,7 @@ import { Mail, ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import SafeCanvas from "./SafeCanvas";
 import CodeTyping from "./CodeTyping";
+import resume from "@/assets/Mohit_Sinha_Resume.pdf.asset.json";
 const Hero3D = lazy(() => import("./Hero3D"));
 
 interface HeroProps {
@@ -75,10 +76,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
                 variants={itemVariants}
                 className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-xl"
               >
-                A dedicated professional pursuing BCA and BS in Data Science, specializing in 
-                transforming complex datasets into actionable business insights. Proficient in 
-                Machine Learning, predictive analytics, and data-driven decision making with 
-                a commitment to delivering scalable AI solutions.
+                BCA student at MMDU University and BS in Data Science and Applications student at IIT Madras, focused on Python, analytics, and practical AI applications.
               </motion.p>
 
               {/* Action Buttons */}
@@ -106,7 +104,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
                 </motion.a>
                 
                 <motion.a 
-                  href="/resume/Mohit_Sinha_Resume.pdf" 
+                  href={resume.url}
                   download 
                   className="btn-secondary"
                   whileHover={{ scale: 1.02 }}

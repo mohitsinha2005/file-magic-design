@@ -1,5 +1,6 @@
 import { Download, FileText, File, ExternalLink } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
+import resume from "@/assets/Mohit_Sinha_Resume.pdf.asset.json";
 
 interface Resource {
   name: string;
@@ -13,9 +14,9 @@ const resources: Resource[] = [
   {
     name: "Resume / CV",
     description: "Download my professional resume with skills, experience, and achievements",
-    file: "/resume/Mohit_Sinha_Resume.pdf",
+    file: resume.url,
     type: "pdf",
-    size: "1.2 MB"
+    size: "276 KB"
   },
 ];
 
@@ -113,7 +114,7 @@ const Resources = () => {
         <ScrollReveal delay={0.4}>
           <div className="mt-12 text-center">
             <a
-              href="/resume/Mohit_Sinha_Resume.pdf"
+              href={resume.url}
               download
               className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary/20"
             >

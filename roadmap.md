@@ -14,3 +14,5 @@
 - [x] Correct the Professional Profile portrait crop and alignment.
 - [x] Refine portrait 3D motion without reducing performance or accessibility.
 - [x] Verify portraits and motion on desktop and mobile.
+- [ ] Clean up the portfolio visual style for a more professional, consistent finish.
+- [ ] Update the public resume using the newly uploaded PDF.

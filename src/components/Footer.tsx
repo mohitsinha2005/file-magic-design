@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Github, Linkedin, Mail } from "lucide-react";
+import resume from "@/assets/Mohit_Sinha_Resume.pdf.asset.json";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -25,7 +26,7 @@ const Footer = () => {
       links: [
         { label: "About", href: "/about" },
         { label: "Contact", href: "/contact" },
-        { label: "Resume", href: "/resume/Mohit_Sinha_Resume.pdf" },
+        { label: "Resume", href: resume.url },
         { label: "LinkedIn", href: "https://www.linkedin.com/in/mohit-sinha-5b5472255" },
       ],
     },
@@ -75,8 +76,9 @@ const Footer = () => {
                       <a
                         href={link.href}
                         className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-                        target={link.href.startsWith("http") || link.href.startsWith("/resume") ? "_blank" : undefined}
+                        target={link.href.startsWith("http") ? "_blank" : undefined}
                         rel="noopener noreferrer"
+                        download={link.label === "Resume" ? true : undefined}
                       >
                         {link.label}
                       </a>
@@ -93,14 +95,7 @@ const Footer = () => {
           <p className="text-muted-foreground text-sm">
             © {currentYear} Mohit Sinha. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <a href="#" className="text-muted-foreground hover:text-foreground text-sm">
-              Privacy Policy
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground text-sm">
-              Terms of Service
-            </a>
-          </div>
+          <p className="text-muted-foreground text-sm">Built with care by Mohit Sinha</p>
         </div>
       </div>
     </footer>

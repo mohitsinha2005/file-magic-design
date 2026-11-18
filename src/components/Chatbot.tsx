@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Bot, User, Download, Linkedin, Github, Mail } from "lucide-react";
+import resume from "@/assets/Mohit_Sinha_Resume.pdf.asset.json";
 
 interface Message {
   role: "user" | "bot";
@@ -55,7 +56,7 @@ const getResponse = (query: string): string => {
   }
   
   if (q.includes("resume") || q.includes("cv") || q.includes("download")) {
-    return `You can download Mohit's resume from the website. Click the "Download Resume" button in the hero section or visit /resume/Mohit_Sinha_Resume.pdf`;
+    return `You can download Mohit's resume from the Download Resume button in the home section.`;
   }
   
   if (q.includes("about") || q.includes("tell me about")) {
@@ -156,7 +157,7 @@ const Chatbot = () => {
             <a href={`mailto:${portfolioInfo.email}`} className="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
               <Mail size={16} className="text-primary" />
             </a>
-            <a href="/resume/Mohit_Sinha_Resume.pdf" download className="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
+            <a href={resume.url} download className="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors">
               <Download size={16} className="text-primary" />
             </a>
           </div>
