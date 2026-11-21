@@ -1,16 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const LINES = [
-  "import pandas as pd",
-  "from sklearn.ensemble import RandomForestClassifier",
-  "",
-  "df = pd.read_csv('insights.csv')",
-  "X, y = df.drop('target', axis=1), df['target']",
-  "",
-  "model = RandomForestClassifier(n_estimators=300)",
-  "model.fit(X, y)",
-  "print(f'accuracy: {model.score(X, y):.2%}')",
-  "# >> accuracy: 96.4%",
+  "features = data.drop(columns='target')",
+  "model.fit(features, target)",
+  "predictions = model.predict(features)",
 ];
 
 const KEYWORDS = /\b(import|from|as|def|return|for|in|if|else|print|None|True|False)\b/;
@@ -46,11 +39,6 @@ const CodeTyping = () => {
       i += 1;
       setShown(full.slice(0, i));
       if (i >= full.length) {
-        timer.current = window.setTimeout(() => {
-          i = 0;
-          setShown("");
-          timer.current = window.setTimeout(tick, 600);
-        }, 3800);
         return;
       }
       const ch = full[i - 1];
@@ -65,24 +53,13 @@ const CodeTyping = () => {
   const rendered = shown.split("\n");
 
   return (
-    <div className="group relative rounded-2xl border border-primary/25 bg-card/60 backdrop-blur-xl overflow-hidden shadow-[0_20px_60px_-25px_hsl(var(--primary)/0.6)]">
-      {/* premium sheen */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-70" />
-
-      <div className="relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 border-b border-primary/15 bg-primary/5">
-        <span className="w-2.5 h-2.5 rounded-full bg-destructive/70" />
-        <span className="w-2.5 h-2.5 rounded-full bg-accent/70" />
-        <span className="w-2.5 h-2.5 rounded-full bg-primary/70" />
-        <span className="min-w-0 truncate ml-1 sm:ml-2 text-[10px] sm:text-[11px] tracking-normal sm:tracking-[0.2em] uppercase text-muted-foreground">
-          model_training.py
-        </span>
-        <span className="ml-auto shrink-0 flex items-center gap-1.5 text-[10px] uppercase tracking-normal sm:tracking-widest text-primary">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          running
-        </span>
+    <div className="relative overflow-hidden rounded-lg border border-border bg-card">
+      <div className="flex items-center justify-between gap-3 border-b border-border px-3 py-2">
+        <span className="truncate font-mono text-xs text-muted-foreground">model_training.py</span>
+        <span className="shrink-0 text-[10px] text-primary">Python</span>
       </div>
 
-      <pre className="relative p-4 text-[12px] md:text-[13px] leading-relaxed font-mono h-[250px] md:h-[290px] overflow-auto whitespace-pre-wrap">
+      <pre className="p-3 font-mono text-xs leading-5 whitespace-pre-wrap">
         {rendered.map((line, idx) => (
           <div key={idx} className="flex gap-3">
             <span className="select-none w-5 shrink-0 text-right text-muted-foreground/40">

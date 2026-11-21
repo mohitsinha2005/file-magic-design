@@ -1,10 +1,7 @@
-import { lazy, Suspense } from "react";
 import { Mail, ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
-import SafeCanvas from "./SafeCanvas";
 import CodeTyping from "./CodeTyping";
 import resume from "@/assets/Mohit_Sinha_Resume.pdf.asset.json";
-const Hero3D = lazy(() => import("./Hero3D"));
 
 interface HeroProps {
   profileImage: string;
@@ -31,7 +28,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
   };
 
   const imageVariants = {
-    hidden: { opacity: 0, scale: 0.8, rotateY: -15 },
+    hidden: { opacity: 0, scale: 0.96, rotateY: -4 },
     visible: {
       opacity: 1,
       scale: 1,
@@ -41,15 +38,9 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
   };
 
   return (
-    <section id="home" className="hero-section min-h-screen flex items-center section relative overflow-hidden">
-      {isVisible && (
-        <SafeCanvas>
-          <Suspense fallback={null}><Hero3D /></Suspense>
-        </SafeCanvas>
-      )}
-      
+    <section id="home" className="hero-section flex items-center section relative">
       <motion.div
-        className="section-container relative z-10"
+        className="section-container relative"
         variants={containerVariants}
         initial="hidden"
         animate={isVisible ? "visible" : "hidden"}
@@ -137,11 +128,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
             className="min-w-0 order-1 md:order-2 flex justify-center md:justify-end perspective-1000"
             variants={imageVariants}
           >
-            <div className="hero-portrait-shell hero-image-frame w-60 sm:w-72 md:w-full md:max-w-80 lg:max-w-[26rem] aspect-square relative group" data-tilt>
-              {/* JARVIS-style counter-rotating orbital rings behind the portrait */}
-              <span className="portrait-ring portrait-ring-a" aria-hidden="true" />
-              <span className="portrait-ring portrait-ring-b" aria-hidden="true" />
-              <span className="portrait-halo" aria-hidden="true" />
+            <div className="hero-portrait-shell hero-image-frame w-60 sm:w-72 md:w-full md:max-w-80 lg:max-w-[22rem] aspect-square relative group" data-tilt>
               <span className="portrait-corner portrait-corner-top" aria-hidden="true" />
               <span className="portrait-corner portrait-corner-bottom" aria-hidden="true" />
               <img
@@ -156,7 +143,7 @@ const Hero = ({ profileImage, isVisible = true }: HeroProps) => {
             </div>
 
           </motion.div>
-          <motion.div variants={itemVariants} className="order-3 w-full min-w-0 max-w-md justify-self-center md:justify-self-end">
+          <motion.div variants={itemVariants} className="order-3 w-full min-w-0 max-w-[22rem] justify-self-center md:justify-self-end">
             <CodeTyping />
           </motion.div>
         </div>

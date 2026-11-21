@@ -8,7 +8,6 @@ import PageTransition from "./components/PageTransition";
 import ScrollProgress from "./components/ScrollProgress";
 import AutoReveal from "./components/AutoReveal";
 import Depth3D from "./components/Depth3D";
-import CodeStrip from "./components/CodeStrip";
 import RouteSweep from "./components/RouteSweep";
 
 import Index from "./pages/Index";
@@ -21,7 +20,6 @@ const AboutPage = lazy(() => import("./pages/AboutPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const ChatPage = lazy(() => import("./pages/ChatPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const Background3D = lazy(() => import("./components/Background3D"));
 const JarvisAI = lazy(() => import("./components/JarvisAI"));
 
 const queryClient = new QueryClient();
@@ -50,7 +48,6 @@ const PageFallback = () => (
 
 const AppRoutes = () => {
   const location = useLocation();
-  const showBackground3D = location.pathname !== "/";
 
   return (
     <>
@@ -58,14 +55,7 @@ const AppRoutes = () => {
       <ScrollProgress />
       <AutoReveal />
       <Depth3D />
-      <CodeStrip />
       <RouteSweep />
-
-      {showBackground3D && (
-        <Suspense fallback={null}>
-          <Background3D />
-        </Suspense>
-      )}
       <Suspense fallback={<PageFallback />}>
         <Routes location={location}>
           <Route path="/" element={<PageTransition><Index /></PageTransition>} />

@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect, lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { Helmet } from "react-helmet";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import Skills from "@/components/Skills";
@@ -10,60 +10,17 @@ import About from "@/components/About";
 import Resources from "@/components/Resources";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
-import IntroAnimation from "@/components/IntroAnimation";
 import profileMohit from "@/assets/profile-library.jpg.asset.json";
 import profileHero from "@/assets/mohit-hero-portrait.jpg";
 
 const LiveChat = lazy(() => import("@/components/LiveChat"));
 
 const Index = () => {
-  const [introComplete, setIntroComplete] = useState(false);
   // Small bundled photo: same-origin and ~50KB, so it loads instantly on phones.
   const profileImage = profileHero;
   // The asset path is not served by third-party hosts (and the local preview
   // can return index.html for it); the published asset origin serves the photo.
   const aboutImage = `https://file-magic-design.lovable.app${profileMohit.url}`;
-
-  // Force scroll to top on mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    if (!introComplete) return;
-    const resetTop = () => {
-      document.documentElement.style.scrollBehavior = "auto";
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    };
-    resetTop();
-    const frame = requestAnimationFrame(resetTop);
-    const settleTimers = [100, 250, 500, 800, 1200, 1600].map((delay) =>
-      window.setTimeout(resetTop, delay),
-    );
-    const restoreSmoothScroll = window.setTimeout(() => {
-      document.documentElement.style.removeProperty("scroll-behavior");
-    }, 1700);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      settleTimers.forEach(window.clearTimeout);
-      window.clearTimeout(restoreSmoothScroll);
-      document.documentElement.style.removeProperty("scroll-behavior");
-    };
-  }, [introComplete]);
-
-  const handleIntroComplete = useCallback(() => {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    setIntroComplete(true);
-    requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
-      requestAnimationFrame(() => window.scrollTo(0, 0));
-    });
-  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -78,18 +35,11 @@ const Index = () => {
         <link rel="canonical" href="https://mohitsinha.dev" />
       </Helmet>
 
-      {/* Cinematic Intro Animation */}
-      <AnimatePresence>
-        {!introComplete && <IntroAnimation onComplete={handleIntroComplete} />}
-      </AnimatePresence>
-
-      {/* Mount the portfolio after the intro so hidden sections cannot restore scroll. */}
-      {introComplete && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-        >
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
           <Navigation />
           <main>
             <Hero profileImage={profileImage} isVisible />
@@ -102,8 +52,7 @@ const Index = () => {
             <CTA />
           </main>
           <Footer />
-        </motion.div>
-      )}
+      </motion.div>
     </div>
   );
 };
